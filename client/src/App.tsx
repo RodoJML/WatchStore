@@ -1,10 +1,10 @@
-
+import Navbar from './components/navbar'
 
 function App() {
 
   return (
-    <div>
-      TEST APP
+    <div>ss
+      <Navbar />      
     </div>
   )
 }
