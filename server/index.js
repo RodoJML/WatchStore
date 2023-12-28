@@ -34,6 +34,7 @@ app
 
 app
     .get('/api/v1', (req, res) => {res.send('Hello World')})
+    .use('/api/v1/brands', brands)
 
 
 app.listen(port, () => console.log(`Server running at http://${hostname}:${port}/`))
