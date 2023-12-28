@@ -1,9 +1,8 @@
 function Navbar() {
     return (
         <>
-         
+        
         </>
-
     );
 }
 

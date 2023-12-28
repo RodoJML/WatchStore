@@ -1,4 +1,6 @@
 # watch_store
 Project for an online store for watches
 
-Installing tailwind
+Followed this to install Tailwind
+https://tailwindcss.com/docs/guides/nextjs
+
