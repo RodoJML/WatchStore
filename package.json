@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js --watch server", 
+    "dev": "nodemon server/index.js --watch server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/RodoJML/Watch_Store#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
