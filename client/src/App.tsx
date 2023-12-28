@@ -3,8 +3,11 @@ import Navbar from './components/navbar'
 function App() {
 
   return (
-    <div> 
-      <Navbar />      
+    <div>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
+      <Navbar />
     </div>
   )
 }
