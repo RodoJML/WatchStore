@@ -3,7 +3,7 @@ POST http://localhost:3000/api/v1/brands/addOne
 Content-Type: application/json
 
 {
-    "name": "Hublot"
+    "name": "Apple"
 }
 
 

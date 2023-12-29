@@ -34,8 +34,7 @@ async function getOne(id) {
     return new Promise((resolve, reject) => {
         connection.query(query, (err, result) => {
             if (err) reject(err);
-            size = result.length;
-            resolve(result, size);
+            resolve(result);
         });
         connection.end(console.log('Connection closed'));
     });
@@ -47,18 +46,54 @@ async function addOne(name) {
     const query = `INSERT INTO ${TABLE_NAME} (brand_name) VALUES ('${name}')`;
 
     return new Promise((resolve, reject) => {
-        connection.execute(query, (err, result) => {
+        connection.query(query, (err, result) => {
             if (err) reject(err);
-            affectedRows = result.affectedRows;
-            insertedId = result.insertId;
-
-            resolve(result, affectedRows, insertedId);
+            resolve(result);
         });
         connection.end(console.log('Connection closed'));
     });
 }
 
-module.exports = { getAll, getOne, addOne }
+async function updateOne(id, name) {
+    const connection = await connect();
+    const query = `UPDATE ${TABLE_NAME} SET brand_name = '${name}' WHERE brand_id = ${id}`;
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+        connection.end(console.log('Connection closed'));
+    });
+}
+
+async function deleteOne(id) {
+    const connection = await connect();
+    const query = `DELETE FROM ${TABLE_NAME} WHERE brand_id = ${id}`;
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+        connection.end(console.log('Connection closed'));
+    });
+}
+
+async function search(key) {
+    const connection = await connect();
+    const query = `SELECT * FROM ${TABLE_NAME} WHERE brand_name LIKE '%${key}%'`;
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+        connection.end(console.log('Connection closed'));
+    });
+}
+
+module.exports = { getAll, getOne, addOne, updateOne, deleteOne, search }
 
 
 // The different sql functions are:
