@@ -7,7 +7,7 @@ router
         model.getBrands()
         .then(
             result => {
-                const data = {data: result, count: result.length, isSuccess: true};
+                const data = {data: result, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
