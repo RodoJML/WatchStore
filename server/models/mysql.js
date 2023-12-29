@@ -4,6 +4,13 @@ const user = process.env.MYSQL_USER;
 const password = process.env.MYSQL_PASSWORD;
 const database = process.env.MYSQL_DATABASE;
 
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: user,
+    password: password,
+    database: database
+});
+
 function connect() {
     
     return new Promise((resolve, reject) => {
