@@ -7,7 +7,7 @@ router
         model.getAll()
         .then(
             result => {
-                const data = {data: result, isSuccess: true};
+                const data = {data: result.objects, size: result.total, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);

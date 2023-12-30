@@ -13,4 +13,17 @@ async function getAll() {
     return {objects, total};
 }
 
+async function getOne(id) {
+    const database = await database_connection();
+    const object = await database(TABLE_NAME).select('*').where('id', id);
+    const total = object.length;
+    return {object, total};
+}
+
+async function addOne(name) {
+    const database = await database_connection();
+    const object = await database(TABLE_NAME).insert({name: name});
+    return object;
+}
+
 module.exports = { getAll };
