@@ -1,3 +1,5 @@
+// Saving this as a backup for main mysql connection that worked using js file
+
 const mysql = require('mysql');
 
 const user = process.env.MYSQL_USER;

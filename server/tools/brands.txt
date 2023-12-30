@@ -1,5 +1,6 @@
-const { connect } = require('./mysql');
+// Saving this as a backup for the brands.js file in the tools folder
 
+const { connect } = require('./mysql');
 const TABLE_NAME = 'brands';
 
 // Create a function called getAll() that returns a promise
