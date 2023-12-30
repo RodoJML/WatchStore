@@ -57,7 +57,7 @@ router
         model.search(req.params.key)
         .then(
             result => {
-                const data = {data: result, size: result.length, isSuccess: true};
+                const data = {data: result.objects, size: result.total, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
