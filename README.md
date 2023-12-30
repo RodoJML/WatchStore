@@ -1,5 +1,4 @@
-<h1>Watch Store</h1>
-![Alt text](image-1.png)
+<h1>⌚️ Watch Store</h1>
 
 Description:
 Personal project for a website to publish and sell watches. 
