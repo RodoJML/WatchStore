@@ -1,15 +1,16 @@
 const { connect } = require('./knex.tsx');
 const TABLE_NAME = 'brands';
 
-async function connnection () {
+async function database_connection() {
     const db = await connect();
     return db;
 }
 
 async function getAll() {
-    const table = await connnection();
-    const objects = await table(TABLE_NAME).select('*');
-    return objects;
+    const database = await database_connection();
+    const objects = await database(TABLE_NAME).select('*');
+    const total = objects.length;
+    return {objects, total};
 }
 
 module.exports = { getAll };
