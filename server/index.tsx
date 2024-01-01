@@ -9,7 +9,7 @@ const hostname = 'localhost';
 const port = 3000;
 
 // Controllers
-const brands = require('./controllers/brands.tsx');
+const brands = require('./controllers/brands.ts');
 
 // Middleware
 app
