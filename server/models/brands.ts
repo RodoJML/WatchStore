@@ -1,8 +1,8 @@
-const { connect } = require('./knex.tsx');
+const { connection } = require('./knex.tsx');
 const TABLE_NAME = 'brands';
 
 async function database_connection() {
-    const db = await connect();
+    const db = await connection();
     return db;
 }
 

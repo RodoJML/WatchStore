@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const model = require('../models/brands.tsx');
+const model = require('../models/brands.ts');
 
 router
     .get('/', (req, res, next) => {
