@@ -1,10 +1,7 @@
-const { connect } = require('./knex.ts');
-// to fix Cannot redeclare block-scoped variable 'connect' error in VSCode
-// https://stackoverflow.com/questions/40900791/cannot-redeclare-block-scoped-variable-in-unrelated-files
-
 const TABLE_NAME = 'brands';
 
 async function database_connection() {
+    const { connect } = require('./knex.ts');
     const db = await connect();
     return db;
 }
