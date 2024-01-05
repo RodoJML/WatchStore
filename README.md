@@ -40,7 +40,8 @@ Each line should be a separate feature.
 Features independent of the user type, must be present in all users. 
 - Register 
 - View listings 
-- 
+- Create a single listing 
+
 
 <h3>Admin</h3>
 
@@ -56,7 +57,6 @@ Features independent of the user type, must be present in all users.
 
 <h3>Registered user with Store</h3>
 
-- Register 
 - Listings: CRUD/Manage Own Listings
 - Listings: Read-only/View others Listings 
 - 
