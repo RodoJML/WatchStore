@@ -10,7 +10,7 @@ Technologies used:
 - mySQL
 - Knex for SQL (Wrapper library) https://knexjs.org/
 
-<h2>Database Design📚</h2>
+<h2>📚 Database Design</h2>
 <h3>Requirements</h3>
 
 - User: Have the ability to CRUD users
@@ -24,10 +24,16 @@ Technologies used:
 - Log: Keep a log of users registered and listings
 - Watches styles, types and movements, keep an updated list of these. 
 
-<h2>Software Design📲</h2>
+<h2>📲 Software Design</h2>
 <h3>Requirements</h3>
 
-Each line should be a separate feature. 
+This project will have at least 4 types of user, in order of privilege, highest at the top:
+1. Admin
+2. Registered user with Store
+3. Registered user
+4. Guest
+ 
+Each line should be a separate feature.
 
 <h3>Admin</h3>
 
@@ -43,6 +49,7 @@ Each line should be a separate feature.
 
 <h3>End-User</h3>
 
+- Register, create an user 
 - Listings: CRUD/Manage Own Listings
 - Listings: Read-only/View others Listings 
 - 
