@@ -35,6 +35,13 @@ This project will have at least 4 types of user, in order of privilege, highest 
  
 Each line should be a separate feature.
 
+<h3>Global</h3>
+
+Features independent of the user type, must be present in all users. 
+- Register 
+- View listings 
+- 
+
 <h3>Admin</h3>
 
 - A section to manage: Users and Stores.
@@ -47,9 +54,9 @@ Each line should be a separate feature.
 - A section to manage watches: specs
 - *Access to all end-user features. 
 
-<h3>End-User</h3>
+<h3>Registered user with Store</h3>
 
-- Register, create an user 
+- Register 
 - Listings: CRUD/Manage Own Listings
 - Listings: Read-only/View others Listings 
 - 
