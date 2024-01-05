@@ -29,7 +29,7 @@ Technologies used:
 
 Each line should be a separate feature. 
 
-Admin
+<h3>Admin</h3>
 - A section to manage: Users and Stores.
 - A section to manage: Wishlists 
 - A section to manage: Listing
@@ -40,7 +40,7 @@ Admin
 - A section to manage watches: specs
 - *Access to all end-user features. 
 
-End-User
+<h3>End-User</h3>
 - Listings: CRUD/Manage Own Listings
 - Listings: Read-only/View others Listings 
 - 
