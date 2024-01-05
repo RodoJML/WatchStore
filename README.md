@@ -21,6 +21,30 @@ Technologies used:
 - Views: Keep track how many people viewed a given watch
 - Listing: A post that contains a watch and seller information
 - Featured: Listings that would be featured on the main page
+- Log: Keep a log of users registered and listings
+- Watches styles, types and movements, keep an updated list of these. 
+
+<h2>Software Requirements<h2>
+
+- Needs to have different 2 type of access: admin and end-user
+
+Admin
+Each line should be a separate feature. 
+
+- A section to manage: Users and Stores.
+- A section to manage: Wishlists 
+- A section to manage: Listing
+- A section to manage: Stocks
+- A section to manage and moderate: Reviews 
+- A section to query Logs
+- A section to manage watches: Brands, Models, Movement, Styles, Types
+- A section to manage watches: specs
+- *Access to all end-user features. 
+
+End-User
+- Listings: CRUD/Manage Own Listings
+- Listings: Read-only/View others Listings 
+- 
 
 These are some notes to self:
 

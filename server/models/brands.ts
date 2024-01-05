@@ -1,4 +1,4 @@
-const TABLE_NAME = 'brands';
+const TABLE_NAME = 'brand';
 
 async function database_connection() {
     const { connect } = require('./knex.ts');
