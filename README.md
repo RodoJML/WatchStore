@@ -10,7 +10,7 @@ Technologies used:
 - mySQL
 - Knex for SQL (Wrapper library) https://knexjs.org/
 
-<h2>Database</h2>
+<h2>Database📚</h2>
 <h3>Requirements</h3>
 
 - User: Have the ability to CRUD users
@@ -24,12 +24,12 @@ Technologies used:
 - Log: Keep a log of users registered and listings
 - Watches styles, types and movements, keep an updated list of these. 
 
-<h2>Software</h2>
+<h2>Software📲</h2>
 <h3>Requirements</h3>
 
-Admin
 Each line should be a separate feature. 
 
+Admin
 - A section to manage: Users and Stores.
 - A section to manage: Wishlists 
 - A section to manage: Listing
