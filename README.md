@@ -30,6 +30,7 @@ Technologies used:
 Each line should be a separate feature. 
 
 <h3>Admin</h3>
+
 - A section to manage: Users and Stores.
 - A section to manage: Wishlists 
 - A section to manage: Listing
@@ -41,6 +42,7 @@ Each line should be a separate feature.
 - *Access to all end-user features. 
 
 <h3>End-User</h3>
+
 - Listings: CRUD/Manage Own Listings
 - Listings: Read-only/View others Listings 
 - 
