@@ -3,7 +3,7 @@
 <h1>Watch Store</h1>
 
 Description:
-Personal project for a website to buy and sell watches online.  
+Personal project for a website to buy and sell watches online. 
 
 Technologies used:
 - Node.js
@@ -56,4 +56,9 @@ These are some notes to self:
 
     cd Documents/Developer/HTML/React/Watch_Store
 
-    Pending to create users and roles into the database, for developer, admin and end-user. 
+    Pending to create users and roles into the database, for developer, admin and end-user.
+
+    I used this script to remove potential sensitive data from the repo.
+    Once the command was run it was required to republish the branch.
+    git filter-repo --force --invert-paths --path other/database_script.sql
+
