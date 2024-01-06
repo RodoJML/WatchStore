@@ -28,7 +28,7 @@ Technologies used:
 
 <h3>EER Diagram</h3>
 
-![databaseDesignWM](https://github.com/RodoJML/Watch_Store/assets/63088555/21b6578a-2543-4bd5-b680-c6a5419819f1)
+![db_model](https://github.com/RodoJML/WatchStore/assets/63088555/bf7e3362-fe34-4d60-9c02-33504a279ab5)
 
 
 <h2>📲 Software Design</h2>
