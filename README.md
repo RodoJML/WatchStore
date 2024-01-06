@@ -25,7 +25,8 @@ Technologies used:
 - Watches styles, types and movements, keep an updated list of these. 
 
 <h3>EER Diagram</h3>
-![watermark 001](https://github.com/RodoJML/Watch_Store/assets/63088555/0ed01856-6aad-455e-b05b-c855d0a35998)
+
+![databaseDesignWM](https://github.com/RodoJML/Watch_Store/assets/63088555/21b6578a-2543-4bd5-b680-c6a5419819f1)
 
 
 <h2>📲 Software Design</h2>
