@@ -1,4 +1,4 @@
-![panerai](https://github.com/RodoJML/WatchStore/assets/63088555/538ac59c-cd4a-45d5-9427-39b4a989223c)
+![panerai](https://github.com/RodoJML/WatchStore/assets/63088555/1163d9b5-6d2f-425f-8c16-ecba6a7affc4)
 
 <h1>Watch Store</h1>
 
