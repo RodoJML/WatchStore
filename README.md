@@ -40,9 +40,9 @@ This project will have at least 4 types of user, in order of privilege, highest 
 3. Registered user (without Store) 
 4. Guest
  
-Below are the main features and the access based by user privilegues:
+Below are the main features and the access based on user privilegues:
 
-![mainFeaturesWM](https://github.com/RodoJML/Watch_Store/assets/63088555/077150e1-b56e-4872-8e36-7b990f8538da)
+![mainFeaturesWM](https://github.com/RodoJML/WatchStore/assets/63088555/e4d14867-d9fe-4767-8887-35f657cdde6c)
 
 
 
