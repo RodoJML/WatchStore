@@ -1,6 +1,6 @@
 ![pnri (2)](https://github.com/RodoJML/Watch_Store/assets/63088555/2b5afa05-fa2e-4d67-9920-a563ce37be04)
 
-<h1>⌚️ Watch Store</h1>
+<h1>Watch Store</h1>
 
 Description:
 Personal project for a website to publish and sell watches. 
