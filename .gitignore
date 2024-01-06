@@ -13,6 +13,8 @@ other/
 #Files with database script and other stuff
 *.mwb
 *.sql
+mwb
+sql
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
