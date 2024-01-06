@@ -62,3 +62,5 @@ These are some notes to self:
     Once the command was run it was required to republish the branch.
     https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository
     git filter-repo --force --invert-paths --path other/database_script.sql
+
+    Remember to add pagination to the server DB queries
