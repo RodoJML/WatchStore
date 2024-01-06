@@ -43,24 +43,8 @@ Features independent of the user type, must be present in all users.
 - View reviews
 - View Stores 
 
+![features](https://github.com/RodoJML/Watch_Store/assets/63088555/99cbc818-4e3b-4712-b4a3-d2824c6b049b)
 
-<h3>Admin</h3>
-
-- A section to manage: Users and Stores.
-- A section to manage: Wishlists 
-- A section to manage: Listing
-- A section to manage: Stocks
-- A section to manage and moderate: Reviews 
-- A section to query Logs
-- A section to manage watches: Brands, Models, Movement, Styles, Types
-- A section to manage watches: specs
-- *Access to all end-user features. 
-
-<h3>Registered user with Store</h3>
-
-- Listings: CRUD/Manage Own Listings
-- Listings: Read-only/View others Listings 
-- 
 
 These are some notes to self:
 
