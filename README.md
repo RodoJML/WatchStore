@@ -35,20 +35,13 @@ Technologies used:
 This project will have at least 4 types of user, in order of privilege, highest at the top:
 1. Admin
 2. Registered user with Store
-3. Registered user
+3. Registered user (without Store) 
 4. Guest
  
-Each line should be a separate feature.
+Below are the main features and the access based by user privilegues:
 
-<h3>Global</h3>
+![mainFeaturesWM](https://github.com/RodoJML/Watch_Store/assets/63088555/077150e1-b56e-4872-8e36-7b990f8538da)
 
-Features independent of the user type, must be present in all users. 
-- Register 
-- View listings 
-- View reviews
-- View Stores 
-
-![features](https://github.com/RodoJML/Watch_Store/assets/63088555/99cbc818-4e3b-4712-b4a3-d2824c6b049b)
 
 
 These are some notes to self:
