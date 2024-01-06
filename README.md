@@ -3,7 +3,7 @@
 <h1>Watch Store</h1>
 
 Description:
-Personal project for a website to publish and sell watches. 
+Personal project for a website to buy and sell watches online.  
 
 Technologies used:
 - Node.js
