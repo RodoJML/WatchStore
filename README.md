@@ -67,3 +67,5 @@ These are some notes to self:
     
     Tailwind cheat sheet
     https://tailwindcomponents.com/cheatsheet/
+
+    Testing from laptop
