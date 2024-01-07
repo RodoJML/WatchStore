@@ -7,7 +7,7 @@ function App() {
       <Navbar/>
 
       {/* Somewhere here I should have a router view to make the website dinamic and single view */}
-      
+
     </div>
   )
 }
