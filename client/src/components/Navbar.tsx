@@ -3,7 +3,7 @@ export default function Navbar() {
         <>
         <nav className="bg-gray-800 grid grid-cols-3 text-white min-h-14 items-center">
             <div className="col-span-1">
-                Hamburguer here
+                <i className="fa-solid fa-bars" />
             </div>
 
             <div className="col-span-1 text-center">
