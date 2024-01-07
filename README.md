@@ -54,7 +54,7 @@ These are some notes to self:
     Ran this on SQL workbench to make the SQL authentication work
     ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxxxxxx';
 
-    cd Documents/Developer/HTML/React/Watch_Store
+    cd Documents/Developer/WebDev/React/Watch_Store
 
     Pending to create users and roles into the database, for developer, admin and end-user.
 
@@ -64,3 +64,6 @@ These are some notes to self:
     git filter-repo --force --invert-paths --path other/database_script.sql
 
     Remember to add pagination to the server DB queries
+    
+    Tailwind cheat sheet
+    https://tailwindcomponents.com/cheatsheet/
