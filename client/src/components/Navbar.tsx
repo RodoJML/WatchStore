@@ -3,6 +3,9 @@ import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 // wishlist icon
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
+// Dont forget to add stiching to the design
+
+
 export default function Navbar() {
     return (
         <>
