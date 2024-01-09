@@ -2,34 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
-
-// Dont forget to add stiching to the design
-
-
+import SideMenu from "./SideMenu";
 
 export default function Navbar() {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    // State
+    const [sideMenuActive, setSideMenuActive] = useState(false);
 
-    function Menu({ isMenuOpen }) {
-        return isMenuOpen ? (
-            <div className="bg-white w-40 h-full absolute transition ease-in delay-1000 duration-1000"> My Flyout </div>
-        ) : null;
-    }
-    
-    function toggleMenu() {
-        setIsMenuOpen(!isMenuOpen);
+    // Functions
+    function toggleSideMenu() {
+        setSideMenuActive(!sideMenuActive);
     }
 
+    // Render
     return (
         <>
             <div className="bg-gradient-to-b from-stone-700 to-stone-900">
 
-                <Menu isMenuOpen={isMenuOpen} />
+                <SideMenu isActive={sideMenuActive} />
 
                 <nav className="grid grid-cols-5 text-white min-h-14 items-center p-4">
                     <div className="col-span-2 text-left">
-                        <FontAwesomeIcon icon={faBars} onClick={toggleMenu}/>
+                        <FontAwesomeIcon icon={faBars} onClick={toggleSideMenu}/>
                         <span className="font-bold"> &nbsp; Watch</span><span className="font-light">Store</span>
                     </div>
 
