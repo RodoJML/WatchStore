@@ -7,13 +7,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Adding font sveningsson
         sveningsson: ["Sveningsson", "svenings"],
       },
       colors: {
         lume: {
           100: "#a3ff91",
         },
+      },
+      transitionProperty: {
+        'transitionright': {'transition': 'left, 0.5s, ease-in-out'},
       },
     },
   },

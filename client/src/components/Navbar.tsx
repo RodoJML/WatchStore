@@ -2,7 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
-import SideMenu from "./SideMenu";
+import SideMenu from './sideMenu';
+
 
 export default function Navbar() {
 
@@ -23,7 +24,7 @@ export default function Navbar() {
 
                 <nav className="grid grid-cols-5 text-white min-h-14 items-center p-4">
                     <div className="col-span-2 text-left">
-                        <FontAwesomeIcon icon={faBars} onClick={toggleSideMenu}/>
+                        <FontAwesomeIcon icon={faBars} onClick={toggleSideMenu} />
                         <span className="font-bold"> &nbsp; Watch</span><span className="font-light">Store</span>
                     </div>
 
