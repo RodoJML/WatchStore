@@ -4,9 +4,9 @@
 
 .seconds {
     width: 80px;
-    height: 4px;
+    height: 5px;
     position: absolute;
-    top: 5%;
+    top: 4%;
     left: calc(50% - 10px);
     transform: rotate(0deg);
     animation: 10s seconds linear infinite;
@@ -15,7 +15,7 @@
     border: 0.5px solid rgb(0, 0, 0);
     box-shadow: 0 0 10px 0 rgb(0, 0, 0);
     border-radius: 0 20px 20px 0;
-    z-index: 15;
+    z-index: 1;
 }
 
 .seconds:after {
@@ -27,10 +27,10 @@
     height: 8px; 
     width: 8px;
     box-shadow: 0 0 10px 0 rgb(0, 0, 0);
-    border: 1px solid rgb(0, 0, 0);
+    border: 1.5px solid rgb(0, 0, 0);
     background-color: whitesmoke; 
     border-radius: 50%; 
-    z-index: 15;
+    z-index: 1;
 }
 
 @keyframes seconds {
