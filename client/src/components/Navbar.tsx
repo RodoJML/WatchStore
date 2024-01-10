@@ -4,6 +4,7 @@ import { faCartFlatbed } from "@fortawesome/free-solid-svg-icons";
 import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import SideMenu from './SideMenu';
+import { Link } from "react-router-dom";
 
 // Components
 function SideBarIcon({ toggle }: { toggle: boolean; }) {
@@ -35,8 +36,10 @@ export default function Navbar() {
                 <nav className="grid grid-cols-5 text-white h-12 items-center p-4">
                     <div className="flex col-span-2 text-left">
                         <a onClick={toggleSideMenu}><SideBarIcon toggle={sideMenuActive} /></a>
-                        <span className="font-bold ml-2">Tico</span>
-                        <span className="font-light">Toc</span>
+                        <Link to="/">
+                            <span className="font-bold ml-2">Tico</span>
+                            <span className="font-light">Toc</span>
+                        </Link>
                     </div>
 
                     <div className="col-span-1 items-center text-center">
