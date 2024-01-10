@@ -63,7 +63,7 @@ export default function Navbar() {
                 </nav>
 
                 <div className="flex items-center space-x-1 p-4">
-                    <input className="w-full min-h-10 border-gray-500 rounded" type="text" placeholder=" Buscar"></input>
+                    <input className="w-full min-h-10 border-gray-500 rounded" id="searchBar" type="text" placeholder=" Buscar"></input>
                     <div className="bg-lume-100 text-center p-2 rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
                         <FontAwesomeIcon icon={faSearch} />
                     </div>
