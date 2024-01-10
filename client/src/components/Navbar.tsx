@@ -73,7 +73,7 @@ export default function Navbar() {
                     <div className="flex flex-grow overflow-scroll">
                         {/* Load image in assets/images dislay it with an htmnl tag */}
 
-                        <img className="h-5" src='/src/assets/images/crc.png' alt="Logo" />
+                        
                         <a className="">Provincia: San Jose</a>
                     </div>
                 </nav>
