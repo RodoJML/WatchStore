@@ -36,7 +36,7 @@ export default function Navbar() {
                 <nav className="grid grid-cols-5 text-white h-12 items-center p-4">
                     <div className="flex col-span-2 text-left">
                         <a onClick={toggleSideMenu}><SideBarIcon toggle={sideMenuActive} /></a>
-                        <Link to="/">
+                        <Link to="/home">
                             <span className="font-bold ml-2">Tico</span>
                             <span className="font-light">Toc</span>
                         </Link>
@@ -59,6 +59,11 @@ export default function Navbar() {
                     </div>
                 </div>
 
+                <nav className="flex h-8 bg-stone-700 text-white text-sm items-center">
+                    <div className="flex flex-grow justify-evenly overflow-scroll">
+                        <a className="">Provincia</a>
+                    </div>
+                </nav>
 
 
             </div>
