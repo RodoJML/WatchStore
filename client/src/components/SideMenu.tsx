@@ -11,8 +11,8 @@ export default function SideMenu({ isActive, onXclick }: SideMenuProps) {
     return <div className={`${isActive ? sideMenuActive : sideMenuInactive}`}>
 
         <div className="flex">
-            <div className="w-full ml-7 mt-4 text-center">
-                <span className="text-white font-bold">Tico</span><span className="text-white font-light">Toc</span>
+            <div className="w-full ml-10 mt-4 text-center">
+                <span className="text-white font-bold">⌚️Tico</span><span className="text-white font-light">Toc</span>
             </div>
             <a className="w-full mt-4 mr-4 text-right" onClick={onXclick}>
                 <FontAwesomeIcon icon={faCircleXmark} inverse/>              
