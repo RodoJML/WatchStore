@@ -44,7 +44,7 @@ export default function Navbar() {
                         <span className="absolute font-extralight text-4xs z-0 mt-4 -ml-3">EST '24</span>
                     </div>
 
-                    <div className="col-span-2 text-right">
+                    <div className="flex justify-end col-span-2">
                         <FontAwesomeIcon icon={faCartFlatbed} />
                     </div>
                 </nav>

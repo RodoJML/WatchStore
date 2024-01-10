@@ -1,5 +1,6 @@
+import { RouterProvider } from 'react-router-dom';
 import Navbar from './components/Navbar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { router } from './router/routes';
 
 function App() {
 
@@ -7,7 +8,7 @@ function App() {
     <div>
       <Navbar/>
 
-      {/* Somewhere here I should have a router view to make the website dinamic and single view */}
+      <RouterProvider router={router} />
 
     </div>
   )
