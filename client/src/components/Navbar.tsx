@@ -1,25 +1,31 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faCartFlatbed } from "@fortawesome/free-solid-svg-icons";
-import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import SideMenu from './SideMenu';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faCartFlatbed } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { getStyles, type Style } from "../model/styles";
+import SideMenu from './SideMenu';
+import BarsIcon from "../assets/barsIcon";
 
-// Components
+
+const [styles, setStyles] = useState<Style[]>([]);
+getStyles().then((styles) => setStyles(styles.data));
+
+
+function StylesToLinks() {
+    return styles.map((style) => {
+        return (
+            <Link to={`/styles/${style.id}`} key={style.id}>
+                <a className="p-2">{style.name}</a>
+            </Link>
+        );
+    });
+}
+
 function SideBarIcon({ toggle }: { toggle: boolean; }) {
     if (toggle) {
-        return <a className="p-0 m-0">
-                <div className="bg-lume-100 w-5 h-1 rounded mr-1 mb-1"></div>
-                <div className="bg-lume-100 w-5 h-1 rounded mr-1 mb-1"></div>
-                <div className="bg-lume-100 w-5 h-1 rounded mr-1"></div>
-            </a>
+        return <BarsIcon />
     } else {
-        return <a className="p-0 m-0">
-        <div className="bg-lume-100 w-5 h-1 rounded mr-1 mb-1"></div>
-        <div className="bg-lume-100 w-5 h-1 rounded mr-1 mb-1"></div>
-        <div className="bg-lume-100 w-5 h-1 rounded mr-1"></div>
-    </a>
+        return <BarsIcon />
     }
 }
 
@@ -78,7 +84,7 @@ export default function Navbar() {
                     </div>
                 </nav>
 
-
+                <StylesToLinks/>
             </div>
 
 
