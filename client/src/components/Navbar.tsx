@@ -2,11 +2,8 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartFlatbed } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { getStyles, type Style } from "../model/styles";
 import SideMenu from './SideMenu';
-import BarsIcon from "../assets/barsIcon";
-
-// Functions
+import BarsIcon from "../assets/BarsIcon";
 
 function SideBarIcon({ toggle }: { toggle: boolean; }) {
     if (toggle) {
@@ -20,9 +17,7 @@ function SideBarIcon({ toggle }: { toggle: boolean; }) {
 export default function Navbar() {
 
     // State
-    const [styles, setStyles] = useState<Style[]>([]);
     const [sideMenuActive, setSideMenuActive] = useState(false);
-    getStyles().then((styles) => setStyles(styles.data));
 
     // Functions
     function toggleSideMenu() {
