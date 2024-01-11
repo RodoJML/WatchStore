@@ -6,20 +6,7 @@ import { getStyles, type Style } from "../model/styles";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/barsIcon";
 
-
-const [styles, setStyles] = useState<Style[]>([]);
-getStyles().then((styles) => setStyles(styles.data));
-
-
-function StylesToLinks() {
-    return styles.map((style) => {
-        return (
-            <Link to={`/styles/${style.id}`} key={style.id}>
-                <a className="p-2">{style.name}</a>
-            </Link>
-        );
-    });
-}
+// Functions
 
 function SideBarIcon({ toggle }: { toggle: boolean; }) {
     if (toggle) {
@@ -33,7 +20,9 @@ function SideBarIcon({ toggle }: { toggle: boolean; }) {
 export default function Navbar() {
 
     // State
+    const [styles, setStyles] = useState<Style[]>([]);
     const [sideMenuActive, setSideMenuActive] = useState(false);
+    getStyles().then((styles) => setStyles(styles.data));
 
     // Functions
     function toggleSideMenu() {
@@ -84,7 +73,6 @@ export default function Navbar() {
                     </div>
                 </nav>
 
-                <StylesToLinks/>
             </div>
 
 

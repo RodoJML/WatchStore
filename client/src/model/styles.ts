@@ -1,8 +1,8 @@
 import { api } from './session';
 import type { DataEnvelope, DataEnvelopeList } from './fetch';
-import { useSession } from './session';
+import Session  from './session';
 
-const session = useSession();
+const session = Session().session;
 
 export interface Style {
     id: number,
