@@ -2,7 +2,7 @@ const knex = require('knex');
 
 const user = process.env.MYSQL_USER;
 const password = process.env.MYSQL_PASSWORD;
-const db = process.env.MYSQL_DATABASE;
+const db = process.env.NPM ;
 
 async function connect() {
     const database = await knex({
