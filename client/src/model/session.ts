@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store/store';
 import { addMessage, setLoading } from '../state/store/slice/sessionSlice';
 
-const session = useSelector((state: RootState) => state.session);
-const dispatch = useDispatch();
+
 
 export function api(url: string, data?: any, method?: string, headers?: any){
+    
+    const session = useSelector((state: RootState) => state.session);
+    const dispatch = useDispatch();
 
     dispatch(setLoading({ value: true }));
     console.log(session);

@@ -7,5 +7,5 @@ export interface StyleItem {
 }
 
 export function getStyles(): Promise<DataEnvelopeList<StyleItem>>{
-    return api('/styles');
+    return api('/brands');
 }
