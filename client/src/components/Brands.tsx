@@ -7,18 +7,14 @@ export async function loader(){
     return brands;
 }
 
-export default function WatchStyles(){
+export default function Brands(){
 
     const brands = useLoaderData() as BrandItem[];
 
     return(
         <>
         <span>
-            {brands.map((brand) => (
-                <div key={brand.brand_id}>
-                    <span>{brand.brand_name}</span>
-                </div>
-            ))}
+            ANYTHING
         </span>
         </>
     )
