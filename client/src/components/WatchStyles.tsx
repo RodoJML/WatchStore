@@ -3,6 +3,7 @@ import { getStyles, type StyleItem } from "../model/watchStyles";
 
 export async function loader(){
     const styles = (await getStyles()).data;
+    console.log(styles);
     return styles;
 }
 
