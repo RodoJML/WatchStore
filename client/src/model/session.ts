@@ -4,9 +4,8 @@ import { RootState } from '../state/store/store';
 import { addMessage, setLoading } from '../state/store/slice/sessionSlice';
 
 
-
 export function api(url: string, data?: any, method?: string, headers?: any){
-    
+
     const session = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch();
 

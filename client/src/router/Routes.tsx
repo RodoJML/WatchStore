@@ -1,10 +1,7 @@
-import { createBrowserRouter} from 'react-router-dom';
-
-import Listings from '../pages/Listings';
 import App from '../App';
 import Home from '../pages/Home';
-import WatchStyles, {loader as stylesLoader} from '../components/WatchStyles';
-
+import { createBrowserRouter} from 'react-router-dom';
+import Brands, {loader as brandsLoader }from '../components/Brands';
 
 export const router = createBrowserRouter([
     {
@@ -16,9 +13,9 @@ export const router = createBrowserRouter([
                 element: <Home/>,
             },
             {
-                path: '/styles',
-                element: <WatchStyles/>,
-                loader: stylesLoader,
+                path: '/brands',
+                element: <Brands/>,
+                loader: brandsLoader,
             },
         ]
     }
