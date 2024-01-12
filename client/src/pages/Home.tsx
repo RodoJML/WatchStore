@@ -1,8 +1,10 @@
+import WatchStyles from "../components/WatchStyles"
+
 
 export default function Home() {
     return (
         <div>
-            HOME SWEET HOME
+            <WatchStyles />
         </div>
     )
 }
