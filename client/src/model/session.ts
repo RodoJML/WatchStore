@@ -20,7 +20,11 @@ export function api(url: string, data?: any, method?: string, headers?: any){
         }
     )
     .finally(
-        () => dispatch(setLoading({ value: false }))
+        () => {
+            dispatch(setLoading({ value: false }));
+            console.log(session);
+        }
+        
     );
 
 }
