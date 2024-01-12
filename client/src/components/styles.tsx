@@ -7,7 +7,9 @@ export default function StyleList() {
 
     useEffect(() => 
     {
-        getStyles().then((stylesData) => {setStyles(stylesData.data)})
+        getStyles()
+            .then( (data) => setStyles(data.data) )
+            .catch( () => console.log("Something bad happened") )
     })
 
     return (

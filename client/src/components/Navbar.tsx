@@ -4,7 +4,6 @@ import { faSearch, faCartFlatbed } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
-import StyleList from "./styles";
 
 function SideBarIcon({ toggle }: { toggle: boolean; }) {
     if (toggle) {
@@ -70,9 +69,6 @@ export default function Navbar() {
                 </nav>
 
             </div>
-
-            <StyleList />
-
         </>
     );
 }

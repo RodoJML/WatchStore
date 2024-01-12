@@ -38,9 +38,9 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
     session.actions.setIsLoading(true)
 
     return Fetch.api(url, data, method, headers)
-        .catch( err => {
-            console.error({err})
-            session.actions.setMessages([{msg: err.message ?? JSON.stringify(err), type: 'danger'}])
+        .catch( (error) => {
+            session.actions.setMessages([{ msg: error.message, type: 'danger' }])
+            throw error
         })
         .finally(() => session.actions.setIsLoading(false))
 }

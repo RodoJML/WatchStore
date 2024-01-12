@@ -1,7 +1,9 @@
+import StyleList from "../components/styles";
+
 export default function Home() {
     return (
         <div>
-            <h1>Home</h1>
+            <StyleList />
         </div>
     )
 }
