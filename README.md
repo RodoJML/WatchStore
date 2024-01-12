@@ -11,6 +11,7 @@ Technologies used:
 - React
 - mySQL
 - Knex for SQL (Wrapper library) https://knexjs.org/
+- Redux for state management
 
 <h2>📚 Database Design</h2>
 <h3>Requirements</h3>
@@ -69,3 +70,39 @@ These are some notes to self:
     https://tailwindcomponents.com/cheatsheet/
 
     Testing from laptop
+
+
+REDUX REMINDERS
+
+Concepts
+- STORE: Is the GLOBAL STATE accessible across any component in the app.
+    - Store is made of multiple SLICES 
+    - Each slice has the state (define interface) of the variable we need
+
+- ACTIONS
+    - Have a "type:" name of the action you defined
+    - have a "payload:" pretty much the parameter passed on the function, value we want to send to update. 
+
+- REDUCER
+    - Takes the "type" of action and EXECUTES whatever the action we need.
+
+    ⚠️ Reducers would never mutate the original state directly, instead they made a copy of the original state, in the copy the value or values are updated and then the copy overwrites the original.
+
+     ℹ️ Following the concept of inmutability. 
+     
+    
+
+Reducer Actions
+
+    - When creating a "slice" you give it a "name:" so later when creating the "reducers" actions you dont need to specify the name, you just type the actions as "increment" or "decrement" for example on the case of a simple counter app.
+
+    - On the other hand for async reducer actions you need to specify the name concatenated with the action, for example "counter/incrementAsync"
+
+    - For Async actions you define the "action" FIRST with "createAsyncThunk()" and later, you define the "reducers"
+
+    - For Async functions within the "slice" these will be placed under "extraReducers:" and NOT "reducers:"
+
+    - For Async when building a case on the "extraReducers" you access to the functions created using "createAsyncThunk" this is the reason you can use ".fullfilled"
+
+    - For Sync actions we define "reducers" first and then the "actions"
+

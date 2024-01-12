@@ -1,6 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL as string;
 
 export function rest(url: string, data?: any, method?: string, headers?: any) {
+    console.log('fetching', url, data, method, headers);
     return fetch(url, 
         {
             method: method ?? (data ? 'POST' : 'GET'),
