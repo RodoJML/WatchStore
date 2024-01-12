@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import sessionReducer from './slice/sessionSlice'; // Import the reducer from sessionSlice.ts
 
-// 
+// We can have multiple reducers in our store.
 export const store = configureStore({
-    reducer: {}
+    reducer: {
+        // This connects the "slice" with the "store" to make it accesible to the entire app.
+        session: sessionReducer,
+    }
 });
 
 // Because we are working on typescript, we need to export two types(Types of the Store and Types of the State)
