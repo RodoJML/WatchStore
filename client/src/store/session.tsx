@@ -46,7 +46,7 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
 }
 
 export function useSession() {
-    return session
+    return defaultSession
 }
 
 export type RootState = ReturnType<typeof store.getState>
