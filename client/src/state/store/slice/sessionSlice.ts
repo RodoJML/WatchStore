@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface Message{
     message: string,
@@ -29,8 +29,14 @@ const sessionSlice = createSlice(
         setUser: (state, action) => {
             state.user = action.payload;
         },
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
+        setLoading: (state, action: PayloadAction<{value: boolean}>) => {
+            state.isLoading = action.payload.value;
+        },
+        addMessage: (state, action: PayloadAction<Message>) => {
+            state.messages.push(action.payload);
+        },
+        setRedirectURL: (state, action) => {
+            state.redirectURL = action.payload;
         },
     }
     }
@@ -38,7 +44,7 @@ const sessionSlice = createSlice(
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
-export const { setUser, setLoading } = sessionSlice.actions;
+export const { setUser, setLoading, addMessage, setRedirectURL } = sessionSlice.actions;
 // Because we are using createSlice from redux toolkit,
 // we can export the reducer and use it in the store.
 // A lot is happening behind scenes that redux is doing for us.
