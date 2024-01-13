@@ -13,7 +13,7 @@ export default function Brands(){
 
     useEffect(() => {
         dispatch(apiFetch({url: '/brands', method: 'GET'}));
-        console.log(apiFetch({url: '/brands', method: 'GET'}));
+        // console.log(apiFetch({url: '/brands', method: 'GET'}));
     }, []);
         
     return (
