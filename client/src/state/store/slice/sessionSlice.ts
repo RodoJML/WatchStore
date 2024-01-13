@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { api } from '../../../model/fetch'
-
+import * as Fetch from './../../../model/fetch';
 interface Message{
     message: string,
     type: 'success' | 'danger' | 'warning' | 'info'
@@ -58,9 +57,8 @@ const sessionSlice = createSlice(
 
 export const apiFetch = createAsyncThunk(
     "session/apiFetch",
-    async () => {
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        return await api( url, null, 'GET', null);
+    async (url: string) => {
+        return await Fetch.api(url);
     }
 )
 

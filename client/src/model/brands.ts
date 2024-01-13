@@ -1,3 +1,4 @@
+import { apiFetch } from '../state/store/slice/sessionSlice';
 import { api } from './fetch';
 import type { DataEnvelopeList } from './fetch';
 
@@ -8,5 +9,5 @@ export interface BrandItem {
 }
 
 export function getBrands(): Promise<DataEnvelopeList<BrandItem>>{
-    return api('/brands', null, 'GET', null);
+    return api('/brands');
 }
