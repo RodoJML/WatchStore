@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
+import { url } from 'inspector';
 interface Message{
     message: string,
     type: 'success' | 'danger' | 'warning' | 'info'
@@ -57,8 +58,8 @@ const sessionSlice = createSlice(
 
 export const apiFetch = createAsyncThunk(
     "session/apiFetch",
-    async (url: string) => {
-        return await Fetch.api(url);
+    async (args: {url: string, data?: any, method?: string, headers?: any}) => {
+        return await Fetch.api(args.url, args.data, args.method, args.headers);
     }
 )
 

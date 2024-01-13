@@ -8,6 +8,6 @@ export interface BrandItem {
     brand_logo: string,
 }
 
-export function getBrands(): Promise<DataEnvelopeList<BrandItem>>{
-    return api('/brands');
-}
+// export function getBrands(): Promise<DataEnvelopeList<BrandItem>>{
+//     return apiFetch('/brands');
+// }

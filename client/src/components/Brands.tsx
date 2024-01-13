@@ -12,9 +12,14 @@ export default function Brands(){
     const [data, setData] = useState<BrandItem[]>([]);
 
     useEffect(() => {
-        console.log(dispatch(apiFetch('/brands')));
+        dispatch(apiFetch({url: '/brands', method: 'GET'}));
     }, []);
         
-    return <>Brands under construction</>
+    return (
+        <>
+            {session.isLoading && <div>Loading...</div>}           
+        </>
+    )
+
 
 }
