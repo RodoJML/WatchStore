@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { api } from '../../../model/fetch'
 
 interface Message{
     message: string,
@@ -38,9 +39,30 @@ const sessionSlice = createSlice(
         setRedirectURL: (state, action) => {
             state.redirectURL = action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(apiFetch.pending, (state) => {
+            console.log('pending');
+            state.isLoading = true;
+        });
+        builder.addCase(apiFetch.fulfilled, (state, action) => {
+            console.log('fulfilled');
+            console.log(action.payload);
+            state.isLoading = false;
+        });
+        builder.addCase(apiFetch.rejected, (state) => {
+            state.isLoading = false;
+        });
     }
+});
+
+export const apiFetch = createAsyncThunk(
+    "session/apiFetch",
+    async () => {
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        return await api( url, null, 'GET', null);
     }
-);
+)
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
