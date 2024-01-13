@@ -7,22 +7,13 @@ import { get } from "http";
 
 export async function loader(){
 
+    const session = useSelector((state: RootState) => state.session);
     const brandItems = [] as BrandItem[];
     const dispatch = useDispatch();
     dispatch(setLoading({value: true}));
 
-    getBrands().then((brands) => {
-        brandItems.values = brands.data;
-    }
-    );
-
-    // const session = useSelector((state: RootState) => state.session);
+    getBrands().then((brands) => { console.log(brands) });
     
-
-
-    // const brands = (await getBrands()).data;
-    // console.log(brands);
-    return brands;
 }
 
 export default function Brands(){
