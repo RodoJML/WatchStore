@@ -1,7 +1,7 @@
 import App from '../App';
 import Home from '../pages/Home';
 import { createBrowserRouter} from 'react-router-dom';
-import Brands, {loader as brandsLoader }from '../components/Brands';
+import Brands from '../components/Brands';
 
 export const router = createBrowserRouter([
     {
@@ -15,7 +15,6 @@ export const router = createBrowserRouter([
             {
                 path: '/brands',
                 element: <Brands/>,
-                loader: brandsLoader,
             },
         ]
     }
