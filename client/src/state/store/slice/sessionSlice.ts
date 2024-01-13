@@ -52,7 +52,7 @@ const sessionSlice = createSlice(
             state.isLoading = true;
         });
         builder.addCase(apiFetch.fulfilled, (state, action) => {
-            console.log(action.payload.total);
+            console.log(action.payload.total); // Backend object values must match data envelope type
             console.log('fulfilled');
             state.isLoading = false;
         });
