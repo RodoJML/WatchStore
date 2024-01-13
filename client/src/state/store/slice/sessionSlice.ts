@@ -1,17 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelopeList } from './../../../model/fetch';
-
-export interface BrandItem {
-    brand_id: number,
-    brand_name: string,
-    brand_logo: string,
-}
 
 interface Message{
     message: string,
     type: 'success' | 'danger' | 'warning' | 'info'
 }
+
 interface SessionState {
     user: undefined | null,
     isLoading: boolean,
@@ -51,8 +45,7 @@ const sessionSlice = createSlice(
             console.log('pending');
             state.isLoading = true;
         });
-        builder.addCase(apiFetch.fulfilled, (state, action) => {
-            console.log(action.payload.total); // Backend object values must match data envelope type
+        builder.addCase(apiFetch.fulfilled, (state) => {
             console.log('fulfilled');
             state.isLoading = false;
         });
@@ -64,10 +57,12 @@ const sessionSlice = createSlice(
 
 export const apiFetch = createAsyncThunk(
     "session/apiFetch",
-    async (args: {url: string, data?: any, method?: string, headers?: any}): Promise<DataEnvelopeList<BrandItem>> => {
+    async (args: {url: string, data?: any, method?: string, headers?: any}) => {
         return await Fetch.api(args.url, args.data, args.method, args.headers);
     }
 )
+
+
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
@@ -76,5 +71,3 @@ export const { setUser, setLoading, addMessage, setRedirectURL } = sessionSlice.
 // we can export the reducer and use it in the store.
 // A lot is happening behind scenes that redux is doing for us.
 export default sessionSlice.reducer;
-
-

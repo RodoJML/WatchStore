@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { apiFetch } from "../state/store/slice/sessionSlice";
+import { getAll } from "../state/store/slice/brandsSlice";
 import { type BrandItem } from "../model/brands";
 import { useEffect, useState } from "react";
 
@@ -11,10 +11,7 @@ export default function Brands(){
 
     const [data, setData] = useState<BrandItem[]>([]);
 
-    useEffect(() => {
-        dispatch(apiFetch({url: '/brands', method: 'GET'}));
-        // console.log(apiFetch({url: '/brands', method: 'GET'}));
-    }, []);
+    useEffect(() => {dispatch(getAll);}, []);
         
     return (
         <>
