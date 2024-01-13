@@ -11,7 +11,7 @@ export default function Brands(){
 
     const [data, setData] = useState<BrandItem[]>([]);
 
-    useEffect(() => {dispatch(getAll);}, []);
+    useEffect(() => {dispatch(getAll());}, []);
         
     return (
         <>
