@@ -1,11 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import { url } from 'inspector';
 interface Message{
     message: string,
     type: 'success' | 'danger' | 'warning' | 'info'
 }
-
 interface SessionState {
     user: undefined | null,
     isLoading: boolean,
@@ -47,7 +45,6 @@ const sessionSlice = createSlice(
         });
         builder.addCase(apiFetch.fulfilled, (state, action) => {
             console.log('fulfilled');
-            console.log(action.payload);
             state.isLoading = false;
         });
         builder.addCase(apiFetch.rejected, (state) => {
