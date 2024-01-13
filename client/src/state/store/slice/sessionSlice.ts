@@ -1,5 +1,13 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
+import type { DataEnvelopeList } from './../../../model/fetch';
+
+export interface BrandItem {
+    brand_id: number,
+    brand_name: string,
+    brand_logo: string,
+}
+
 interface Message{
     message: string,
     type: 'success' | 'danger' | 'warning' | 'info'
@@ -55,7 +63,7 @@ const sessionSlice = createSlice(
 
 export const apiFetch = createAsyncThunk(
     "session/apiFetch",
-    async (args: {url: string, data?: any, method?: string, headers?: any}) => {
+    async (args: {url: string, data?: any, method?: string, headers?: any}): Promise<DataEnvelopeList<BrandItem>> => {
         return await Fetch.api(args.url, args.data, args.method, args.headers);
     }
 )
