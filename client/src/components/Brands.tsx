@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Brands(){
 
-    const session = useSelector((state: RootState) => state.session);
+    const brands = useSelector((state: RootState) => state.brands);
     const dispatch = useDispatch<AppDispatch>();
 
     const [data, setData] = useState<BrandItem[]>([]);
@@ -15,7 +15,7 @@ export default function Brands(){
         
     return (
         <>
-            {session.isLoading && <div>Loading...</div>}           
+            {brands.isLoading && <div>Loading...</div>}           
         </>
     )
 

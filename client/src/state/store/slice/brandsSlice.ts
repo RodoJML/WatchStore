@@ -14,14 +14,16 @@ interface Message{
 }
 
 interface BrandsState {
-    data: DataEnvelopeList<BrandItem> | DataEnvelope<BrandItem> | null,
+    item: DataEnvelope<BrandItem> | null,
+    items: DataEnvelopeList<BrandItem> | null, 
     isLoading: boolean,
     messages: Message[],
     redirectURL: string | null,
 }
 
 const initialState: BrandsState = {
-    data: null,
+    item: null,
+    items: null,
     isLoading: false,
     messages: [],
     redirectURL: null,
@@ -36,13 +38,17 @@ const brandsSlice = createSlice(
             builder.addCase(getAll.pending, (state) => {
                 state.messages.push({message: 'Loading...' , type: 'info'});
                 state.isLoading = true;
+                console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(getAll.fulfilled, (state, action) => {
-                state.messages.push({message: 'Response received from server' , type: 'success'});
-                state.data = action.payload;
+                state.messages.push({message: 'Data received' , type: 'success'});
+                state.isLoading = false;
+                state.items = action.payload;
+                console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(getAll.rejected, (state, action) => {
-                state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'});
+                state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'}); 
+                console.log(state.messages[state.messages.length - 1]);
             });
         }
     }
