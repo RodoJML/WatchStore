@@ -1,21 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { getAll } from "../state/store/slice/brandsSlice";
+import { apiFetch } from "../state/store/slice/sessionSlice";
 import { type BrandItem } from "../model/brands";
 import { useEffect, useState } from "react";
+import { setLoading } from "../state/store/slice/sessionSlice";
 
 export default function Brands(){
 
-    const brands = useSelector((state: RootState) => state.brands);
+    const session = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
 
     const [data, setData] = useState<BrandItem[]>([]);
 
-    useEffect(() => {dispatch(getAll());}, []);
+    useEffect(() => {
+        dispatch(setLoading({value: true}));
+        dispatch(apiFetch({url: '/brands'}))
+        .then((res) => {console.log(res.payload)});
+    }, []);
         
     return (
         <>
-            {brands.isLoading && <div>Loading...</div>}           
+            {session.isLoading && <div>Session Loading...</div>}
+
+
+            {/* <ul>
+                {brands?.items?.data.map((brand) => (
+                    <li key={brand.brand_id}>
+                        {brand.brand_name}
+                    </li>
+                ))}
+            </ul> */}
         </>
     )
 

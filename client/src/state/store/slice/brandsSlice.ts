@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
 import type { DataEnvelopeList, DataEnvelope } from './../../../model/fetch';
+import { type Message } from './sessionSlice';
 
 export interface BrandItem {
     brand_id: number,
@@ -8,22 +9,13 @@ export interface BrandItem {
     brand_logo: string,
 }
 
-interface Message{
-    message: string,
-    type: 'success' | 'danger' | 'warning' | 'info'
-}
-
 interface BrandsState {
-    item: DataEnvelope<BrandItem> | null,
-    items: DataEnvelopeList<BrandItem> | null, 
     isLoading: boolean,
     messages: Message[],
     redirectURL: string | null,
 }
 
 const initialState: BrandsState = {
-    item: null,
-    items: null,
     isLoading: false,
     messages: [],
     redirectURL: null,
@@ -40,10 +32,9 @@ const brandsSlice = createSlice(
                 state.isLoading = true;
                 console.log(state.messages[state.messages.length - 1]);
             });
-            builder.addCase(getAll.fulfilled, (state, action) => {
+            builder.addCase(getAll.fulfilled, (state) => {
                 state.messages.push({message: 'Data received' , type: 'success'});
                 state.isLoading = false;
-                state.items = action.payload;
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(getAll.rejected, (state, action) => {

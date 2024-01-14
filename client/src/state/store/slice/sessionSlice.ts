@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
 
-interface Message{
+export interface Message{
     message: string,
     type: 'success' | 'danger' | 'warning' | 'info'
 }
@@ -42,15 +42,19 @@ const sessionSlice = createSlice(
     },
     extraReducers: (builder) => {
         builder.addCase(apiFetch.pending, (state) => {
-            console.log('pending');
             state.isLoading = true;
+            state.messages.push({message: 'Loading...' , type: 'info'});
+            console.log(state.messages[state.messages.length - 1]);
         });
         builder.addCase(apiFetch.fulfilled, (state) => {
-            console.log('fulfilled');
             state.isLoading = false;
+            state.messages.push({message: 'Data received' , type: 'success'});
+            console.log(state.messages[state.messages.length - 1]);
         });
-        builder.addCase(apiFetch.rejected, (state) => {
+        builder.addCase(apiFetch.rejected, (state, action) => {
             state.isLoading = false;
+            state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'});
+            console.log(state.messages[state.messages.length - 1]);
         });
     }
 });
@@ -58,7 +62,7 @@ const sessionSlice = createSlice(
 export const apiFetch = createAsyncThunk(
     "session/apiFetch",
     async (args: {url: string, data?: any, method?: string, headers?: any}) => {
-        return await Fetch.api(args.url, args.data, args.method, args.headers);
+        return await Fetch.api(args.url, args.data, args.method, args.headers).catch((err) => {throw err;});
     }
 )
 
