@@ -15,7 +15,7 @@ async function getAll() {
 
 async function getOne(id) {
     const database = await database_connection();
-    const object = await database(TABLE_NAME).select('*').where('id', id);
+    const object = await database(TABLE_NAME).select('*').where('brand_id', id);
     return object;
 }
 

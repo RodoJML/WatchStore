@@ -48,7 +48,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex justify-end col-span-2">
-                        <FontAwesomeIcon icon={faCartFlatbed} />
+                        <FontAwesomeIcon icon={faCartFlatbed} className="fa-shake" style={{animationIterationCount: '2'}} />
                     </div>
                 </nav>
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import { getAllBrands, type BrandItem } from "../state/store/slice/brandsSlice";
+import { getAllBrands, getOneBrand, type BrandItem } from "../state/store/slice/brandsSlice";
 import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
 
 export default function Brands(){
@@ -30,6 +30,10 @@ export default function Brands(){
                     </li>
                 ))}
             </ul>
+
+            <button onClick={() => {dispatch(getOneBrand(68)).then((res) => {console.log(res.payload)})}}>Get One Brand</button>
+
+
         </>
     )
 
