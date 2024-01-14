@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import { getAll, type BrandItem } from "../state/store/slice/brandsSlice";
+import { getAllBrands, type BrandItem } from "../state/store/slice/brandsSlice";
 import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
-
 
 export default function Brands(){
 
@@ -14,7 +13,7 @@ export default function Brands(){
     const [brands, setData] = useState<DataEnvelopeList<BrandItem>>();
 
     useEffect(() => {
-        dispatch(getAll()).then((res) => {
+        dispatch(getAllBrands()).then((res) => {
             setData(res.payload as DataEnvelopeList<BrandItem>)
         })
     }, []);

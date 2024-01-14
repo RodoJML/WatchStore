@@ -27,29 +27,50 @@ const brandsSlice = createSlice(
         initialState,
         reducers: {},
         extraReducers: (builder) => {
-            builder.addCase(getAll.pending, (state) => {
+            builder.addCase(getAllBrands.pending, (state) => {
                 state.messages.push({message: 'Loading...' , type: 'info'});
                 state.isLoading = true;
-                // console.log(state.messages[state.messages.length - 1]);
+                console.log(state.messages[state.messages.length - 1]);
             });
-            builder.addCase(getAll.fulfilled, (state) => {
+            builder.addCase(getAllBrands.fulfilled, (state) => {
                 state.messages.push({message: 'Data received' , type: 'success'});
                 state.isLoading = false;
-                // console.log(state.messages[state.messages.length - 1]);
+                console.log(state.messages[state.messages.length - 1]);
             });
-            builder.addCase(getAll.rejected, (state, action) => {
+            builder.addCase(getAllBrands.rejected, (state, action) => {
                 state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'}); 
-                // console.log(state.messages[state.messages.length - 1]);
+                console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(getOneBrand.pending, (state) => {
+                state.messages.push({message: 'Loading...' , type: 'info'});
+                state.isLoading = true;
+                console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(getOneBrand.fulfilled, (state) => {
+                state.messages.push({message: 'Data received' , type: 'success'});
+                state.isLoading = false;
+                console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(getOneBrand.rejected, (state, action) => {
+                state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'}); 
+                console.log(state.messages[state.messages.length - 1]);
             });
         }
     }
 );
 
 
-export const getAll = createAsyncThunk(
-    "brands/getAll",
+export const getAllBrands = createAsyncThunk(
+    "brands/getAllBrands",
     async (): Promise<DataEnvelopeList<BrandItem>> => {
         return await Fetch.api('/brands').catch((err) => {throw err;});
+    },
+)
+
+export const getOneBrand = createAsyncThunk(
+    "brands/getOneBrand",
+    async (id: number): Promise<DataEnvelope<BrandItem>> => {
+        return await Fetch.api(`/brands/${id}`).catch((err) => {throw err;});
     },
 )
 
