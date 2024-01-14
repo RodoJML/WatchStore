@@ -4,19 +4,28 @@ import { apiFetch } from "../state/store/slice/sessionSlice";
 import { type BrandItem } from "../model/brands";
 import { useEffect, useState } from "react";
 import { setLoading } from "../state/store/slice/sessionSlice";
+import { getAll } from "../state/store/slice/brandsSlice";
+import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
+
 
 export default function Brands(){
 
     const session = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
 
-    const [data, setData] = useState<BrandItem[]>([]);
+    const [brands, setData] = useState<DataEnvelopeList<BrandItem>>();
 
     useEffect(() => {
         dispatch(setLoading({value: true}));
-        dispatch(apiFetch({url: '/brands'}))
-        .then((res) => {console.log(res.payload)});
-    }, []);
+
+        dispatch(
+            getAll()).then((res) => {
+                setData(res.payload as DataEnvelopeList<BrandItem>);
+                console.log(brands?.data);
+            }
+        ).finally(() => {
+            dispatch(setLoading({value: false}));
+        })}, []);
         
     return (
         <>
