@@ -1,8 +1,4 @@
-async function database_connection() {
-    const { connect } = require('./knex.ts');
-    const db = await connect();
-    return db;
-}
+import { database_connection } from './knex';
 
 async function getAll() {
     const database = await database_connection();

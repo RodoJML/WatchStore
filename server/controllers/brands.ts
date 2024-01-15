@@ -1,6 +1,6 @@
-const expressController = require('express');
-const router = expressController.Router();
-const model_brand = require('../models/brands.ts');
+var expressController = require('express');
+var router = expressController.Router();
+var model_brand = require('../models/brands.ts');
 
 router
     .get('/', (req, res, next) => {
