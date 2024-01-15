@@ -1,9 +1,18 @@
 ###
-PATCH http://localhost:3000/api/v1/fetch/brand/brand_id/135
+PATCH http://localhost:3000/api/v1/fetch/brand/brand_id/134
 Content-Type: application/json
 
 {
-    "brand_name": "Samsung",
-    "brand_logo_path": "none",
-    "brand_website": "https://www.samsung.com/"
+    "brand_name": "Apple",
+    "brand_logo_path": "https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?202106302340",
+    "brand_website": "https://www.apple.com/",
+    "brand_country_make": "USA"
+}
+
+###
+GET http://localhost:3000/api/v1/fetch/brand/
+
+
+{
+    "avatarUrl": "https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?202106302340",
 }

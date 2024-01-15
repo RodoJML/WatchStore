@@ -29,6 +29,12 @@ async function updateOne(table, column_id, id, objct) {
     return object;
 }
 
+async function updateOne1(table, objct) {
+    const database = await database_connection();
+    const object = await database(table).update(objct);
+    return object;
+}
+
 async function deleteOne(table, column_id, id) {
     const database = await database_connection();
     const object = await database(table).where(column_id, id).del();
@@ -42,4 +48,4 @@ async function search(table, colum_name, key) {
     return { objects, total };
 }
 
-module.exports = { getAll, getOne, addOne, updateOne, deleteOne, search};
+module.exports = { getAll, getOne, addOne, updateOne, deleteOne, search, updateOne1};
