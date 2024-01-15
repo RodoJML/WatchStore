@@ -1,9 +1,8 @@
 ###
-POST http://localhost:3000/api/v1/fetch/brand
-Content-Type: application/json
+PATCH http://localhost:3000/api/v1/fetch/brand/brand_id/134
 
 {
-    "brand_name": "Apple",
-    "brand_logo_path": "https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?201606271147",
-    "brand_website": "https://www.apple.com/"
+    "brand_name": "Sony",
+    "brand_logo_path": "Smartphone/Sony.png",
+    "brand_website": "Whatever"
 }
