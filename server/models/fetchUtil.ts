@@ -42,4 +42,4 @@ async function search(table, colum_name, key) {
     return { objects, total };
 }
 
-module.exports = { getAll, getOne, addOne, updateOne, deleteOne, search, updateOne1};
+module.exports = { getAll, getOne, addOne, updateOne, deleteOne, search};
