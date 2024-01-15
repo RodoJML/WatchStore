@@ -27,7 +27,7 @@ async function updateOne(table, column_id, id, objct) {
     const database = await database_connection();
     const object = await database(table).where(column_id, id).update(objct);
     return object;
-}   
+}
 
 async function deleteOne(table, column_id, id) {
     const database = await database_connection();
