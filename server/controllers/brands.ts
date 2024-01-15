@@ -1,4 +1,5 @@
-import { router } from '../index';
+const expressController = require('express');
+const router = expressController.Router();
 const model_brand = require('../models/brands.ts');
 
 router
