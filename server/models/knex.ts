@@ -17,9 +17,4 @@ async function connect() {
     return database;
 }
 
-export async function database_connection() {
-    const db = await connect();
-    return db;
-}
-
-module.exports = { connect, knex, database_connection};
+module.exports = { connect, knex };
