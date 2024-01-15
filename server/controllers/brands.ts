@@ -1,10 +1,9 @@
-const expressController = require('express');
-const router = expressController.Router();
-const model = require('../models/brands.ts');
+import { router } from '../index';
+const model_brand = require('../model_brands/brands.ts');
 
 router
     .get('/', (req, res, next) => {
-        model.getAll()
+        model_brand.getAll()
         .then(
             result => {
                 const data = {data: result.objects, total: result.total, isSuccess: true};
@@ -14,7 +13,7 @@ router
     })
 
     .get('/:id', (req, res, next) => {
-        model.getOne(req.params.id)
+        model_brand.getOne(req.params.id)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -24,7 +23,7 @@ router
     })
 
     .post('/', (req, res, next) => {
-        model.addOne(req.body.name)
+        model_brand.addOne(req.body.name)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -34,7 +33,7 @@ router
     })
 
     .patch('/:id', (req, res, next) => {
-        model.updateOne(req.params.id, req.body.name)
+        model_brand.updateOne(req.params.id, req.body.name)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -44,7 +43,7 @@ router
     })
 
     .delete('/:id', (req, res, next) => {
-        model.deleteOne(req.params.id)
+        model_brand.deleteOne(req.params.id)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -54,7 +53,7 @@ router
     })
 
     .get('/search/:key', (req, res, next) => {
-        model.search(req.params.key)
+        model_brand.search(req.params.key)
         .then(
             result => {
                 const data = {data: result.objects, total: result.total, isSuccess: true};

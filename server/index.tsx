@@ -1,6 +1,7 @@
 // Modules
 require('dotenv').config({path:(__dirname+'/.env')});
-const express = require('express');
+export const express = require('express');
+export const router = express.Router();
 const app = express();
 const path = require('path');
 
