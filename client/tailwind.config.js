@@ -24,10 +24,9 @@ export default {
         'right': {'transition': 'ease-in-out;', 'transition-property': 'right', 'transition-duration': '500ms'},
         'left': {'transition': 'ease-in-out'},
       },
-      // Add more lefft properties here
-      left: {
-        'sideMenu': '-19rem',
-      }
+      dropShadow: {
+        '2xl-white': '0 20px 13px rgba(255, 255, 255, 0.25)',
+      },
     },
   },
   plugins: [],
