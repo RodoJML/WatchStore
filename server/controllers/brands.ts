@@ -1,5 +1,5 @@
 import { router } from '../index';
-const model_brand = require('../model_brands/brands.ts');
+const model_brand = require('../models/brands.ts');
 
 router
     .get('/', (req, res, next) => {
