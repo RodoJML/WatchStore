@@ -43,16 +43,6 @@ router
         ).catch(next);
     })
 
-    .patch('/:table', (req, res, next) => {
-        model.updateOne1(req.params.table, req.body)
-        .then(
-            result => {
-                const data = {data: result, isSuccess: true};
-                res.send(data);
-            }
-        ).catch(next);
-    })
-
     .delete('/:table/:column_id/:id', (req, res, next) => {
         model.deleteOne(req.params.table, req.params.column_id, req.params.id)
         .then(
