@@ -1,20 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelopeList, DataEnvelope } from './../../../model/fetch';
+import type { DataEnvelopeList, DataEnvelope, ListingItem } from './../../../model/fetch';
 import { type Message } from './sessionSlice';
-
-export interface ListingItem {
-    listing_stock_id: number,
-    listing_stock_user_id: number,
-    listing_description: string,
-    listing_status: number,
-    listing_thumbnail: string,
-    listing_guarantee: number,
-    listing_views: number,
-    listing_featured: number,
-    listing_unit_cprince: number,
-    listing_unit_drice: number,
-}
 
 interface listingsState {
     isLoading: boolean,
