@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { getAllListings, type ListingItem } from "../state/store/slice/listingsSlice";
 import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
-import { faExpand, faGear, faRuler } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faGear, faGem} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Listing() {
@@ -22,7 +22,9 @@ export default function Listing() {
     return (
         <div className="flex">
 
-            <div className="shadow-2xl shadow-black m-2">
+            <div className="shadow-2xl shadow-black m-2 relative">
+                
+                <div className="ribbon"><span>Original</span></div>
 
                 <div className="border border-white rounded-t border-opacity-30 border-b-0">
                     <img className="aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white"
@@ -33,33 +35,37 @@ export default function Listing() {
                     <div className="grid col-span-1 p-1">
 
                         <div className="-mb-1 overflow-scroll">
-                            <a className="text-white font-extrabold font-serif text-4vw">PANERAI</a>
+                            <a className="text-white uppercase font-extrabold font-serif text-4vw">panerai</a>
                         </div>
 
                         <div className="grid">
-                            <a className="text-white font-thin text-4vw -mb-1 overflow-scroll">Luminor Marina</a>
+                            <a className="text-white font-thin capitalize text-4vw -mb-1 overflow-scroll">luminor marina</a>
 
-                            <div className="flex justify-center items-center text-white">
-                                    <a className="text-4vw">₡100.000</a><span>|</span>
-                                    <a className="text-3vw text-opacity-80">$200</a>
+                            <div className="grid grid-cols-5 items-center text-white overflow-scroll">
+                                <div className="col-span-1"></div>
+                                <div className="col-span-3 text-left overflow-visible">
+                                    <span className="text-2.5vw">₡</span><span className="text-4vw font-extrabold text-lume-100">100.000</span>
+                                    <span className="text-2.5vw ml-1 text-white text-opacity-50">($200)</span>
+                                </div>
+                                    
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 text-white items-center text-3vw">
-                            <div className="flex ml-4 items-center">
+                            <div className="flex ml-3 items-center overflow-scroll">
                                 <FontAwesomeIcon icon={faGear} className="fa-spin"/><span className="ml-1">Automatico</span>
                             </div>
                             
                             
-                            <div className="flex ml-4 items-center">
-                                <FontAwesomeIcon icon={faExpand}/><span className="ml-1">44mm</span>
+                            <div className="flex mr-3 items-center overflow-scroll justify-end">
+                            <span className="mr-1">44mm</span><FontAwesomeIcon icon={faExpand}/>
                             </div>
-                            
                         </div>
 
 
                     </div>
                 </div>
+               
             </div>
 
             <div className="shadow-2xl shadow-black m-2">
