@@ -33,6 +33,14 @@
     z-index: 1;
 }
 
+body {
+    /* background-color: white; */
+    background-image: url('./images/carpet.jpg');
+    background-repeat: repeat;
+    background-size: 12rem;
+    -webkit-overflow-scrolling: touch;
+}
+
 @keyframes seconds {
     0% {
         transform: rotate(0deg);
