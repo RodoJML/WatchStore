@@ -12,8 +12,12 @@ export default function ListingCard() {
 
                 <div className="border border-white rounded-t border-opacity-30 border-b-0">
                     {/* <div className="bg-green-900 aspect-square animate-pulse opacity-30"></div> For when API is loading*/}
-                    <img className="aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white"
-                        src="https://i0.wp.com/www.thetimebum.com/wp-content/uploads/2023/08/IMG_0611.jpeg?fit=1800%2C1800&ssl=1" />
+
+                    <div className="aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white">
+                        <img className="w-full h-full object-cover rounded-t"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVI7P7hMrynIF3eUF6c00v0O4rjEq8Mpapfg&usqp=CAU" />
+                    </div>
+                    
                 </div>
 
                 <div className="grid bg-stone-900 rounded-b aspect-video text-center whitespace-nowrap border-t border-opacity-40 border-white items-center p-2">
