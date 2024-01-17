@@ -11,7 +11,7 @@ export default function ListingCard() {
                 <div className="ribbon"><span>Original</span></div>
 
                 <div className="border border-white rounded-t border-opacity-30 border-b-0">
-                    {/* <div className="bg-green-950 opacity-40 aspect-square"></div>  For when api is loading */}
+                    {/* <div className="bg-green-900 aspect-square animate-pulse opacity-30"></div> For when API is loading*/}
                     <img className="aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white"
                         src="https://i0.wp.com/www.thetimebum.com/wp-content/uploads/2023/08/IMG_0611.jpeg?fit=1800%2C1800&ssl=1" />
                 </div>
