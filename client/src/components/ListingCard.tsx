@@ -35,7 +35,7 @@ export default function ListingCard() {
                     <div className="grid col-span-1 p-1">
 
                         <div className="-mb-1 overflow-scroll">
-                            <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">Audemars Piget</a>
+                            <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">Rolex</a>
                         </div>
 
                         <div className="grid">

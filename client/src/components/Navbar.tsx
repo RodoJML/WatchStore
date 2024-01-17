@@ -27,7 +27,7 @@ export default function Navbar() {
     // Render
     return (
         <>
-            <div className="bg-gradient-to-b from-stone-700 to-stone-900">
+            <div className="bg-gradient-to-b from-stone-700 to-stone-900 mb-4">
 
                 <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
 
