@@ -1,9 +1,8 @@
-import { faExpand, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faExpand, faEye, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StockItem, ListingItem } from "../model/fetch";
 
 export default function ListingCard() {
-
 
     return (
         <div className="shadow-2xl shadow-black m-2 relative">
@@ -13,9 +12,21 @@ export default function ListingCard() {
                 <div className="border border-white rounded-t border-opacity-30 border-b-0">
                     {/* <div className="bg-green-900 aspect-square animate-pulse opacity-30"></div> For when API is loading*/}
 
-                    <div className="aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white">
-                        <img className="w-full h-full object-cover rounded-t"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVI7P7hMrynIF3eUF6c00v0O4rjEq8Mpapfg&usqp=CAU" />
+                    <div className="relative aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white">
+                        <img className="w-full h-full object-cover"
+                        src="https://www.uhrenworld.com/media/images/org/233276_1.jpg" />
+
+                        <div className="absolute bottom-1 left-1 text-xs text-white opacity-50">
+                            <FontAwesomeIcon icon={faCalendarDays} style={{color: "#ffffff", opacity: 0.7}}/>
+                            <i> 7 dias</i>
+                        </div>
+                        
+                        <div>
+                            <div className="absolute bottom-1 right-1 text-xs text-white opacity-50 z-10">
+                                <FontAwesomeIcon icon={faEye} style={{color: "#ffffff", opacity: 0.7}}/>
+                                <i> 347</i>
+                            </div>
+                        </div>
                     </div>
                     
                 </div>
@@ -24,11 +35,11 @@ export default function ListingCard() {
                     <div className="grid col-span-1 p-1">
 
                         <div className="-mb-1 overflow-scroll">
-                            <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">panerai</a>
+                            <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">Audemars Piget</a>
                         </div>
 
                         <div className="grid">
-                            <a className="text-white font-thin capitalize text-4vw sm:text-lg -mb-1 overflow-scroll">luminor marina</a>
+                            <a className="text-white font-thin capitalize text-4vw sm:text-lg -mb-1 overflow-scroll">submariner</a>
 
                             <div className="flex text-white overflow-scroll justify-center items-center">
                                     <span className="text-3vw sm:text-xs">₡</span><span className="text-4vw sm:text-lg font-extrabold text-lume-100">100.000</span>
