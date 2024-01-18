@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { getAllListings } from "../state/store/slice/listingsSlice";
 import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
-import ListingCard from "./ListingCard";
+import ListingList from "./ListingList";
 
 
 export default function Listing() {
@@ -20,10 +20,11 @@ export default function Listing() {
     }, []);
 
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-            <ListingCard /> <ListingCard /> <ListingCard /> <ListingCard /> <ListingCard /> <ListingCard />
-        
-
+        <div className="m-4">        
+            <ListingList />
         </div>
     )
 }
+
+// Listings columns responsiveness properties
+// grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8

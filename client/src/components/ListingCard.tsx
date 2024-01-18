@@ -5,7 +5,7 @@ import { StockItem, ListingItem } from "../model/fetch";
 export default function ListingCard() {
 
     return (
-        <div className="shadow-2xl shadow-black m-2 relative">
+        <div className="shadow-2xl shadow-black relative m-3">
                 
                 <div className="ribbon"><span>Original</span></div>
 
