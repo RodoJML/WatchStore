@@ -5,6 +5,8 @@ import { getAllListings } from "../state/store/slice/listingsSlice";
 import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
 import ListingList from "./ListingList";
 import ListingList1 from "./ListingList1";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Listing() {
@@ -21,15 +23,13 @@ export default function Listing() {
     }, []);
 
     return (
-        <div className="bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-2 shadow shadow-black m-3">        
-            <ListingList />
-            <ListingList />
-            <ListingList />
-            <ListingList />
-            <ListingList />
-
-
+        <div>
+            <FontAwesomeIcon icon={faSpinner} className="absolute fa-spin text-white text-3xl text-center z-20" />
+            <div className="bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-2 shadow shadow-black m-3 animate-pulse">
+                <div className="h-screen"></div>
+            </div>
         </div>
+        
     )
 }
 
