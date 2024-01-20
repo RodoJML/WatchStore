@@ -12,10 +12,8 @@ function ListingListLoading() {
         <>
             <div className={`${listingListStyle}` + "animate-pulse"}>
                 <div className="flex h-screen justify-center p-28">
-                    <div className="h-10 animate-ping">
-                        <img className="h-10 rounded-full animate-spin"
-                            src="/src/assets/images/loading.png" alt="" />
-                    </div>
+                    <img className="h-10 rounded-full animate-spin"
+                        src="/src/assets/images/loading.png" alt="" />
                 </div>
             </div>
         </>
