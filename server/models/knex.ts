@@ -1,20 +1,31 @@
 const knex = require('knex');
 
-const user = process.env.MYSQL_USER;
-const password = process.env.MYSQL_PASSWORD;
-const db = process.env.MYSQL_DATABASE ;
+const user_secret = process.env.MYSQL_USER;
+const password_secret = process.env.MYSQL_PASSWORD;
+const database_secret = process.env.MYSQL_DATABASE ;
 
-async function connect() {
-    const database = await knex({
-        client: 'mysql',
+const db_config = {
+    client: 'mysql',
         connection: {
             host: 'localhost',
-            user: user,
-            password: password,
-            database: db
+            user: user_secret,
+            password: password_secret,
+            database: database_secret
         }
-    });
-    return database;
 }
 
-module.exports = { connect, knex };
+const db_connection = knex(db_config);
+
+db_connection.on('query', query => {
+    console.log('SQL:', query.sql);
+});
+
+db_connection.on('query-response', response => {
+    console.log('Response:', response);
+});
+
+db_connection.on('error', error => {
+    console.log('Error:', error);
+});
+
+module.exports = db_connection;
