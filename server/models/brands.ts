@@ -39,5 +39,5 @@
 //     return { objects, total };
 // }
 
-module.exports = { getAll};
+// module.exports = { getAll};
 // module.exports = { brands_getAll, brands_getOne, brands_addOne, brands_updateOne, brands_deleteOne, brands_search};

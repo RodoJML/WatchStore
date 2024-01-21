@@ -1,17 +1,17 @@
 const API_URL = import.meta.env.VITE_API_URL as string;
 
 export function rest(url: string, data?: any, method?: string, headers?: any) {
-    return fetch(url, 
+    return fetch(url,
         {
             method: method ?? (data ? 'POST' : 'GET'),
             headers: { 'Content-Type': 'application/json', ...headers },
             body: data ? JSON.stringify(data) : undefined
 
         }
-    ).then(res => res.ok ? res.json() : res.json().then(x => {throw({...x, message: x.error})}));
+    ).then(res => res.ok ? res.json() : res.json().then(x => { throw ({ ...x, message: x.error }) }));
 }
 
-export function api(url: string, data?: any, method?: string, headers?: any){
+export function api(url: string, data?: any, method?: string, headers?: any) {
     return rest(API_URL + url, data, method, headers);
 }
 
@@ -20,14 +20,14 @@ export function api(url: string, data?: any, method?: string, headers?: any){
 export type DataEnvelope<T> = {
     data: T,
     isSuccess: boolean,
-    error?: string, 
+    error?: string,
 }
 
 export type DataEnvelopeList<T> = DataEnvelope<T[]> & {
     total: number,
 }
 
-export interface UserItem{
+export interface UserItem {
     user_id: number,
     user_type: number,
     user_name: string,
@@ -35,7 +35,7 @@ export interface UserItem{
     user_views: number,
 }
 
-export interface RegLogItem{
+export interface RegLogItem {
 
     reg_phone: string,
     reg_date: Date, // Need to double check on this 
@@ -43,7 +43,7 @@ export interface RegLogItem{
     reg_user_id: number,
 }
 
-export interface UserInfoItem{
+export interface UserInfoItem {
     info_user_id: number,
     info_user_first_name: string,
     info_user_last_name: string,
@@ -55,37 +55,37 @@ export interface UserInfoItem{
     info_user_province: string,
 }
 
-export interface StoreItem{
+export interface StoreItem {
     store_user_id: number,
     store_name: string,
     store_about: string,
     store_photo: string,
 }
 
-export interface BrandItem{
+export interface BrandItem {
     brand_id: number,
     brand_name: string,
     brand_logo: string,
     brand_website: string,
 }
 
-export interface CountryItem{
+export interface CountryItem {
     country_id: number,
     country_name: string,
     country_emoji: string,
 }
 
-export interface OriginalModelItem{
+export interface OriginalModelItem {
     watch_model_id: number,
     watch_brand_id: number,
     watch_model_name: string,
     watch_description: string,
     watch_UPC: string,
     watch_model_photo: string,
-    watch_country_id: number,   
+    watch_country_id: number,
 }
 
-export interface GenericModelItem{
+export interface GenericModelItem {
     gen_model_id: number,
     gen_brand_id: number,
     gen_model_name: string,
@@ -95,7 +95,7 @@ export interface GenericModelItem{
     gen_country_id: number,
 }
 
-export interface StockItem{
+export interface StockItem {
     stock_id: number,
     stock_store_user_id: number,
     orig_watch_model_id: number,
@@ -109,58 +109,58 @@ export interface StockItem{
     stock_quantity: number,
 }
 
-export interface TypeItem{
+export interface TypeItem {
     type_id: number,
     type_name: string,
 }
 
-export interface MovementItem{
+export interface MovementItem {
     movement_id: number,
     movement_name: string,
 }
 
-export interface StyleItem{
+export interface StyleItem {
     style_id: number,
     style_name: string,
 }
 
-export interface CaseMaterialItem{
+export interface CaseMaterialItem {
     case_material_id: number,
     case_material_name: string,
 }
 
-export interface GlassMaterialItem{
+export interface GlassMaterialItem {
     glass_material_id: number,
     glass_material_name: string,
 }
 
-export interface shapeItem{
+export interface shapeItem {
     shape_id: number,
     shape_name: string,
 }
 
-export interface StrapMaterialItem{
+export interface StrapMaterialItem {
     strap_material_id: number,
     strap_material_name: string,
 }
 
-export interface BezelTypeItem{
+export interface BezelTypeItem {
     bezel_type_id: number,
     bezel_type_name: string,
 }
 
-export interface BezelMaterialItem{
+export interface BezelMaterialItem {
     bezel_material_id: number,
     bezel_material_name: string,
 }
 
-export interface ClaspTypeItem{
+export interface ClaspTypeItem {
     clasp_type_id: number,
     clasp_type_name: string,
 }
 
 
-export interface OriginalSpecsItem{
+export interface OriginalSpecsItem {
     orig_specs_model_id: number,
     orig_specs_brand_id: number,
     orig_specs_type_id: number,
@@ -186,7 +186,7 @@ export interface OriginalSpecsItem{
     orig_specs_clasp_type_id: number,
 }
 
-export interface GenSpecsItem{
+export interface GenSpecsItem {
     gen_specs_model_id: number,
     gen_specs_brand_id: number,
     gen_specs_type_id: number,
@@ -226,7 +226,7 @@ export interface ListingItem {
     listing_unit_drice: number,
 }
 
-export interface ListingLogItem{
+export interface ListingLogItem {
     listingLog_id: number,
     listingLog_stock_id: number,
     listingLog_stock_user_id: number,
@@ -236,7 +236,7 @@ export interface ListingLogItem{
     listingLog_listing_unit_dprice: number,
 }
 
-export interface ListingReviewItem{
+export interface ListingReviewItem {
     listingReview_id: number,
     listingReview_stock_user_id: number,
     listingReview_stock_id: number,
@@ -245,17 +245,31 @@ export interface ListingReviewItem{
     listingReview_comment: string,
 }
 
-export interface WishlistItem{
+export interface WishlistItem {
     wishlist_id: number,
     wishlist_user_id: number,
     wishlist_listing_user_id: number,
     wishlist_listing_stock_id: number,
 }
 
-export interface ListingPhotoItem{
+export interface ListingPhotoItem {
     listingPhoto_id: number,
     listingPhoto_stock_id: number,
     listingPhoto_stock_user_id: number,
     listingPhoto_path: string,
 }
 
+export const apiFetchCalls = {
+    "brands": {
+        getAll: {
+            url: 'fetch/brands',
+            method: 'GET',
+        },
+        getOne(id: number) {
+            return {
+                url: `fetch/brand/brand_id/${id}`,
+                method: 'GET',
+            }
+        }
+    },
+}

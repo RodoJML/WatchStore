@@ -1,26 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import { getAllBrands, getOneBrand, type BrandItem } from "../state/store/slice/brandsSlice";
-import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
+import { apiFetch } from "../state/store/slice/sessionSlice";
+import type { DataEnvelopeList, DataEnvelope, BrandItem } from "../model/fetch";
+import { apiFetchCalls } from "../model/fetch";
 
 export default function Brands(){
 
     const sessionState = useSelector((state: RootState) => state.session);
-    const brandsState = useSelector((state: RootState) => state.brands);
     const dispatch = useDispatch<AppDispatch>();
 
     const [brands, setData] = useState<DataEnvelopeList<BrandItem>>();
 
     useEffect(() => {
-        dispatch(getAllBrands()).then((res) => {
+        dispatch(apiFetch(apiFetchCalls.brands.getOne(2))).then((res) => {
             setData(res.payload as DataEnvelopeList<BrandItem>)
         })
     }, []);
         
     return (
         <>
-            {brandsState.isLoading && <div>Loading...</div>}
+            {sessionState.isLoading && <div>Loading...</div>}
 
 
             <ul>
@@ -30,10 +30,6 @@ export default function Brands(){
                     </li>
                 ))}
             </ul>
-
-            <button onClick={() => {dispatch(getOneBrand(68)).then((res) => {console.log(res.payload)})}}>Get One Brand</button>
-
-
         </>
     )
 
