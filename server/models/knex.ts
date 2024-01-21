@@ -16,6 +16,10 @@ const db_config = {
 
 const db_connection = knex(db_config);
 
+db_connection.on('connect', () => {
+    console.log('A connection has been made!');
+});
+
 db_connection.on('query', query => {
     console.log('SQL:', query.sql);
 });
