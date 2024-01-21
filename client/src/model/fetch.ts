@@ -262,12 +262,12 @@ export interface ListingPhotoItem {
 export const apiFetchCalls = {
     "brands": {
         getAll: {
-            url: 'fetch/brands',
+            url: '/fetch/brand',
             method: 'GET',
         },
-        getOne(id: number) {
+        getOne(id: string) {
             return {
-                url: `fetch/brand/brand_id/${id}`,
+                url: `/fetch/brand/brand_id/${id}`,
                 method: 'GET',
             }
         }

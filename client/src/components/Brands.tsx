@@ -13,7 +13,7 @@ export default function Brands(){
     const [brands, setData] = useState<DataEnvelopeList<BrandItem>>();
 
     useEffect(() => {
-        dispatch(apiFetch(apiFetchCalls.brands.getOne(2))).then((res) => {
+        dispatch(apiFetch(apiFetchCalls.brands.getOne('87'))).then((res) => {
             setData(res.payload as DataEnvelopeList<BrandItem>)
         })
     }, []);

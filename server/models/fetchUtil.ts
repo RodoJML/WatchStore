@@ -1,3 +1,5 @@
+const database = require('./knex.ts');
+
 async function getAll(table) {
     const objects = await database(table).select('*');
     const total = objects.length;
