@@ -2,11 +2,11 @@
 // Cannot use import statement outside a module then we have to use require
 // const { userConnection } = require("./user");
 
-// async function getAll() {
-//     const objects = await database('brand').select('*');
-//     const total = objects.length;
-//     return {objects, total};
-// }
+async function getAll() {
+    // const objects = await database('brand').select('*');
+    // const total = objects.length;
+    // return {objects, total};
+}
 
 // async function brands_getOne(id) {
 //     const database = await database_connection();

@@ -1,3 +1,4 @@
+import { Knex } from "knex";
 const knex = require('knex');
 
 const user_secret = process.env.MYSQL_USER;
@@ -14,22 +15,26 @@ const db_config = {
         }
 }
 
-const db_connection = knex(db_config);
+const knexInstance: Knex = knex(db_config);
 
-db_connection.on('connect', () => {
-    console.log('A connection has been made!');
-});
+async function connect(): Promise<Knex>{
+    return knexInstance;
+}
 
-db_connection.on('query', query => {
-    console.log('SQL:', query.sql);
-});
+export { connect, knexInstance as knex };
 
-db_connection.on('query-response', response => {
-    console.log('Response:', response);
-});
+// db_connection.on('connect', () => {
+//     console.log('A connection has been made!');
+// });
 
-db_connection.on('error', error => {
-    console.log('Error:', error);
-});
+// db_connection.on('query', query => {
+//     console.log('SQL:', query.sql);
+// });
 
-export default db_connection;
+// db_connection.on('query-response', response => {
+//     console.log('Response:', response);
+// });
+
+// db_connection.on('error', error => {
+//     console.log('Error:', error);
+// });

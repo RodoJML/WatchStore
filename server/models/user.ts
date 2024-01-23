@@ -1,9 +1,15 @@
-import database from './knex';
+import { connect } from './knex';
 const jwt = require('jsonwebtoken');
 
-async function login(email, password) {
+async function connection() {
+    const db = await connect();
+    return db;
+}
 
-    const user = await database('user').select('*').where('user_email', email); 
+async function login(email, password) {
+    
+    const db = await connection();
+    const user = await db('user').select('*').where('user_email', email); 
     
     if(!user) {
         throw new Error('Email or user not found');
