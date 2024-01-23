@@ -1,4 +1,3 @@
-const databaseBrands = require('./knex.ts');
 
 // Cannot use import statement outside a module then we have to use require
 // const { userConnection } = require("./user");

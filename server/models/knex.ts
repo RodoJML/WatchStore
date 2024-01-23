@@ -32,4 +32,4 @@ db_connection.on('error', error => {
     console.log('Error:', error);
 });
 
-module.exports = db_connection;
+export default db_connection;

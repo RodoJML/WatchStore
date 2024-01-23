@@ -1,4 +1,4 @@
-const database = require('./knex.ts');
+import database from './knex';
 
 async function getAll(table) {
     const objects = await database(table).select('*');

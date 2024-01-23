@@ -1,10 +1,10 @@
 var expressController = require('express');
 var router = expressController.Router();
-var model_brand = require('../models/brands.ts');
+var model = require('../models/brands.ts');
 
 router
     .get('/', (req, res, next) => {
-        model_brand.getAll()
+        model.getAll()
         .then(
             result => {
                 const data = {data: result.objects, total: result.total, isSuccess: true};
@@ -14,7 +14,7 @@ router
     })
 
     .get('/:id', (req, res, next) => {
-        model_brand.getOne(req.params.id)
+        model.getOne(req.params.id)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -24,7 +24,7 @@ router
     })
 
     .post('/', (req, res, next) => {
-        model_brand.addOne(req.body.name)
+        model.addOne(req.body.name)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -34,7 +34,7 @@ router
     })
 
     .patch('/:id', (req, res, next) => {
-        model_brand.updateOne(req.params.id, req.body.name)
+        model.updateOne(req.params.id, req.body.name)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -44,7 +44,7 @@ router
     })
 
     .delete('/:id', (req, res, next) => {
-        model_brand.deleteOne(req.params.id)
+        model.deleteOne(req.params.id)
         .then(
             result => {
                 const data = {data: result, isSuccess: true};
@@ -54,7 +54,7 @@ router
     })
 
     .get('/search/:key', (req, res, next) => {
-        model_brand.search(req.params.key)
+        model.search(req.params.key)
         .then(
             result => {
                 const data = {data: result.objects, total: result.total, isSuccess: true};
