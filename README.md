@@ -74,6 +74,24 @@ These are some notes to self:
 
     Testing from laptop
 
+    -----------------------------
+
+    To make the server to run on typescript I had to install the following 
+    npm install --save-dev @types/node
+
+    Update in package.json all listed as index.js to index.ts
+    Update in package.json all listed as server.js to server.ts
+
+    Installed "ts-node": "^10.9.2" so node.js can run typescript files
+    Add a configuration to nodemon
+    "nodemonConfig": {
+    "exec": "ts-node",
+    "watch": [
+      "server"
+    ],
+    "ext": "ts"
+    },
+
 
 REDUX REMINDERS
 

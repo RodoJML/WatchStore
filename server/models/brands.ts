@@ -1,11 +1,17 @@
-
+import { connect } from './knex';
 // Cannot use import statement outside a module then we have to use require
 // const { userConnection } = require("./user");
 
+async function connection() {
+    const db = await connect();
+    return db;
+}
+
 async function getAll() {
-    // const objects = await database('brand').select('*');
-    // const total = objects.length;
-    // return {objects, total};
+    const db = await connection();
+    const objects = await db('brand').select('*');
+    const total = objects.length;
+    return {objects, total};
 }
 
 // async function brands_getOne(id) {
@@ -39,5 +45,5 @@ async function getAll() {
 //     return { objects, total };
 // }
 
-// module.exports = { getAll};
+module.exports = { getAll };
 // module.exports = { brands_getAll, brands_getOne, brands_addOne, brands_updateOne, brands_deleteOne, brands_search};

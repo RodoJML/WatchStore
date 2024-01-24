@@ -1,3 +1,6 @@
+// Importing from express the request and response types
+import { Request, Response, NextFunction } from 'express';
+
 // Modules
 require('dotenv').config({path:(__dirname+'/.env')});
 const express = require('express');
@@ -20,7 +23,7 @@ app
 
     // This is CORS
     // CORS is a security feature built into browsers that prevents a website from making a request to a different domain
-    .use((req, res, next) => {
+    .use((req: Request, res: Response, next: NextFunction) => {
         res.header('Access-Control-Allow-Origin', '*')
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
@@ -34,7 +37,7 @@ app
     })
 
 app
-    .get('/api/v1', (req, res) => {res.send('Hello World')})
+    .get('/api/v1', (req: Request, res: Response) => {res.send('Hello World')})
     .use('/api/v1/brands', brands)
     .use('/api/v1/fetch', fetchUtil)
 

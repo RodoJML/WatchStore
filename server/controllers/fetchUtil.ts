@@ -1,62 +1,63 @@
-var expressController = require('express');
-var router = expressController.Router();
-var model = require('../models/fetchUtil.ts');
+import { Request, Response, NextFunction } from 'express';
+const expressController = require('express');
+const router = expressController.Router();
+const model = require('../models/fetchUtil.ts');
 
 router
-    .get('/:table', (req, res, next) => {
+    .get('/:table', (req: Request, res: Response, next: NextFunction) => {
         model.getAll(req.params.table)
         .then(
-            result => {
+            (result: any) => {
                 const data = {data: result.objects, total: result.total, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
     })
 
-    .get('/:table/:column_id/:id', (req, res, next) => {
+    .get('/:table/:column_id/:id', (req: Request, res: Response, next: NextFunction) => {
         model.getOne(req.params.table, req.params.column_id, req.params.id)
         .then(
-            result => {
+            (result: any) => {
                 const data = {data: result, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
     })
 
-    .post('/:table', (req, res, next) => {
+    .post('/:table', (req: Request, res: Response, next: NextFunction) => {
         model.addOne(req.params.table, req.body)
         .then(
-            result => {
+            (result: any) => {
                 const data = {data: result, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
     })
 
-    .patch('/:table/:column_id/:id', (req, res, next) => {
+    .patch('/:table/:column_id/:id', (req: Request, res: Response, next: NextFunction) => {
         model.updateOne(req.params.table, req.params.column_id, req.params.id, req.body)
         .then(
-            result => {
+            (result: any) => {
                 const data = {data: result, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
     })
 
-    .delete('/:table/:column_id/:id', (req, res, next) => {
+    .delete('/:table/:column_id/:id', (req: Request, res: Response, next: NextFunction) => {
         model.deleteOne(req.params.table, req.params.column_id, req.params.id)
         .then(
-            result => {
+            (result: any) => {
                 const data = {data: result, isSuccess: true};
                 res.send(data);
             }
         ).catch(next);
     })
 
-    .get('/search/:table/:column_name/:key', (req, res, next) => {
+    .get('/search/:table/:column_name/:key', (req: Request, res: Response, next: NextFunction) => {
         model.search(req.params.table, req.params.column_name, req.params.key)
         .then(
-            result => {
+            (result: any) => {
                 const data = {data: result.objects, total: result.total, isSuccess: true};
                 res.send(data);
             }
