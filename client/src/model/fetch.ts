@@ -31,8 +31,11 @@ export interface UserItem {
     user_id: number,
     user_type: number,
     user_name: string,
-    user_password: string,
-    user_views: number,
+    user_email: string,
+    user_password: string | undefined,
+    user_views: number | null | undefined,
+    user_photo: string | null | undefined,
+    user_reg_date: Date | null | undefined,
 }
 
 export interface RegLogItem {

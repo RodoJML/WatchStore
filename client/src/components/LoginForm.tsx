@@ -8,6 +8,7 @@ export default function LoginForm(){
         e.preventDefault();
         // e comes from the event listener, a default behavior of react
         // event listener is the submit button
+        
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

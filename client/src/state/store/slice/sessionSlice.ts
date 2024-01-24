@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
+import type { DataEnvelope, UserItem } from './../../../model/fetch';
 
 export interface Message{
     message: string,
@@ -7,7 +8,7 @@ export interface Message{
 }
 
 interface SessionState {
-    user: undefined | null,
+    user: UserItem | undefined,
     isLoading: boolean,
     messages: Message[],
     redirectURL: string | null,
@@ -56,6 +57,17 @@ const sessionSlice = createSlice(
             state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'});
             console.log(state.messages[state.messages.length - 1]);
         });
+        builder.addCase(login.pending, (state) => {
+            state.isLoading = true;
+            state.messages.push({message: 'Loading...' , type: 'info'});
+            console.log(state.messages[state.messages.length - 1]);
+        });
+        builder.addCase(login.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.messages.push({message: 'User received' , type: 'success'});
+            console.log(state.messages[state.messages.length - 1]);
+            state.user = action.payload.data;
+        });
     }
 });
 
@@ -63,9 +75,15 @@ export const apiFetch = createAsyncThunk(
     "session/apiFetch",
     async (args: {url: string, data?: any, method?: string, headers?: any}) => {
         return await Fetch.api(args.url, args.data, args.method, args.headers).catch((err) => {throw err;});
-    }
+    },
 )
 
+export const login = createAsyncThunk(
+    "session/login",
+    async (user: {email: string, password: string}): Promise<DataEnvelope<UserItem>> => {
+        return await Fetch.api('/login', user, 'POST').catch((err) => {throw err;});
+    },
+)
 
 
 // We easily access to the actions by exporting from the slice.
