@@ -14,6 +14,7 @@ const port = 3000;
 // Controllers
 const fetchUtil = require('./controllers/fetchUtil.ts');
 const brands = require('./controllers/brands.ts');
+const user = require('./controllers/user.ts');
 
 // Middleware
 app
@@ -40,6 +41,7 @@ app
     .get('/api/v1', (req: Request, res: Response) => {res.send('Hello World')})
     .use('/api/v1/brands', brands)
     .use('/api/v1/fetch', fetchUtil)
+    .use('/api/v1/login', user)
 
 
 app.listen(port, () => console.log(`Server running at http://${hostname}:${port}/`))
