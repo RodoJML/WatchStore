@@ -16,3 +16,12 @@ GET http://localhost:3000/api/v1/fetch/brand/
 {
     "avatarUrl": "https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?202106302340",
 }
+
+###
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+    "email": "rodojml@me.com",
+    "password": "123456"
+}

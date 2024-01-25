@@ -14,7 +14,7 @@ const port = 3000;
 // Controllers
 const fetchUtil = require('./controllers/fetchUtil.ts');
 const brands = require('./controllers/brands.ts');
-const user = require('./controllers/user.ts');
+const login = require('./controllers/user.ts');
 
 // Middleware
 app
@@ -41,7 +41,10 @@ app
     .get('/api/v1', (req: Request, res: Response) => {res.send('Hello World')})
     .use('/api/v1/brands', brands)
     .use('/api/v1/fetch', fetchUtil)
-    .use('/api/v1/login', user)
+    // '/api/v1/login' is the path that will be used to login
+    // but is giving 404 not found because the path is not defined in the userC controller
+    .use('/api/v1/login', login)
+    
 
 
 app.listen(port, () => console.log(`Server running at http://${hostname}:${port}/`))

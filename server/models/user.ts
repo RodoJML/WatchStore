@@ -16,17 +16,19 @@ async function connection() {
     return db;
 }
 
-async function login(email: string, password: string) {
+async function login(data: {email: string, password: string}) {
     
     const db = await connection();
-    const user: UserItem[] = await db('user').select('*').where('user_email', email);
+    const user: UserItem[] = await db('user').select('*').where('user_email', data.email);
     
-    if(!user) {
+    if(user.length === 0) {
         throw new Error('Email or user not found');
     }
-    if(user[0].user_password !== password) {
+    if(user[0].user_password !== data.password) {
         throw new Error('Password is incorrect');
     }
+    
+    //Remember try to use bcrypt to encrypt the password
     
     // These next lines are critical for security reasons, 
     // We want to clear the user password before we send it back to the client
