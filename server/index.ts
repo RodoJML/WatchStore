@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 // Modules
-require('dotenv').config({path:(__dirname+'/.env')});
+require('dotenv').config({ path: (__dirname + '/.env') });
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -38,14 +38,24 @@ app
     })
 
 app
-    .get('/api/v1', (req: Request, res: Response) => {res.send('Hello World')})
+    .get('/api/v1', (req: Request, res: Response) => { res.send('Hello World') })
     .use('/api/v1/brands', brands)
     .use('/api/v1/fetch', fetchUtil)
     .use('/api/v1/login', login)
-    // '/api/v1/login' is the path that will be used to login
-    // but is giving 404 not found because the path is not defined in the userC controller
-    
-    
+// '/api/v1/login' is the path that will be used to login
+// but is giving 404 not found because the path is not defined in the userC controller
+
+// Error handling middleware
+app
+    .use((err: any, req: Request, res: Response, next: NextFunction) => {
+        console.error(err)
+        const msg = {
+            status: err.status || 500,
+            error: err.message || 'Internal Server Error',
+            isSuccess: false
+        }
+        res.status(msg.status).json(msg)
+    })
 
 
 app.listen(port, () => console.log(`Server running at http://${hostname}:${port}/`))

@@ -6,7 +6,7 @@ const { requireLogin } = require('../middleware/authorization.ts');
 
 router.post('/login', (req: Request, res: Response, next: NextFunction) => {
         console.log('login');
-        model.login(req.body)
+        model.login(req.body.data)
         .then(
             (result: any) => {
                 const data = {data: result, isSuccess: true};
