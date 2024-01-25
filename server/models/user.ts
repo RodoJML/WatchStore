@@ -5,7 +5,7 @@ export interface UserItem {
     user_type: number,
     user_name: string,
     user_email: string,
-    user_password: string | undefined,
+    user_password: string | null,
     user_views: number | null | undefined,
     user_photo: string | null | undefined,
     user_reg_date: Date | null | undefined,
@@ -32,7 +32,7 @@ async function login(data: {email: string, password: string}) {
     
     // These next lines are critical for security reasons, 
     // We want to clear the user password before we send it back to the client
-    const cleanUser: UserItem = { ...user[0], user_password: undefined };
+    const cleanUser: UserItem = { ...user[0], user_password: null };
 
     // We are using the cleanUser as the token subject
     const token = await generateTokenAsync(cleanUser, '1d');

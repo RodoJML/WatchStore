@@ -4,9 +4,8 @@ const router = expressController.Router();
 const model = require('../models/user.ts');
 const { requireLogin } = require('../middleware/authorization.ts');
 
-router.post('/login', (req: Request, res: Response, next: NextFunction) => {
-        console.log('login');
-        model.login(req.body.data)
+router.post('/', (req: Request, res: Response, next: NextFunction) => {
+        model.login(req.body)
         .then(
             (result: any) => {
                 const data = {data: result, isSuccess: true};
