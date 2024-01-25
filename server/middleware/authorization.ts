@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-const users = require('../models/user');
+const users = require('../models/user.ts');
 
 function parseAuthorizationHeader(req: Request, next: NextFunction){
     const token = req.headers.authorization?.split(' ')[1];

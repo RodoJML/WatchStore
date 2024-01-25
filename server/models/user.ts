@@ -35,7 +35,7 @@ async function login(data: {email: string, password: string}) {
     const cleanUser: UserItem = { ...user[0], user_password: undefined };
 
     // We are using the cleanUser as the token subject
-    const token = await generateTokenAsync(cleanUser, '24h');
+    const token = await generateTokenAsync(cleanUser, '1d');
     return { user: cleanUser, token };
 }
 

@@ -41,9 +41,10 @@ app
     .get('/api/v1', (req: Request, res: Response) => {res.send('Hello World')})
     .use('/api/v1/brands', brands)
     .use('/api/v1/fetch', fetchUtil)
+    .use('/api/v1/login', login)
     // '/api/v1/login' is the path that will be used to login
     // but is giving 404 not found because the path is not defined in the userC controller
-    .use('/api/v1/login', login)
+    
     
 
 
