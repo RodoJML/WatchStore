@@ -18,8 +18,8 @@ export default function Login({ isActive, onXclick }: LoginProps) {
                 </div>
 
                 <div className="text-white text-3xl text-center">
-                    <span className="font-bold ml-1">⌚️Tico</span>
-                    <span className="font-light">Toc</span>
+                    <span className="font-bold ml-1">⌚️Logo</span>
+                    <span className="font-light">Logo</span>
                 </div>
                 
                 <div className="text-3xl text-white font-extrabold">

@@ -24,10 +24,12 @@ export default function LoginForm() {
     };
 
     return (
-        <form className="grid" onSubmit={handleSubmit}>
-            <input className="mb-1" type="text" name="email" placeholder="Email" onChange={handleChange} />
-            <input className="mb-1" type="password" name="password" placeholder="Password" onChange={handleChange} />
-            <button className="bg-amber-400" type="submit">Login</button>
-        </form>
+        <div >
+            <form className="grid" onSubmit={handleSubmit}>
+                <input className="mb-1 h-10" type="text" name="email" placeholder="Email" onChange={handleChange} />
+                <input className="mb-1 h-10" type="password" name="password" placeholder="Password" onChange={handleChange} />
+                <button className="bg-stone-800 text-lume-100 font-extrabold h-10" type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
     )
 }
