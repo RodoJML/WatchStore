@@ -1,27 +1,44 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faCartFlatbed } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCartFlatbed, faUserLarge } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
+import Login from "../pages/Login";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store/store";
 
-function SideBarIcon({ toggle }: { toggle: boolean; }) {
-    if (toggle) {
-        return <BarsIcon />
+const LoginArea = ({ sessionStatus }: { sessionStatus: RootState['session'] }) => {
+    if (sessionStatus.user.user_name == 'Guest') {
+        return <>
+            <div>
+                <span className="text-sm">Iniciar</span>
+                <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '4' }} />
+            </div>
+        </>
     } else {
-        return <BarsIcon />
+        return <>
+            <label className="text-sm mr-1">{sessionStatus.user.user_name}</label>
+            <FontAwesomeIcon icon={faUserLarge} />
+        </>
     }
-}
+};
 
 
 export default function Navbar() {
 
     // State
+    const sessionState = useSelector((state: RootState) => state.session);
     const [sideMenuActive, setSideMenuActive] = useState(false);
+    const [loginFormActive, setLoginFormActive] = useState(false);
 
     // Functions
     function toggleSideMenu() {
         setSideMenuActive(!sideMenuActive);
+    }
+
+    function toggleLoginForm() {
+        setLoginFormActive(!loginFormActive);
     }
 
     // Render
@@ -30,11 +47,12 @@ export default function Navbar() {
             <div className="bg-gradient-to-b from-stone-700 to-stone-900">
 
                 <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
+                <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
                 <nav className="grid grid-cols-5 text-white h-12 items-center p-4">
                     <div className="flex col-span-2 text-left items-center">
 
-                        <div onClick={toggleSideMenu}><SideBarIcon toggle={sideMenuActive} /></div>
+                        <div onClick={toggleSideMenu}><BarsIcon/></div>
 
                         <Link to="/">
                             <span className="font-bold ml-1">⌚️Tico</span>
@@ -48,7 +66,13 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex justify-end col-span-2">
-                        <FontAwesomeIcon icon={faCartFlatbed} className="fa-shake" style={{animationIterationCount: '2'}} />
+                        <div onClick={toggleLoginForm}>
+                            <LoginArea sessionStatus={sessionState}/>
+                        </div>
+                            
+                        <div>
+                            <FontAwesomeIcon className="ml-4" icon={faCartFlatbed} />
+                        </div>
                     </div>
                 </nav>
 
@@ -63,7 +87,7 @@ export default function Navbar() {
                     <div className="flex flex-grow overflow-scroll">
                         {/* Load image in assets/images dislay it with an htmnl tag */}
 
-                        
+
                         <a className="">Provincia: San Jose</a>
                     </div>
                 </nav>

@@ -32,10 +32,10 @@ export interface UserItem {
     user_type: number,
     user_name: string,
     user_email: string,
-    user_password: string | undefined,
-    user_views: number | null | undefined,
-    user_photo: string | null | undefined,
-    user_reg_date: Date | null | undefined,
+    user_password: string | null,
+    user_views: number | null,
+    user_photo: string | null,
+    user_reg_date: Date | null,
 }
 
 export interface RegLogItem {
@@ -260,6 +260,10 @@ export interface ListingPhotoItem {
     listingPhoto_stock_id: number,
     listingPhoto_stock_user_id: number,
     listingPhoto_path: string,
+}
+export interface AuthenticationEnvelope {
+    user: UserItem,
+    token: string,
 }
 
 export const apiFetchCalls = {
