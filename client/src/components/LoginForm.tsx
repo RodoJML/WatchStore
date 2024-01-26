@@ -26,9 +26,9 @@ export default function LoginForm() {
     return (
         <div >
             <form className="grid" onSubmit={handleSubmit}>
-                <input className="mb-1 h-10" type="text" name="email" placeholder="Email" onChange={handleChange} />
-                <input className="mb-1 h-10" type="password" name="password" placeholder="Password" onChange={handleChange} />
-                <button className="bg-stone-800 text-lume-100 font-extrabold h-10" type="submit">Iniciar Sesión</button>
+                <input className="mb-4 h-10 rounded border" type="text" name="email" placeholder=" Correo" onChange={handleChange} />
+                <input className="mb-4 h-10 rounded" type="password" name="password" placeholder=" Contraseña" onChange={handleChange} />
+                <button className="bg-stone-800 text-lume-100 font-bold h-12 rounded" type="submit" onClick={handleSubmit}>Iniciar Sesión</button>
             </form>
         </div>
     )

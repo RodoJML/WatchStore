@@ -13,18 +13,11 @@ export default function Login({ isActive, onXclick }: LoginProps) {
 
             <div className="grid ">
 
-                <div className="relative bg-stone-800 opacity-40 ">
-       
-                </div>
-
-                <div className="text-white text-3xl text-center">
-                    <span className="font-bold ml-1">⌚️Logo</span>
-                    <span className="font-light">Logo</span>
+                <div className="flex  text-white text-2xl text-center mb-4 items-center justify-center ">
+                    <span className="font-bold ml-1">Watch</span>
+                    <span className="font-light">Store</span>
                 </div>
                 
-                <div className="text-3xl text-white font-extrabold">
-                    Bienvenido
-                </div>
                 <LoginForm />
                 
                 <a onClick={onXclick}>
