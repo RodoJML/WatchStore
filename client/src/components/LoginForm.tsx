@@ -44,7 +44,7 @@ export default function LoginForm() {
 
               
                 <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="text" name="user" placeholder="Nombre de usuario" />
-                <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="text" name="user" placeholder="Numero" />
+                <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="text" pattern="[0-9]{8}" name="phone" placeholder="Telefono (8 Digitos)" />
                 <input className="h-10 mb-4 rounded border pl-2" type="text" name="email" placeholder="Correo" onChange={handleChange} />
                 <input className="h-10 mb-4 rounded pl-2" type="password" name="password" placeholder="Contraseña" onChange={handleChange} />
                 <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="password" name="passwordConfirm" placeholder="Confirmar la contrasena" />
