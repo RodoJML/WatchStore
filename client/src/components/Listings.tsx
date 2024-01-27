@@ -5,6 +5,8 @@ import { getAllListings } from "../state/store/slice/listingsSlice";
 import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import ListingCard from "./ListingCard";
+import ListingList from "./ListingList";
 
 
 function ListingListLoading() {
@@ -36,7 +38,7 @@ export default function Listing() {
 
     return (
         <div className="m-4">
-            <ListingListLoading />
+    
         </div>
 
     )

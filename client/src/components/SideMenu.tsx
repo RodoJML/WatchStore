@@ -24,7 +24,7 @@ export default function SideMenu({ isActive, onXclick }: SideMenuProps) {
 
 }
 
-const sideMenuBase = 'fixed bg-transparent w-56 h-full rounded rounded-l-none ease-in-out duration-500 shadow-2xl backdrop-blur border border-white border-opacity-20 z-10';
+const sideMenuBase = 'fixed bg-transparent w-56 h-full rounded rounded-l-none ease-in-out duration-500 shadow-2xl backdrop-blur border border-white border-opacity-20 z-20';
 const sideMenuActive = `${sideMenuBase} left-0`;
 const sideMenuInactive = `${sideMenuBase} -left-80`;
 

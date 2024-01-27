@@ -16,7 +16,7 @@ interface SessionState {
 
 const initialState: SessionState = {
     user: {
-        user_id: 0,
+        user_id: null,
         user_type: 3,
         user_name: "Guest",
         user_email: "No email",

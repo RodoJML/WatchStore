@@ -28,7 +28,7 @@ export type DataEnvelopeList<T> = DataEnvelope<T[]> & {
 }
 
 export interface UserItem {
-    user_id: number,
+    user_id: number | null,
     user_type: number,
     user_name: string,
     user_email: string,
