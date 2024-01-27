@@ -8,6 +8,7 @@ export interface Message {
 }
 
 interface SessionState {
+    signedIn: boolean,
     user: UserItem,
     isLoading: boolean,
     messages: Message[],
@@ -15,6 +16,7 @@ interface SessionState {
 }
 
 const initialState: SessionState = {
+    signedIn: false,
     user: {
         user_id: null,
         user_type: 3,
@@ -75,12 +77,15 @@ const sessionSlice = createSlice(
                 state.isLoading = false;
                 state.messages.push({ message: 'User received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
+                console.log(action.payload);
                 state.user = action.payload.data.user;
+                state.signedIn = true;
             });
             builder.addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
                 console.log(state.messages[state.messages.length - 1]);
+                state.signedIn = false;
             });
         }
     });

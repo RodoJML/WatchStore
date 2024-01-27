@@ -2,27 +2,21 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { login } from "../state/store/slice/sessionSlice";
-import { AuthenticationEnvelope, DataEnvelope } from "../model/fetch";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-interface LoginFormProps {
-    onSignInClose: () => (void);
-}
-
-export default function LoginForm({ onSignInClose }: LoginFormProps) {
+export default function LoginForm() {
 
     const sessionState = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
     const [loginFormData, setLoginFormData] = useState({ email: "", password: "", });
+    const [registerFormActive, setRegisterFormActive] = useState(false);
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
         // e comes from the event listener, a default behavior of react
         // event listener is the submit button
-        dispatch(login(loginFormData)).then((res: any) => {
-            console.log("Login successful of user: " + res.payload.email);
-            onSignInClose()
-        });
+        dispatch(login(loginFormData));
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +24,10 @@ export default function LoginForm({ onSignInClose }: LoginFormProps) {
         const { name, value } = e.target;
         setLoginFormData({ ...loginFormData, [name]: value });
     };
+
+    const toggleRegisterForm = () => {
+        setRegisterFormActive(!registerFormActive);
+    }
 
     return (
         <form className="grid row-span-3" onSubmit={handleSubmit}>
@@ -41,17 +39,27 @@ export default function LoginForm({ onSignInClose }: LoginFormProps) {
                 </div>
 
                 <span className="text-sm mb-6 text-left text-white">
-                    Inicia sesión o <a className="text-white underline" href="/">crea una cuenta nueva</a>
+                    Inicia sesión o <a className="text-white underline" onClick={toggleRegisterForm}>crea una cuenta nueva</a>
                 </span>
-                
 
+              
+                <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="text" name="user" placeholder="Nombre de usuario" />
+                <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="text" name="user" placeholder="Numero" />
                 <input className="h-10 mb-4 rounded border pl-2" type="text" name="email" placeholder="Correo" onChange={handleChange} />
                 <input className="h-10 mb-4 rounded pl-2" type="password" name="password" placeholder="Contraseña" onChange={handleChange} />
-                <button className="bg-stone-800 mb-4 text-white font-bold h-12 rounded" type="submit" onClick={handleSubmit}>Iniciar Sesión</button>
-                <a className="text-sm text-white" href="/"> Olvidaste la contraseña? </a>
+                <input className={registerFormActive ? registrationFormStyleActive :registrationFormStyleInactive} type="password" name="passwordConfirm" placeholder="Confirmar la contrasena" />
+                <button className="bg-stone-800 mb-4 text-white font-bold h-12 rounded" type="submit" onClick={handleSubmit}>
+                    {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Iniciar Sesión"}
+                </button>
+
+                <a className="text-sm text-white" onClick={toggleRegisterForm}> Olvidaste la contraseña? </a>
 
             </div>
 
         </form>
     )
 }
+
+const registrationFormStyleBase = "rounded border pl-2";
+const registrationFormStyleActive = `${registrationFormStyleBase} h-10 mb-4 opacity-1 transition ease-in duration-700`;
+const registrationFormStyleInactive = `${registrationFormStyleBase} h-0 mb-0 opacity-0`;

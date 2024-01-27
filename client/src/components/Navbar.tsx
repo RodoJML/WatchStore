@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../state/store/store";
 
 const LoginArea = ({ sessionStatus }: { sessionStatus: RootState['session'] }) => {
-    if (sessionStatus.user.user_name == 'Guest') {
+    if (!sessionStatus.signedIn) {
         return <>
             <span className="text-sm">Iniciar Sesión</span>
             <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '4' }} />
@@ -22,7 +22,6 @@ const LoginArea = ({ sessionStatus }: { sessionStatus: RootState['session'] }) =
         </>
     }
 };
-
 
 export default function Navbar() {
 
@@ -38,6 +37,7 @@ export default function Navbar() {
 
     function toggleLoginForm() {
         setLoginFormActive(!loginFormActive);
+        return null;
     }
 
     // Render
@@ -65,10 +65,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex justify-end col-span-2">
-                        {sessionState.user.user_id === null
-                            ? <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} /></div>
-                            : <LoginArea sessionStatus={sessionState} />}
-
+                       <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} /></div>
                     </div>
                 </nav>
 
