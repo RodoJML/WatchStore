@@ -54,16 +54,20 @@ export default function LoginForm() {
 
             {!registerFormActive
                 ?
-                (<button className="bg-stone-800 mb-4 text-white font-bold h-12 rounded" type="submit">
-                    {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Iniciar Sesión"}
-                </button>)
+                (<div className="grid">
+                    <button className="bg-stone-800 mb-4 text-white font-bold h-12 rounded transition-colors ease-in-out duration-1000" type="submit">
+                        {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Iniciar Sesión"}
+                    </button>
+                    <a className="text-sm text-white"> Olvidaste la contraseña? </a>
+                </div>)
                 :
-                (<button className="bg-lume-100 mb-4 text-white font-bold h-12 rounded" type="submit">
+                (<button className="bg-blue-800 mb-4 text-white font-bold h-12 rounded transition-colors ease-in-out duration-1000" type="submit">
                     {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Registrarse"}
                 </button>)
             }
+            
 
-            <a className="text-sm text-white"> Olvidaste la contraseña? </a>
+
 
 
 
