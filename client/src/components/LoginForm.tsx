@@ -24,6 +24,8 @@ export default function LoginForm() {
     const [user_name_Exist, set_user_name_Exist] = useState(false);
     const [user_email_Exist, set_user_email_Exist] = useState(false);
     const [user_id_Exist, set_user_id_Exist] = useState(false);
+    const [pw_mismatch, set_pw_mismatch] = useState(false);
+    const [formInput, setFormInput] = useState(false);
 
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
@@ -48,6 +50,7 @@ export default function LoginForm() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Handle form field changes and update the state
+        setFormInput(true);
         const { name, value } = e.target;
         setLoginFormData({ ...loginFormData, [name]: value });
         setSignUpFormData({ ...signUpFormData, [name]: value });
@@ -89,7 +92,15 @@ export default function LoginForm() {
                 console.log("The id field might be empty " + error);
             }
         );
-    }, [signUpFormData.user_name, signUpFormData.user_email, signUpFormData.user_id]);
+
+        if (signUpFormData.user_password != signUpFormData.user_password_confirmation) {
+            set_pw_mismatch(true);
+        } else {
+            set_pw_mismatch(false);
+        };
+
+    }, [signUpFormData.user_name, signUpFormData.user_email,
+    signUpFormData.user_id, signUpFormData.user_password_confirmation,]);
 
 
     return (
@@ -116,8 +127,8 @@ export default function LoginForm() {
             }
 
 
-            {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias / Sin espacios" onChange={handleChange} required />}
-            {signupFormActive && <input className={signupFormStyle} type="text" pattern="\d{8}" name="user_id" placeholder="Telefono / 8 Digitos" onChange={handleChange} required />}
+            {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias | Sin espacios - Min 6 letras" onChange={handleChange} required />}
+            {signupFormActive && <input className={signupFormStyle} type="text" pattern="\d{8}" name="user_id" placeholder="Telefono | 8 Digitos" onChange={handleChange} required />}
             <input className="h-10 mb-4 rounded border pl-2" type="text" name="user_email" placeholder="Correo" onChange={handleChange} required />
             <input className="h-10 mb-4 rounded pl-2" type="password" name="user_password" placeholder="Contraseña" onChange={handleChange} required />
             {signupFormActive && <input className={signupFormStyle} type="password" name="user_password_confirmation" placeholder="Confirmar contraseña" onChange={handleChange} required />}
@@ -143,17 +154,26 @@ export default function LoginForm() {
                         {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Registrarse"}
                     </button>
 
-                    {user_name_Exist || user_email_Exist || user_id_Exist
+                    {user_name_Exist || user_email_Exist || user_id_Exist || pw_mismatch
                         ?
                         (
-                            <div>
-                                {user_name_Exist && <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este alias ya esta en uso, por favor elija otro.</label>}
-                                {user_email_Exist && <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este correo ya esta en uso, por favor elija otro.</label>}
-                                {user_id_Exist && <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este no. de telefono ya esta en uso, por favor elija otro.</label>}
+                            <div className="grid text-wrap text-white whitespace-normal text-xs text-left">
+                                {user_name_Exist && <label>🚨 Este alias ya esta en uso, por favor elija otro.</label>}
+                                {user_id_Exist && <label>🚨 Este telefono ya esta en uso, por favor elija otro.</label>}
+                                {user_email_Exist && <label>🚨 Este correo ya esta en uso, por favor elija otro.</label>}
+                                {pw_mismatch && <label>🚨 Las contraseñas no coinciden!</label>}
                             </div>
                         )
                         :
-                        <label className="text-wrap text-white whitespace-normal text-xs">ℹ️ Su alias es diferente a su nombre físico, su información personal se podra configurar luego.</label>
+                        (
+                            <div className="grid text-wrap text-xs whitespace-normal text-white text-center">
+                                {formInput 
+                                ? <label>ℹ️ Todos los campos son obligatorios!</label>
+                                : <label>ℹ️ Su información personal como nombre, apellido, entre otros, se podra configurar una vez registrado.</label>}
+                            </div>
+                        )
+                        
+
                     }
 
                 </div>
