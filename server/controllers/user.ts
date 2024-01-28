@@ -4,7 +4,8 @@ const router = expressController.Router();
 const model = require('../models/user.ts');
 const { requireLogin } = require('../middleware/authorization.ts');
 
-router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+router
+    .post('/login', (req: Request, res: Response, next: NextFunction) => {
         model.login(req.body)
         .then(
             (result: any) => {
@@ -12,7 +13,16 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
                 res.send(data);
             }
         ).catch(next);
-    });
+    })
+    .get('/userExist/:user_name', (req: Request, res: Response, next: NextFunction) => {
+        model.userExist(req.params.user_name)
+        .then(
+            (result: any) => {
+                const data = {data: result, isSuccess: true};
+                res.send(data);
+            }
+        ).catch(next);
+    })
     
 // Export the router
 module.exports = router;
