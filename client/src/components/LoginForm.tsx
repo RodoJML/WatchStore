@@ -115,7 +115,7 @@ export default function LoginForm() {
                 <span className="font-bold text-shadow shadow-black">⌚️Watch</span>
                 <span className="font-light text-shadow shadow-black">Store</span>
             </div>
-            
+
             {!signupFormActive
                 ?
                 <span className="text-sm mb-6 text-left text-white text-shadow shadow-black">
@@ -178,10 +178,6 @@ export default function LoginForm() {
                             )
                         }
                     </div>
-
-                    
-
-
                 </div>
             }
         </form>
