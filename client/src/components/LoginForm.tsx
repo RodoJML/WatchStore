@@ -62,12 +62,12 @@ export default function LoginForm() {
         setTimeout(() => setsignupFormStyle(signupFormStyle2), 50);
     };
 
-    if(formInput){
-        
+    if (formInput) {
+
     }
 
     useEffect(() => {
-        if(formInput){
+        if (signupFormActive) {
             dispatch(exist({ column_name: "user_name", key: signUpFormData.user_name })).then(
                 (response: any) => {
                     set_user_name_Exist(response.payload.data);
@@ -77,7 +77,7 @@ export default function LoginForm() {
                     console.log("The alias field might be empty " + error);
                 }
             );
-    
+
             dispatch(exist({ column_name: "user_email", key: signUpFormData.user_email })).then(
                 (response: any) => {
                     set_user_email_Exist(response.payload.data);
@@ -87,7 +87,7 @@ export default function LoginForm() {
                     console.log("The email field might be empty " + error);
                 }
             );
-    
+
             dispatch(exist({ column_name: "user_id", key: signUpFormData.user_id })).then(
                 (response: any) => {
                     set_user_id_Exist(response.payload.data);
@@ -97,7 +97,7 @@ export default function LoginForm() {
                     console.log("The id field might be empty " + error);
                 }
             );
-    
+
             if (signUpFormData.user_password != signUpFormData.user_password_confirmation) {
                 set_pw_mismatch(true);
             } else {
@@ -115,7 +115,7 @@ export default function LoginForm() {
                 <span className="font-bold text-shadow shadow-black">⌚️Watch</span>
                 <span className="font-light text-shadow shadow-black">Store</span>
             </div>
-
+            
             {!signupFormActive
                 ?
                 <span className="text-sm mb-6 text-left text-white text-shadow shadow-black">
@@ -157,34 +157,30 @@ export default function LoginForm() {
                         {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Registrarse"}
                     </button>
 
-                    {sessionState.isLoading
-                        ?
-                        <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />
-                        :
-                        (
-                            <div>
-                                {user_name_Exist || user_email_Exist || user_id_Exist || pw_mismatch
-                                    ?
-                                    (
-                                        <div className="grid text-wrap text-white whitespace-normal text-xs text-left">
-                                            {user_name_Exist && <div>🚨 Este alias ya esta en uso, por favor elija otro.</div>}
-                                            {user_id_Exist && <div>🚨 Este telefono ya esta en uso, por favor elija otro.</div>}
-                                            {user_email_Exist && <div>🚨 Este correo ya esta en uso, por favor elija otro.</div>}
-                                            {pw_mismatch && <div>🚨 Las contraseñas no coinciden!</div>}
-                                        </div>
-                                    )
-                                    :
-                                    (
-                                        <div className="grid text-wrap text-xs whitespace-normal text-white text-center">
-                                            {formInput
-                                                ? <div>ℹ️ Todos los campos son obligatorios!</div>
-                                                : <div>ℹ️ Su información personal como nombre, apellido, entre otros, se podra configurar una vez registrado.</div>}
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        )
-                    }
+                    <div>
+                        {user_name_Exist || user_email_Exist || user_id_Exist || pw_mismatch
+                            ?
+                            (
+                                <div className="grid text-wrap text-white whitespace-normal text-xs text-left">
+                                    {user_name_Exist && <div>🚨 Este alias ya esta en uso, por favor elija otro.</div>}
+                                    {user_id_Exist && <div>🚨 Este telefono ya esta en uso, por favor elija otro.</div>}
+                                    {user_email_Exist && <div>🚨 Este correo ya esta en uso, por favor elija otro.</div>}
+                                    {pw_mismatch && <div>🚨 Las contraseñas no coinciden!</div>}
+                                </div>
+                            )
+                            :
+                            (
+                                <div className="grid text-wrap text-xs whitespace-normal text-white text-center">
+                                    {formInput
+                                        ? <div>ℹ️ Todos los campos son obligatorios!</div>
+                                        : <div>ℹ️ Su información personal como nombre, apellido, entre otros, se podra configurar una vez registrado.</div>}
+                                </div>
+                            )
+                        }
+                    </div>
+
+                    
+
 
                 </div>
             }
