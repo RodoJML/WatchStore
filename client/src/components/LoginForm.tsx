@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { login, userExist } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faSpinner, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { DataEnvelope } from "../model/fetch";
 
 export default function LoginForm() {
@@ -95,7 +95,6 @@ export default function LoginForm() {
 
 
             {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias / Sin espacios" onChange={handleChange} required />}
-            {user_name_Exist && <label className="text-left text-wrap text-red-800 whitespace-normal text-xs -mt-4">⚠️ El alias ya existe, por favor elija otro.</label>}
             {signupFormActive && <input className={signupFormStyle} type="text" pattern="\d{8}" name="user_id" placeholder="Telefono / 8 Digitos" onChange={handleChange} required />}
             <input className="h-10 mb-4 rounded border pl-2" type="text" name="user_email" placeholder="Correo" onChange={handleChange} required />
             <input className="h-10 mb-4 rounded pl-2" type="password" name="user_password" placeholder="Contraseña" onChange={handleChange} required />
@@ -121,7 +120,12 @@ export default function LoginForm() {
                     <button className="bg-blue-800 mb-4 text-white font-bold h-12 rounded" type="submit" name="signup">
                         {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Registrarse"}
                     </button>
-                    <label className="text-wrap text-white whitespace-normal text-xs">ℹ️ Su alias es diferente a su nombre físico, su información personal se podra configurar luego, una vez registrado.</label>
+
+                    {user_name_Exist ? 
+                    <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este alias ya esta en uso, por favor elija otro.</label> :
+                    <label className="text-wrap text-white whitespace-normal text-xs">ℹ️ Su alias es diferente a su nombre físico, su información personal se podra configurar luego.</label>
+                    }
+                    
                 </div>
             }
         </form>
