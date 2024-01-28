@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { login } from "../state/store/slice/sessionSlice";
+import { login, userExist } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { DataEnvelope } from "../model/fetch";
 
 export default function LoginForm() {
 
@@ -11,13 +12,16 @@ export default function LoginForm() {
     const dispatch = useDispatch<AppDispatch>();
     const [loginFormData, setLoginFormData] = useState({ user_email: "", user_password: "", });
     const [signUpFormData, setSignUpFormData] = useState(
-        { ...loginFormData ,
+        {
+            ...loginFormData,
             user_name: "",
             user_id: "",
             user_password: "",
             user_password_confirmation: "",
-            info_user_province: "",}
-        );
+            info_user_province: "",
+        }
+    );
+    const [user_name_Exist, set_user_name_Exist] = useState(false);
 
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
@@ -28,12 +32,12 @@ export default function LoginForm() {
         const submitter = e.nativeEvent.submitter as HTMLButtonElement;
         // e comes from the event listener, a default behavior of react
         // event listener is the submit button
-        if(submitter.name === "login") {   
+        if (submitter.name === "login") {
             dispatch(login(loginFormData));
-        } else if(submitter.name === "signup") {
-            if(signUpFormData.user_password != signUpFormData.user_password_confirmation) {
+        } else if (submitter.name === "signup") {
+            if (signUpFormData.user_password != signUpFormData.user_password_confirmation) {
                 alert("Las contraseñas no coinciden");
-            }else{
+            } else {
                 console.log(signUpFormData);
                 // dispatch(signup(signUpFormData));
             }
@@ -53,8 +57,22 @@ export default function LoginForm() {
         setTimeout(() => setsignupFormStyle(signupFormStyle2), 50);
     };
 
+    useEffect(() => {
+        dispatch(userExist(signUpFormData.user_name)).then(
+            (response: any) => {
+                set_user_name_Exist(response.payload.data);
+            }
+        ).catch(
+            (error: any) => {
+                console.log("The alias field is empty "+error);
+            }
+        );
+    }, [signUpFormData.user_name]);
+
+
     return (
         <form className="grid" onSubmit={handleSubmit}>
+            
 
 
             <div className="flex text-white text-3xl">
@@ -77,6 +95,7 @@ export default function LoginForm() {
 
 
             {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias / Sin espacios" onChange={handleChange} required />}
+            {user_name_Exist && <label className="text-left text-wrap text-red-800 whitespace-normal text-xs -mt-4">⚠️ El alias ya existe, por favor elija otro.</label>}
             {signupFormActive && <input className={signupFormStyle} type="text" pattern="\d{8}" name="user_id" placeholder="Telefono / 8 Digitos" onChange={handleChange} required />}
             <input className="h-10 mb-4 rounded border pl-2" type="text" name="user_email" placeholder="Correo" onChange={handleChange} required />
             <input className="h-10 mb-4 rounded pl-2" type="password" name="user_password" placeholder="Contraseña" onChange={handleChange} required />

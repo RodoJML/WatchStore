@@ -17,7 +17,7 @@ router
     .get('/userExist/:user_name', (req: Request, res: Response, next: NextFunction) => {
         model.userExist(req.params.user_name)
         .then(
-            (result: any) => {
+            (result: boolean) => {
                 const data = {data: result, isSuccess: true};
                 res.send(data);
             }

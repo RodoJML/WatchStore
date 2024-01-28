@@ -16,20 +16,20 @@ async function connection() {
     return db;
 }
 
-async function login(data: {user_email: string, user_password: string}) {
-    
+async function login(data: { user_email: string, user_password: string }) {
+
     const db = await connection();
     const user: UserItem[] = await db('user').select('*').where('user_email', data.user_email);
-    
-    if(user.length === 0) {
+
+    if (user.length === 0) {
         throw new Error('Email or user not found');
     }
-    if(user[0].user_password !== data.user_password) {
+    if (user[0].user_password !== data.user_password) {
         throw new Error('Password is incorrect');
     }
-    
+
     //Remember try to use bcrypt to encrypt the password
-    
+
     // These next lines are critical for security reasons, 
     // We want to clear the user password before we send it back to the client
     const cleanUser: UserItem = { ...user[0], user_password: null };
@@ -41,15 +41,15 @@ async function login(data: {user_email: string, user_password: string}) {
 
 async function userExist(user_name: string) {
     const db = await connection();
-    const user = await db('user').count('user_name').where('user_name', user_name);
-    return user.length > 0;
+    const user = await db('user').count('*').where('user_name', user_name);
+    return user[0]['count(*)'] as number > 0;
 }
 
-function generateTokenAsync(user: UserItem, expiresIn: string){
+function generateTokenAsync(user: UserItem, expiresIn: string) {
 
     return new Promise((resolve, reject) => {
         jwt.sign(user, process.env.JWT_SECRET ?? "", { expiresIn }, (err: Error, token: any) => {
-            if(err) {
+            if (err) {
                 reject(err);
             } else {
                 resolve(token);
@@ -58,10 +58,10 @@ function generateTokenAsync(user: UserItem, expiresIn: string){
     });
 }
 
-function verifyTokenAsync(token: any){
+function verifyTokenAsync(token: any) {
     return new Promise((resolve, reject) => {
         jwt.verify(token, process.env.JWT_SECRET ?? "", (err: Error, user: UserItem) => {
-            if(err) {
+            if (err) {
                 reject(err);
             } else {
                 resolve(user);
@@ -71,4 +71,4 @@ function verifyTokenAsync(token: any){
 }
 
 
-module.exports = { login, userExist, generateTokenAsync, verifyTokenAsync}; 
+module.exports = { login, userExist, generateTokenAsync, verifyTokenAsync }; 
