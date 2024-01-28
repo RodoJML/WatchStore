@@ -14,12 +14,13 @@ export default function Login({ isActive, onXclick }: LoginProps) {
     const sessionState = useSelector((state: RootState) => state.session);
     
     return (
+        // This is how the login page slides up when it detects that the state of the session is signed in
         <div className={`${isActive && !sessionState.signedIn ? loginPageActive : loginPageInactive}`}>
 
             <LoginForm/>
             {/* Once signed in the login page reacts like its closed */}
 
-            <a className="relative -bottom-10" onClick={onXclick}>
+            <a className="relative -bottom-8" onClick={onXclick}>
                 <FontAwesomeIcon className="text-lg" icon={faChevronUp} inverse />
             </a>
 

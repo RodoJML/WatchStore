@@ -77,7 +77,6 @@ const sessionSlice = createSlice(
                 state.isLoading = false;
                 state.messages.push({ message: 'User received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
-                console.log(action.payload);
                 state.user = action.payload.data.user;
                 state.signedIn = true;
             });
