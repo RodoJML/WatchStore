@@ -14,8 +14,8 @@ router
             }
         ).catch(next);
     })
-    .get('/userExist/:user_name', (req: Request, res: Response, next: NextFunction) => {
-        model.userExist(req.params.user_name)
+    .get('/exist/:table_name/:key', (req: Request, res: Response, next: NextFunction) => {
+        model.userExist(req.params.table_name, req.params.key)
         .then(
             (result: boolean) => {
                 const data = {data: result, isSuccess: true};

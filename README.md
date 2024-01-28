@@ -68,6 +68,9 @@ These are some notes to self:
     git filter-repo --force --invert-paths --path other/database_script.sql
 
     Remember to add pagination to the server DB queries
+    Add share button to the listings
+    Add a section to see the stores in a list or grid
+
     
     Tailwind cheat sheet
     https://tailwindcomponents.com/cheatsheet/

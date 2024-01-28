@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { login, userExist } from "../state/store/slice/sessionSlice";
+import { exist, login, userExist } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faSpinner, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { DataEnvelope } from "../model/fetch";
@@ -58,7 +58,7 @@ export default function LoginForm() {
     };
 
     useEffect(() => {
-        dispatch(userExist(signUpFormData.user_name)).then(
+        dispatch(exist({column_name: "user_name", key: signUpFormData.user_name})).then(
             (response: any) => {
                 set_user_name_Exist(response.payload.data);
             }

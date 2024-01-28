@@ -39,9 +39,9 @@ async function login(data: { user_email: string, user_password: string }) {
     return { user: cleanUser, token };
 }
 
-async function userExist(user_name: string) {
+async function exist(column: string, key: string) {
     const db = await connection();
-    const user = await db('user').count('*').where('user_name', user_name);
+    const user = await db('user').count('*').where(column, key);
     return user[0]['count(*)'] as number > 0;
 }
 
@@ -71,4 +71,4 @@ function verifyTokenAsync(token: any) {
 }
 
 
-module.exports = { login, userExist, generateTokenAsync, verifyTokenAsync }; 
+module.exports = { login, exist, generateTokenAsync, verifyTokenAsync }; 
