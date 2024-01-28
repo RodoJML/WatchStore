@@ -105,7 +105,7 @@ export const login = createAsyncThunk(
 
 export const exist = createAsyncThunk(
     "session/exist",
-    async ({ column_name, key }: { column_name: string, key: string }): Promise<DataEnvelope<boolean>> => {
+    async ({ column_name, key = ""}: { column_name: string, key: string }): Promise<DataEnvelope<boolean>> => {
         if (key !== "") {
             return await Fetch.api(`/user/exist/${column_name}/${key}`).catch((err) => { throw err; });
         } else {

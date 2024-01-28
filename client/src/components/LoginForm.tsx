@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { exist, login, userExist } from "../state/store/slice/sessionSlice";
+import { exist, login } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faSpinner, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { DataEnvelope } from "../model/fetch";
@@ -22,6 +22,8 @@ export default function LoginForm() {
         }
     );
     const [user_name_Exist, set_user_name_Exist] = useState(false);
+    const [user_email_Exist, set_user_email_Exist] = useState(false);
+    const [user_id_Exist, set_user_id_Exist] = useState(false);
 
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
@@ -58,21 +60,41 @@ export default function LoginForm() {
     };
 
     useEffect(() => {
-        dispatch(exist({column_name: "user_name", key: signUpFormData.user_name})).then(
+        dispatch(exist({ column_name: "user_name", key: signUpFormData.user_name })).then(
             (response: any) => {
                 set_user_name_Exist(response.payload.data);
             }
         ).catch(
             (error: any) => {
-                console.log("The alias field is empty "+error);
+                console.log("The alias field might be empty " + error);
             }
         );
-    }, [signUpFormData.user_name]);
+
+        dispatch(exist({ column_name: "user_email", key: signUpFormData.user_email })).then(
+            (response: any) => {
+                set_user_email_Exist(response.payload.data);
+            }
+        ).catch(
+            (error: any) => {
+                console.log("The email field might be empty " + error);
+            }
+        );
+
+        dispatch(exist({ column_name: "user_id", key: signUpFormData.user_id })).then(
+            (response: any) => {
+                set_user_id_Exist(response.payload.data);
+            }
+        ).catch(
+            (error: any) => {
+                console.log("The id field might be empty " + error);
+            }
+        );
+    }, [signUpFormData.user_name, signUpFormData.user_email, signUpFormData.user_id]);
 
 
     return (
         <form className="grid" onSubmit={handleSubmit}>
-            
+
 
 
             <div className="flex text-white text-3xl">
@@ -121,11 +143,19 @@ export default function LoginForm() {
                         {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Registrarse"}
                     </button>
 
-                    {user_name_Exist ? 
-                    <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este alias ya esta en uso, por favor elija otro.</label> :
-                    <label className="text-wrap text-white whitespace-normal text-xs">ℹ️ Su alias es diferente a su nombre físico, su información personal se podra configurar luego.</label>
+                    {user_name_Exist || user_email_Exist || user_id_Exist
+                        ?
+                        (
+                            <div>
+                                {user_name_Exist && <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este alias ya esta en uso, por favor elija otro.</label>}
+                                {user_email_Exist && <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este correo ya esta en uso, por favor elija otro.</label>}
+                                {user_id_Exist && <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este no. de telefono ya esta en uso, por favor elija otro.</label>}
+                            </div>
+                        )
+                        :
+                        <label className="text-wrap text-white whitespace-normal text-xs">ℹ️ Su alias es diferente a su nombre físico, su información personal se podra configurar luego.</label>
                     }
-                    
+
                 </div>
             }
         </form>
@@ -136,5 +166,5 @@ const signupFormStyle0 = "rounded border pl-2 transition-all ease-in-out duratio
 const signupFormStyle1 = `${signupFormStyle0} h-0 mb-0 opacity-0`;
 const signupFormStyle2 = `${signupFormStyle0} h-10 mb-4 opacity-1`;
 
-
+{/* <label className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este alias ya esta en uso, por favor elija otro.</label> */ }
 // Remember that React uses a different syntax for handling forms, so you may also want to use state and an onChange event handler if you need to manage the state of the dropdown in a React component. If you are not using React, please clarify the 
