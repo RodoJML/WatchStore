@@ -16,15 +16,15 @@ async function connection() {
     return db;
 }
 
-async function login(data: {email: string, password: string}) {
+async function login(data: {user_email: string, user_password: string}) {
     
     const db = await connection();
-    const user: UserItem[] = await db('user').select('*').where('user_email', data.email);
+    const user: UserItem[] = await db('user').select('*').where('user_email', data.user_email);
     
     if(user.length === 0) {
         throw new Error('Email or user not found');
     }
-    if(user[0].user_password !== data.password) {
+    if(user[0].user_password !== data.user_password) {
         throw new Error('Password is incorrect');
     }
     
@@ -39,6 +39,11 @@ async function login(data: {email: string, password: string}) {
     return { user: cleanUser, token };
 }
 
+async function userExist(user_name: string) {
+    const db = await connection();
+    const user = await db('user').count('user_name').where('user_name', user_name);
+    return user.length > 0;
+}
 
 function generateTokenAsync(user: UserItem, expiresIn: string){
 
@@ -66,4 +71,4 @@ function verifyTokenAsync(token: any){
 }
 
 
-module.exports = { login, generateTokenAsync, verifyTokenAsync}; 
+module.exports = { login, userExist, generateTokenAsync, verifyTokenAsync}; 

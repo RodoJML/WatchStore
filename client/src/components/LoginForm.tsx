@@ -9,7 +9,15 @@ export default function LoginForm() {
 
     const sessionState = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
-    const [loginFormData, setLoginFormData] = useState({ email: "", password: "", });
+    const [loginFormData, setLoginFormData] = useState({ user_email: "", user_password: "", });
+    const [signUpFormData, setSignUpFormData] = useState(
+        { ...loginFormData ,
+            user_name: "",
+            user_id: "",
+            user_password: "",
+            user_password_confirmation: "",
+            info_user_province: "",}
+        );
 
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
@@ -23,7 +31,12 @@ export default function LoginForm() {
         if(submitter.name === "login") {   
             dispatch(login(loginFormData));
         } else if(submitter.name === "signup") {
-            // dispatch(register(loginFormData));
+            if(signUpFormData.user_password != signUpFormData.user_password_confirmation) {
+                alert("Las contraseñas no coinciden");
+            }else{
+                console.log(signUpFormData);
+                // dispatch(signup(signUpFormData));
+            }
         }
     }
 
@@ -31,6 +44,7 @@ export default function LoginForm() {
         // Handle form field changes and update the state
         const { name, value } = e.target;
         setLoginFormData({ ...loginFormData, [name]: value });
+        setSignUpFormData({ ...signUpFormData, [name]: value });
     };
 
     const handleRegFormToggle = () => {
@@ -62,13 +76,13 @@ export default function LoginForm() {
             }
 
 
-            {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user" placeholder="Alias | Sin espacios" required />}
-            {signupFormActive && <input className={signupFormStyle} type="text" pattern="\d{8}" name="phone" placeholder="Telefono | 8 Digitos" required />}
-            <input className="h-10 mb-4 rounded border pl-2" type="text" name="email" placeholder="Correo" onChange={handleChange} required />
-            <input className="h-10 mb-4 rounded pl-2" type="password" name="password" placeholder="Contraseña" onChange={handleChange} required />
-            {signupFormActive && <input className={signupFormStyle} type="password" name="passwordConfirm" placeholder="Confirmar la contrasena" required />}
+            {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias / Sin espacios" onChange={handleChange} required />}
+            {signupFormActive && <input className={signupFormStyle} type="text" pattern="\d{8}" name="user_id" placeholder="Telefono / 8 Digitos" onChange={handleChange} required />}
+            <input className="h-10 mb-4 rounded border pl-2" type="text" name="user_email" placeholder="Correo" onChange={handleChange} required />
+            <input className="h-10 mb-4 rounded pl-2" type="password" name="user_password" placeholder="Contraseña" onChange={handleChange} required />
+            {signupFormActive && <input className={signupFormStyle} type="password" name="user_password_confirmation" placeholder="Confirmar contraseña" onChange={handleChange} required />}
             {signupFormActive &&
-                <select className="h-10 mb-4 rounded border pl-2" defaultValue="">
+                <select name="info_user_province" className="h-10 mb-4 rounded border pl-2" defaultValue="">
                     <option value="" disabled>Provincia</option>
                     {provinces.map((province, index) => (
                         <option key={index} value={province}>{province}</option>

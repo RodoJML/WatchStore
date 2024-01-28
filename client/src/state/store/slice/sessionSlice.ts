@@ -98,11 +98,17 @@ export const apiFetch = createAsyncThunk(
 
 export const login = createAsyncThunk(
     "session/login",
-    async (user: { email: string, password: string }): Promise<DataEnvelope<AuthenticationEnvelope>> => {
-        return await Fetch.api('/login', user, 'POST').catch((err) => { throw err; });
+    async (user: { user_email: string, user_password: string }): Promise<DataEnvelope<AuthenticationEnvelope>> => {
+        return await Fetch.api('/user/login', user, 'POST').catch((err) => { throw err; });
     },
 )
 
+export const userExist = createAsyncThunk(
+    "session/userExist",
+    async (user_name: boolean): Promise<DataEnvelope<boolean>> => {
+        return await Fetch.api('/userExist', user_name).catch((err) => { throw err; });
+    },
+)
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
