@@ -62,51 +62,50 @@ export default function LoginForm() {
         setTimeout(() => setsignupFormStyle(signupFormStyle2), 50);
     };
 
-    if (formInput) {
-
-    }
-
     useEffect(() => {
         if (signupFormActive) {
-            dispatch(exist({ column_name: "user_name", key: signUpFormData.user_name })).then(
-                (response: any) => {
-                    set_user_name_Exist(response.payload.data);
-                }
-            ).catch(
-                (error: any) => {
-                    console.log("The alias field might be empty " + error);
-                }
-            );
+            if (formInput) {
+                dispatch(exist({ column_name: "user_name", key: signUpFormData.user_name })).then(
+                    (response: any) => {
+                        set_user_name_Exist(response.payload.data);
+                    }
+                ).catch(
+                    (error: any) => {
+                        console.log("The alias field might be empty " + error);
+                    }
+                );
 
-            dispatch(exist({ column_name: "user_email", key: signUpFormData.user_email })).then(
-                (response: any) => {
-                    set_user_email_Exist(response.payload.data);
-                }
-            ).catch(
-                (error: any) => {
-                    console.log("The email field might be empty " + error);
-                }
-            );
+                dispatch(exist({ column_name: "user_email", key: signUpFormData.user_email })).then(
+                    (response: any) => {
+                        set_user_email_Exist(response.payload.data);
+                    }
+                ).catch(
+                    (error: any) => {
+                        console.log("The email field might be empty " + error);
+                    }
+                );
 
-            dispatch(exist({ column_name: "user_id", key: signUpFormData.user_id })).then(
-                (response: any) => {
-                    set_user_id_Exist(response.payload.data);
-                }
-            ).catch(
-                (error: any) => {
-                    console.log("The id field might be empty " + error);
-                }
-            );
-
-            if (signUpFormData.user_password != signUpFormData.user_password_confirmation) {
-                set_pw_mismatch(true);
-            } else {
-                set_pw_mismatch(false);
+                dispatch(exist({ column_name: "user_id", key: signUpFormData.user_id })).then(
+                    (response: any) => {
+                        set_user_id_Exist(response.payload.data);
+                    }
+                ).catch(
+                    (error: any) => {
+                        console.log("The id field might be empty " + error);
+                    }
+                );
             };
         }
     }, [signUpFormData.user_name, signUpFormData.user_email,
-    signUpFormData.user_id, signUpFormData.user_password_confirmation,]);
+    signUpFormData.user_id]);
 
+    useEffect(() => {
+        if(signUpFormData.user_password_confirmation != signUpFormData.user_password){
+            set_pw_mismatch(true);
+        } else {
+            set_pw_mismatch(false);
+        }
+    },[signUpFormData.user_password_confirmation, signUpFormData.user_password]);
 
     return (
         <form className="grid" onSubmit={handleSubmit}>
