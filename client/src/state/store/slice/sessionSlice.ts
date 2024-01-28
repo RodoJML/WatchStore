@@ -86,6 +86,16 @@ const sessionSlice = createSlice(
                 console.log(state.messages[state.messages.length - 1]);
                 state.signedIn = false;
             });
+            builder.addCase(exist.pending, (state) => {
+                state.isLoading = true;
+                state.messages.push({ message: 'Loading...', type: 'info' });
+                console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(exist.fulfilled, (state) => {
+                state.isLoading = false;
+                state.messages.push({ message: 'Data received', type: 'success' });
+                console.log(state.messages[state.messages.length - 1]);
+            });
         }
     });
 
