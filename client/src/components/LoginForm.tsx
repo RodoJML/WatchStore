@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { exist, login, signup } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faCircleDot, faCircleNotch, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { sign } from "crypto";
-import { UserItem } from "../model/fetch";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function LoginForm() {
 
@@ -39,11 +37,10 @@ export default function LoginForm() {
         if (submitter.name === "login") {
             dispatch(login(loginFormData));
         } else if (submitter.name === "signup") {
-            if (!user_name_Exist && !user_email_Exist && !user_id_Exist && 
+            if (!user_name_Exist && !user_email_Exist && !user_id_Exist &&
                 signUpFormData.user_password === signUpFormData.user_password_confirmation) {
-                    const cleanForm = {...signUpFormData, user_password_confirmation: undefined, user_type: 2};
-                    dispatch(signup(cleanForm));
-                    console.log(cleanForm);
+                const cleanForm = { ...signUpFormData, user_password_confirmation: undefined };
+                dispatch(signup(cleanForm));
             } else {
                 alert("Por favor revise el formulario, hay campos incorrectos.");
             }
@@ -65,38 +62,40 @@ export default function LoginForm() {
     };
 
     useEffect(() => {
-        if (signupFormActive) {
-            if (formInput) {
-                dispatch(exist({ column_name: "user_name", key: signUpFormData.user_name })).then(
-                    (response: any) => {
-                        set_user_name_Exist(response.payload.data);
-                    }
-                ).catch(
-                    (error: any) => {
-                        console.log("The alias field might be empty " + error);
-                    }
-                );
+        if (!sessionState.signedIn) {
+            if (signupFormActive) {
+                if (formInput) {
+                    dispatch(exist({ column_name: "user_name", key: signUpFormData.user_name })).then(
+                        (response: any) => {
+                            set_user_name_Exist(response.payload.data);
+                        }
+                    ).catch(
+                        (error: any) => {
+                            console.log("The alias field might be empty " + error);
+                        }
+                    );
 
-                dispatch(exist({ column_name: "user_email", key: signUpFormData.user_email })).then(
-                    (response: any) => {
-                        set_user_email_Exist(response.payload.data);
-                    }
-                ).catch(
-                    (error: any) => {
-                        console.log("The email field might be empty " + error);
-                    }
-                );
+                    dispatch(exist({ column_name: "user_email", key: signUpFormData.user_email })).then(
+                        (response: any) => {
+                            set_user_email_Exist(response.payload.data);
+                        }
+                    ).catch(
+                        (error: any) => {
+                            console.log("The email field might be empty " + error);
+                        }
+                    );
 
-                dispatch(exist({ column_name: "user_id", key: signUpFormData.user_id })).then(
-                    (response: any) => {
-                        set_user_id_Exist(response.payload.data);
-                    }
-                ).catch(
-                    (error: any) => {
-                        console.log("The id field might be empty " + error);
-                    }
-                );
-            };
+                    dispatch(exist({ column_name: "user_id", key: signUpFormData.user_id })).then(
+                        (response: any) => {
+                            set_user_id_Exist(response.payload.data);
+                        }
+                    ).catch(
+                        (error: any) => {
+                            console.log("The id field might be empty " + error);
+                        }
+                    );
+                };
+            }
         }
     }, [signUpFormData.user_name, signUpFormData.user_email,
     signUpFormData.user_id]);

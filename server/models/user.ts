@@ -7,8 +7,8 @@ export interface UserItem {
     user_email: string,
     user_password: string | null,
     user_views: number | null | undefined,
-    user_photo: string | null | undefined,
-    user_reg_date: Date | null | undefined,
+    user_photo_path: string | null | undefined,
+    user_registration_date: Date | null | undefined,
 }
 
 async function connection() {
@@ -43,19 +43,23 @@ async function signup(signupForm: any) {
     const db = await connection();
 
     // All user when registring will be type 2, which is a normal user.
-    const newUser: UserItem = {
-        user_id: signupForm.user_id,
+    const signedUpUser: UserItem = {
+        user_id: +signupForm.user_id,
         user_type: 2,
         user_name: signupForm.user_name,
         user_email: signupForm.user_email,
         user_password: signupForm.user_password,
         user_views: 0,
-        user_photo: null,
-        user_reg_date: null,
+        user_photo_path: undefined, 
+        user_registration_date: undefined, // Needs to be undefined so the db sets the default value of the timestamp
     };
 
-    const user = await db('user').insert(newUser);
-    return user;
+    try {
+        await db('user').insert(signedUpUser)
+        return { user: signedUpUser }    
+    } catch (err) {
+        throw new Error('Something bad happened in the backend when inserting the user');
+    }
 }
 
 async function exist(column: string, key: string) {
@@ -90,4 +94,4 @@ function verifyTokenAsync(token: any) {
 }
 
 
-module.exports = { login, exist, generateTokenAsync, verifyTokenAsync }; 
+module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync }; 

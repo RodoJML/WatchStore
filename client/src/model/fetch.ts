@@ -34,8 +34,8 @@ export interface UserItem {
     user_email: string,
     user_password: string | null,
     user_views: number | null,
-    user_photo: string | null,
-    user_reg_date: Date | null,
+    user_photo_path: string | null,
+    user_registration_date: Date | null,
 }
 
 export interface RegLogItem {

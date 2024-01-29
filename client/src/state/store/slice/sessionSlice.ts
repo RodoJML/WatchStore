@@ -21,11 +21,11 @@ const initialState: SessionState = {
         user_id: null,
         user_type: 3,
         user_name: "Guest",
-        user_email: "No email",
+        user_email: "",
         user_password: null,
         user_views: 0,
-        user_photo: null,
-        user_reg_date: null,
+        user_photo_path: null,
+        user_registration_date: null,
     },
     isLoading: false,
     messages: [],
@@ -95,6 +95,23 @@ const sessionSlice = createSlice(
                 state.isLoading = false;
                 state.messages.push({ message: 'Data received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(exist.rejected, (state, action) => {
+                state.isLoading = false;
+                state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+                console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(signup.pending, (state) => {
+                state.isLoading = true;
+                state.messages.push({ message: 'Loading...', type: 'info' });
+                console.log(state.messages[state.messages.length - 1]);
+            });
+            builder.addCase(signup.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.messages.push({ message: 'User received', type: 'success' });
+                console.log(state.messages[state.messages.length - 1]);
+                state.user = action.payload.data.user;
+                state.signedIn = true;
             });
         }
     });
