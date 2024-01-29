@@ -134,7 +134,7 @@ export default function LoginForm() {
             <input className="h-10 mb-4 rounded pl-2" type="password" name="user_password" placeholder="Contraseña" onChange={handleChange} required />
             {signupFormActive && <input className={signupFormStyle} type="password" name="user_password_confirmation" placeholder="Confirmar contraseña" onChange={handleChange} required />}
             {signupFormActive &&
-                <select name="info_user_province" className="h-10 mb-4 rounded border pl-2" defaultValue="">
+                <select name="info_user_province" className="h-10 mb-4 rounded border pl-2" defaultValue="" required>
                     <option value="" disabled>Provincia</option>
                     {provinces.map((province, index) => (
                         <option key={index} value={province}>{province}</option>
@@ -144,7 +144,7 @@ export default function LoginForm() {
             {!signupFormActive
                 ?
                 <div className="grid">
-                    <button className="bg-stone-800 mb-4 text-white font-bold h-12 rounded" type="submit" name="login" >
+                    <button className="bg-stone-800 mb-4 text-white font-bold h-12 rounded" type="submit" name="login" disabled={sessionState.isLoading}>
                         {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Iniciar Sesión"}
                     </button>
                     <a className="text-sm text-white"> Olvidaste la contraseña? </a>
