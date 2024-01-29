@@ -78,6 +78,7 @@ const sessionSlice = createSlice(
                 state.messages.push({ message: 'User received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
                 state.user = action.payload.data.user;
+                // action.payload.data.token is also available, use it when you need it.
                 state.signedIn = true;
             });
             builder.addCase(login.rejected, (state, action) => {
@@ -111,7 +112,14 @@ const sessionSlice = createSlice(
                 state.messages.push({ message: 'User received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
                 state.user = action.payload.data.user;
+                // action.payload.data.token is also available, use it when you need it.
                 state.signedIn = true;
+            });
+            builder.addCase(signup.rejected, (state, action) => {
+                state.isLoading = false;
+                state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+                console.log(state.messages[state.messages.length - 1]);
+                state.signedIn = false;
             });
         }
     });

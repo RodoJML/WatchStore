@@ -56,7 +56,9 @@ async function signup(signupForm: any) {
 
     try {
         await db('user').insert(signedUpUser)
-        return { user: signedUpUser }    
+        const cleanUser = { ...signedUpUser, user_password: null };
+        const token = await generateTokenAsync(cleanUser, '1d');
+        return { user: signedUpUser, token };   
     } catch (err) {
         throw new Error('Something bad happened in the backend when inserting the user');
     }
