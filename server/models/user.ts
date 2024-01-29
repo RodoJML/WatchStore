@@ -1,5 +1,6 @@
 import { connect } from './knex';
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 export interface UserItem {
     user_id: number,
     user_type: number,
@@ -20,11 +21,12 @@ async function login(data: { user_email: string, user_password: string }) {
 
     const db = await connection();
     const user: UserItem[] = await db('user').select('*').where('user_email', data.user_email);
+    const match = await bcrypt.compare(data.user_password, user[0].user_password);
 
     if (user.length === 0) {
         throw new Error('Email or user not found');
     }
-    if (user[0].user_password !== data.user_password) {
+    if (!match) {
         throw new Error('Password is incorrect');
     }
 
@@ -40,25 +42,26 @@ async function login(data: { user_email: string, user_password: string }) {
 }
 
 async function signup(signupForm: any) {
-    const db = await connection();
-
-    // All user when registring will be type 2, which is a normal user.
-    const signedUpUser: UserItem = {
-        user_id: +signupForm.user_id,
-        user_type: 2,
-        user_name: signupForm.user_name,
-        user_email: signupForm.user_email,
-        user_password: signupForm.user_password,
-        user_views: 0,
-        user_photo_path: undefined, 
-        user_registration_date: undefined, // Needs to be undefined so the db sets the default value of the timestamp
-    };
 
     try {
+        const db = await connection();
+        const hashedPassword = await bcrypt.hash(signupForm.user_password, 10);
+        // All user when registring will be type 2, which is a normal user.
+        const signedUpUser: UserItem = {
+            user_id: +signupForm.user_id,
+            user_type: 2,
+            user_name: signupForm.user_name,
+            user_email: signupForm.user_email,
+            user_password: hashedPassword,
+            user_views: 0,
+            user_photo_path: undefined,
+            user_registration_date: undefined, // Needs to be undefined so the db sets the default value of the timestamp
+        };
+
         await db('user').insert(signedUpUser)
         const cleanUser = { ...signedUpUser, user_password: null };
         const token = await generateTokenAsync(cleanUser, '1d');
-        return { user: signedUpUser, token };   
+        return { user: signedUpUser, token };
     } catch (err) {
         throw new Error('Something bad happened in the backend when inserting the user');
     }
