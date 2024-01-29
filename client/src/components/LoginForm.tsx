@@ -100,12 +100,12 @@ export default function LoginForm() {
     signUpFormData.user_id]);
 
     useEffect(() => {
-        if(signUpFormData.user_password_confirmation != signUpFormData.user_password){
+        if (signUpFormData.user_password_confirmation != signUpFormData.user_password) {
             set_pw_mismatch(true);
         } else {
             set_pw_mismatch(false);
         }
-    },[signUpFormData.user_password_confirmation, signUpFormData.user_password]);
+    }, [signUpFormData.user_password_confirmation, signUpFormData.user_password]);
 
     return (
         <form className="grid" onSubmit={handleSubmit}>
@@ -151,7 +151,7 @@ export default function LoginForm() {
                 </div>
                 :
                 <div className="grid">
-                    <button className="bg-blue-800 mb-4 text-white font-bold h-12 rounded" type="submit" name="signup">
+                    <button className="bg-blue-800 mb-4 text-white font-bold h-12 rounded" type="submit" name="signup" disabled={sessionState.isLoading}>
                         {sessionState.isLoading ? <FontAwesomeIcon icon={faSpinner} className="fa-spin" /> : "Registrarse"}
                     </button>
 
