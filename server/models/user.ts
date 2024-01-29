@@ -39,6 +39,25 @@ async function login(data: { user_email: string, user_password: string }) {
     return { user: cleanUser, token };
 }
 
+async function signup(signupForm: any) {
+    const db = await connection();
+
+    // All user when registring will be type 2, which is a normal user.
+    const newUser: UserItem = {
+        user_id: signupForm.user_id,
+        user_type: 2,
+        user_name: signupForm.user_name,
+        user_email: signupForm.user_email,
+        user_password: signupForm.user_password,
+        user_views: 0,
+        user_photo: null,
+        user_reg_date: null,
+    };
+
+    const user = await db('user').insert(newUser);
+    return user;
+}
+
 async function exist(column: string, key: string) {
     const db = await connection();
     const user = await db('user').count('*').where(column, key);

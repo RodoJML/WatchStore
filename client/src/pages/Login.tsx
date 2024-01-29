@@ -20,7 +20,7 @@ export default function Login({ isActive, onXclick }: LoginProps) {
             <LoginForm/>
             {/* Once signed in the login page reacts like its closed */}
 
-            <a className="relative -bottom-8" onClick={onXclick}>
+            <a className="relative -bottom-4" onClick={onXclick}>
                 <FontAwesomeIcon className="text-lg" icon={faChevronUp} inverse />
             </a>
 

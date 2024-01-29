@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { exist, login, signup } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faCircleDot, faCircleNotch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { sign } from "crypto";
+import { UserItem } from "../model/fetch";
 
 export default function LoginForm() {
 
@@ -40,7 +41,7 @@ export default function LoginForm() {
         } else if (submitter.name === "signup") {
             if (!user_name_Exist && !user_email_Exist && !user_id_Exist && 
                 signUpFormData.user_password === signUpFormData.user_password_confirmation) {
-                    const cleanForm = {...signUpFormData, user_password_confirmation: undefined};
+                    const cleanForm = {...signUpFormData, user_password_confirmation: undefined, user_type: 2};
                     dispatch(signup(cleanForm));
                     console.log(cleanForm);
             } else {

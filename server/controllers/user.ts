@@ -14,6 +14,15 @@ router
             }
         ).catch(next);
     })
+    .post('/signup', (req: Request, res: Response, next: NextFunction) => {
+        model.signup(req.body)
+        .then(
+            (result: any) => {
+                const data = {data: result, isSuccess: true};
+                res.send(data);
+            }
+        ).catch(next);
+    })
     .get('/exist/:table_name/:key', (req: Request, res: Response, next: NextFunction) => {
         model.exist(req.params.table_name, req.params.key)
         .then(
