@@ -12,6 +12,7 @@ Technologies used:
 - mySQL
 - Knex for SQL (Wrapper library) https://knexjs.org/
 - Redux for state management
+- JWT ![Screen Shot 2024-01-28 at 11 50 03 PM](https://github.com/RodoJML/WatchStore/assets/63088555/698a5528-21a7-4e3b-8e30-742ddfe73fce)
 
 <h2>📚 Database Design</h2>
 <h3>Requirements</h3>
