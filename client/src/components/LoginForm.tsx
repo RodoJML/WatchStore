@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { exist, login } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation, faCircleNotch, faSpinner, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { DataEnvelope } from "../model/fetch";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function LoginForm() {
 
@@ -185,6 +184,3 @@ export default function LoginForm() {
 const signupFormStyle0 = "rounded border pl-2 transition-all ease-in-out duration-300";
 const signupFormStyle1 = `${signupFormStyle0} h-0 mb-0 opacity-0`;
 const signupFormStyle2 = `${signupFormStyle0} h-10 mb-4 opacity-1`;
-
-{/* <div className="text-wrap text-white whitespace-normal text-xs"><FontAwesomeIcon icon={faTriangleExclamation} className="text-base text-red-500 fa-bounce" /> Este alias ya esta en uso, por favor elija otro.</div> */ }
-// Remember that React uses a different syntax for handling forms, so you may also want to use state and an onChange event handler if you need to manage the state of the dropdown in a React component. If you are not using React, please clarify the 
