@@ -113,6 +113,13 @@ export const login = createAsyncThunk(
     },
 )
 
+export const signup = createAsyncThunk(
+    "session/signup",
+    async (signUpForm: any): Promise<DataEnvelope<AuthenticationEnvelope>> => {
+        return await Fetch.api('/user/signup', signUpForm, 'POST').catch((err) => { throw err; });
+    },
+)  
+
 export const exist = createAsyncThunk(
     "session/exist",
     async ({ column_name, key}: { column_name: string, key: string }): Promise<DataEnvelope<boolean>> => {

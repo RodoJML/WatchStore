@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { exist, login } from "../state/store/slice/sessionSlice";
+import { exist, login, signup } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { sign } from "crypto";
 
 export default function LoginForm() {
 
@@ -15,8 +16,7 @@ export default function LoginForm() {
             ...loginFormData,
             user_name: "",
             user_id: "",
-            user_password: "",
-            user_password_confirmation: "",
+            user_password_confirmation: "" as string | undefined,
             info_user_province: "",
         }
     );
@@ -38,11 +38,13 @@ export default function LoginForm() {
         if (submitter.name === "login") {
             dispatch(login(loginFormData));
         } else if (submitter.name === "signup") {
-            if (signUpFormData.user_password != signUpFormData.user_password_confirmation) {
-                alert("Las contraseñas no coinciden");
+            if (!user_name_Exist && !user_email_Exist && !user_id_Exist && 
+                signUpFormData.user_password === signUpFormData.user_password_confirmation) {
+                    const cleanForm = {...signUpFormData, user_password_confirmation: undefined};
+                    dispatch(signup(cleanForm));
+                    console.log(cleanForm);
             } else {
-                console.log(signUpFormData);
-                // dispatch(signup(signUpFormData));
+                alert("Por favor revise el formulario, hay campos incorrectos.");
             }
         }
     }
@@ -130,8 +132,8 @@ export default function LoginForm() {
             {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias | Sin espacios - Min 6 letras" minLength={6} maxLength={20} onChange={handleChange} required />}
             {signupFormActive && <input className={signupFormStyle} type="tel" minLength={8} maxLength={8} name="user_id" placeholder="Telefono | 8 Digitos" onChange={handleChange} required />}
             <input className="h-10 mb-4 rounded border pl-2" type="text" name="user_email" placeholder="Correo" onChange={handleChange} required />
-            <input className="h-10 mb-4 rounded pl-2" type="password" name="user_password" placeholder="Contraseña" onChange={handleChange} required />
-            {signupFormActive && <input className={signupFormStyle} type="password" name="user_password_confirmation" placeholder="Confirmar contraseña" onChange={handleChange} required />}
+            <input className="h-10 mb-4 rounded pl-2" type="password" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$" minLength={8} name="user_password" placeholder="Contraseña" onChange={handleChange} required title="test" />
+            {signupFormActive && <input className={signupFormStyle} type="password" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$" minLength={8} name="user_password_confirmation" placeholder="Confirmar contraseña" onChange={handleChange} required />}
             {signupFormActive &&
                 <select name="info_user_province" className="h-10 mb-4 rounded border pl-2" defaultValue="" required>
                     <option value="" disabled>Provincia</option>
@@ -167,10 +169,10 @@ export default function LoginForm() {
                             )
                             :
                             (
-                                <div className="grid text-wrap text-xs whitespace-normal text-white text-center">
+                                <div className="grid text-wrap text-xs whitespace-normal text-white text-left">
                                     {formInput
-                                        ? <div>ℹ️ Todos los campos son obligatorios!</div>
-                                        : <div>ℹ️ Su información personal como nombre, apellido, entre otros, se podra configurar una vez registrado.</div>}
+                                        ? <div>Recordatorios:<br />ℹ️ Todos los campos son obligatorios.<br />ℹ️ La contraseña debe tener minimo 8 caracteres, al menos una letra, un número y un símbolo.</div>
+                                        : <div>Recordatorios:<br />ℹ️ El alias es diferente a su nombre físico.<br />ℹ️ Su información personal como nombre, apellido, entre otros, se podra configurar una vez registrado.</div>}
                                 </div>
                             )
                         }
