@@ -16,11 +16,11 @@ export default function Notification({ message = { message: null, type: null } }
     const errorNotification = `${active ? NotificationActive : NotificationInactive} border-red-500 border-opacity-20 bg-red-500`;
 
     useEffect(() => {
-        setActive(true);
-        // if (message.message !== null){
-        //     setActive(true);
-        //     setTimeout(() => setActive(false), 5000);
-        // }
+        console.log("from react", message);
+        if (message.message !== null){
+            setActive(true);
+            setTimeout(() => setActive(false), 5000);
+        }
     }, [message]);
 
     return <div className={`${message.type === 'success' ? successNotification : errorNotification}`}>
@@ -52,7 +52,7 @@ export default function Notification({ message = { message: null, type: null } }
         </div>
         <div className="absolute bg-black bg-opacity-10 h-px w-11/12 place-self-center"></div>
         <div className="text-stone-800 text-sm capitalize">
-            <strong>💬 Message: </strong>{message.message}
+            💬 Message: {message.message}
         </div>
 
     </div>;
