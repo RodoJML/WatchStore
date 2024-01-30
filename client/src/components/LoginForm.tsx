@@ -36,7 +36,7 @@ export default function LoginForm() {
         // e comes from the event listener, a default behavior of react
         // event listener is the submit button
         if (submitter.name === "login") {
-            dispatch(login(loginFormData)).unwrap().catch((error: any) => {
+            dispatch(login(loginFormData)).unwrap().catch(() => {
                 setNotification(sessionState.messages[sessionState.messages.length - 1]);
             });
         } else if (submitter.name === "signup") {
