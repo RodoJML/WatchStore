@@ -12,6 +12,7 @@ export interface UserItem {
     user_registration_date: Date | null | undefined,
 }
 
+
 async function connection() {
     const db = await connect();
     return db;
@@ -29,7 +30,7 @@ async function login(data: { user_email: string, user_password: string }) {
     const match = await bcrypt.compare(data.user_password, user[0].user_password);
     if (!match) {
         
-        throw new Error('La contraseña es incorrecta');
+        throw new Error('Contraseña incorrecta');
     }
 
     //Remember try to use bcrypt to encrypt the password

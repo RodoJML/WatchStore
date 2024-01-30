@@ -5,7 +5,7 @@ interface NotificationProps {
     message: Message;
 };
 
-export default function Notification({ message = { message: null, type: null } }: NotificationProps) {
+export default function Notification({ message }: NotificationProps) {
 
     const [active, setActive] = useState(false);
     const NotificationStyle = 'grid fixed left-4 right-4 h-16 ease-in-out duration-500 shadow-2xl justify-start items-center rounded-lg bg-white pl-3 text-left';
@@ -16,7 +16,6 @@ export default function Notification({ message = { message: null, type: null } }
     const errorNotification = `${active ? NotificationActive : NotificationInactive} border-red-500 border-opacity-20 bg-red-500`;
 
     useEffect(() => {
-        console.log("from react", message);
         if (message.message !== null){
             setActive(true);
             setTimeout(() => setActive(false), 5000);
@@ -24,35 +23,35 @@ export default function Notification({ message = { message: null, type: null } }
     }, [message]);
 
     return <div className={`${message.type === 'success' ? successNotification : errorNotification}`}>
-        <div className="text-stone-800 text-sm capitalize">
+        <div className="text-stone-800 text-sm">
             {message.type === 'success' &&
                 <div>
                     <span>✅ </span>
-                    <span>Type: </span>
-                    <span className="text-green-800">{message.type}</span>
+                    <span>Tipo: </span>
+                    <span className="text-green-800 capitalize">{message.type}</span>
                 </div>
             }
             {message.type === 'danger' &&
                 <div>
                     <span>🚨 </span>
-                    <span>Type: </span>
-                    <span className="text-red-800">{message.type}</span>
+                    <span>Tipo: </span>
+                    <span className="text-red-800 capitalize">{message.type}</span>
                 </div>
             }
             {message.type === 'warning' &&
                 <div>
                     <span>🚸 </span>
-                    <span>Type: </span>
-                    <span className="text-yellow-800">{message.type}</span>
+                    <span>Tipo: </span>
+                    <span className="text-yellow-800 capitalize">{message.type}</span>
                 </div>
             }
             {message.type === 'info' &&
-                <span>ℹ️ Type: {message.type}</span>
+                <span>ℹ️ Tipo: {message.type}</span>
             }
         </div>
         <div className="absolute bg-black bg-opacity-10 h-px w-11/12 place-self-center"></div>
-        <div className="text-stone-800 text-sm capitalize">
-            💬 Message: {message.message}
+        <div className="text-stone-800 text-sm whitespace-nowrap text-nowrap overflow-scroll">
+            💬 Mensaje: {message.message}
         </div>
 
     </div>;
