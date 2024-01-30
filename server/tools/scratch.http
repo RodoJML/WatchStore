@@ -18,10 +18,10 @@ GET http://localhost:3000/api/v1/fetch/brand/
 }
 
 ###
-POST http://localhost:3000/api/v1/login/
+POST http://localhost:3000/api/v1/user/login/
 Content-Type: application/json
 
 {
-    "email": "rodojml@me.com",
-    "password": "1234"
+    "user_email": "rodojml@me.com",
+    "user_password": "rjml2290111111111"
 }

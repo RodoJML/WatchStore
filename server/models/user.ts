@@ -6,7 +6,7 @@ export interface UserItem {
     user_type: number,
     user_name: string,
     user_email: string,
-    user_password: string | null,
+    user_password: string | null | undefined,
     user_views: number | null | undefined,
     user_photo_path: string | null | undefined,
     user_registration_date: Date | null | undefined,
@@ -21,13 +21,15 @@ async function login(data: { user_email: string, user_password: string }) {
 
     const db = await connection();
     const user: UserItem[] = await db('user').select('*').where('user_email', data.user_email);
-    const match = await bcrypt.compare(data.user_password, user[0].user_password);
 
     if (user.length === 0) {
-        throw new Error('Email or user not found');
+        throw new Error('Este correo no se encuentra registrado');
     }
+
+    const match = await bcrypt.compare(data.user_password, user[0].user_password);
     if (!match) {
-        throw new Error('Password is incorrect');
+        
+        throw new Error('La contraseña es incorrecta');
     }
 
     //Remember try to use bcrypt to encrypt the password
@@ -45,25 +47,24 @@ async function signup(signupForm: any) {
 
     try {
         const db = await connection();
-        const hashedPassword = await bcrypt.hash(signupForm.user_password, 10);
         // All user when registring will be type 2, which is a normal user.
+        // Fields set as undefined are required so the db can set the default value.
         const signedUpUser: UserItem = {
             user_id: +signupForm.user_id,
             user_type: 2,
             user_name: signupForm.user_name,
             user_email: signupForm.user_email,
-            user_password: hashedPassword,
-            user_views: 0,
+            user_password: await bcrypt.hash(signupForm.user_password, 10),
+            user_views: undefined,
             user_photo_path: undefined,
-            user_registration_date: undefined, // Needs to be undefined so the db sets the default value of the timestamp
+            user_registration_date: undefined,
         };
-
         await db('user').insert(signedUpUser)
         const cleanUser = { ...signedUpUser, user_password: null };
         const token = await generateTokenAsync(cleanUser, '1d');
-        return { user: signedUpUser, token };
+        return { user: cleanUser, token };
     } catch (err) {
-        throw new Error('Something bad happened in the backend when inserting the user');
+        throw new Error('Something bad happened in the backend when inserting the user: ' + err);
     }
 }
 

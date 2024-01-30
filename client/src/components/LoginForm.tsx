@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { exist, login, signup } from "../state/store/slice/sessionSlice";
+import { Message, exist, login, signup } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Notification from "./Notification";
 
 export default function LoginForm() {
 
@@ -24,10 +25,10 @@ export default function LoginForm() {
     const [user_id_Exist, set_user_id_Exist] = useState(false);
     const [pw_mismatch, set_pw_mismatch] = useState(false);
     const [formInput, setFormInput] = useState(false);
-
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
     const provinces = ["San Jose", "Alajuela", "Heredia", "Cartago", "Guanacaste", "Puntarenas", "Limon"];
+    const [notification, setNotification] = useState({message: null, type: null} as Message);
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
@@ -35,7 +36,9 @@ export default function LoginForm() {
         // e comes from the event listener, a default behavior of react
         // event listener is the submit button
         if (submitter.name === "login") {
-            dispatch(login(loginFormData));
+            dispatch(login(loginFormData)).unwrap().catch((error: any) => {
+                setNotification(sessionState.messages[sessionState.messages.length - 1]);
+            });
         } else if (submitter.name === "signup") {
             if (!user_name_Exist && !user_email_Exist && !user_id_Exist &&
                 signUpFormData.user_password === signUpFormData.user_password_confirmation) {
@@ -109,7 +112,9 @@ export default function LoginForm() {
     }, [signUpFormData.user_password_confirmation, signUpFormData.user_password]);
 
     return (
-        <form className="grid" onSubmit={handleSubmit}>
+        <form className="relative grid" onSubmit={handleSubmit}>
+
+            <Notification message={notification}/>
 
             <div className="flex text-white text-3xl">
                 <span className="font-bold text-shadow shadow-black">⌚️Watch</span>

@@ -42,11 +42,11 @@ export default function Navbar() {
 
     // Render
     return (
-        <>
-            <div className="bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible">
+        <div>
+            <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
+            <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
-                <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
-                <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
+            <div className="bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10">
 
                 <nav className="grid grid-cols-5 text-white h-12 items-center p-4">
                     <div className="flex col-span-2 text-left items-center">
@@ -65,7 +65,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex justify-end col-span-2">
-                       <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} /></div>
+                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} /></div>
                     </div>
                 </nav>
 
@@ -85,7 +85,7 @@ export default function Navbar() {
                 </nav>
 
             </div>
-        </>
+        </div>
     );
 }
 

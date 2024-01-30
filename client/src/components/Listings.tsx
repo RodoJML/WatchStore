@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { getAllListings } from "../state/store/slice/listingsSlice";
-import type { DataEnvelopeList, DataEnvelope } from "../model/fetch";
+import type { DataEnvelopeList, DataEnvelope, ListingItem } from "../model/fetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "./ListingCard";

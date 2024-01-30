@@ -3,8 +3,8 @@ import * as Fetch from './../../../model/fetch';
 import type { DataEnvelope, AuthenticationEnvelope, UserItem } from './../../../model/fetch';
 
 export interface Message {
-    message: string,
-    type: 'success' | 'danger' | 'warning' | 'info'
+    message: string | null,
+    type: 'success' | 'danger' | 'warning' | 'info' | null
 }
 
 interface SessionState {
