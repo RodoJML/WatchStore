@@ -24,7 +24,7 @@ async function login(data: { user_email: string, user_password: string }) {
     const user: UserItem[] = await db('user').select('*').where('user_email', data.user_email);
 
     if (user.length === 0) {
-        throw new Error('Este correo no se encuentra registrado');
+        throw new Error('Correo no registrado');
     }
 
     const match = await bcrypt.compare(data.user_password, user[0].user_password);
