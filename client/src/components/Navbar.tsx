@@ -5,10 +5,11 @@ import { useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
 import Login from "../pages/Login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store/store";
+import { logOut } from "../state/store/slice/sessionSlice";
 
-const LoginArea = ({ sessionStatus }: { sessionStatus: RootState['session'] }) => {
+const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void)}) => {
     if (!sessionStatus.signedIn) {
         return <>
             <span className="text-sm">Iniciar Sesión</span>
@@ -18,7 +19,7 @@ const LoginArea = ({ sessionStatus }: { sessionStatus: RootState['session'] }) =
         return <>
             <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
             <FontAwesomeIcon icon={faUserLarge} className="mr-3 fa-bounce" style={{ animationIterationCount: '4' }} />
-            <FontAwesomeIcon icon={faRightFromBracket} />
+            <FontAwesomeIcon icon={faRightFromBracket} onClick={Logout} />
         </>
     }
 };
@@ -29,6 +30,7 @@ export default function Navbar() {
     const sessionState = useSelector((state: RootState) => state.session);
     const [sideMenuActive, setSideMenuActive] = useState(false);
     const [loginFormActive, setLoginFormActive] = useState(false);
+    const dispatch = useDispatch();
 
     // Functions
     function toggleSideMenu() {
@@ -39,7 +41,7 @@ export default function Navbar() {
         setLoginFormActive(!loginFormActive);
         return null;
     }
-
+    
     // Render
     return (
         <div>
@@ -65,7 +67,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex justify-end col-span-2">
-                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} /></div>
+                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())}/></div>
                     </div>
                 </nav>
 

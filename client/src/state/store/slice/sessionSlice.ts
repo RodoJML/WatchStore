@@ -51,6 +51,19 @@ const sessionSlice = createSlice(
             setRedirectURL: (state, action) => {
                 state.redirectURL = action.payload;
             },
+            logOut: (state) => {
+                state.signedIn = false;
+                state.user = {
+                    user_id: null,
+                    user_type: 3,
+                    user_name: "Guest",
+                    user_email: "",
+                    user_password: null,
+                    user_views: null,
+                    user_photo_path: null,
+                    user_registration_date: null,
+                };
+            }
         },
         extraReducers: (builder) => {
             builder.addCase(apiFetch.pending, (state) => {
@@ -157,7 +170,7 @@ export const exist = createAsyncThunk(
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
-export const { setUser, setLoading, addMessage, setRedirectURL } = sessionSlice.actions;
+export const { setUser, setLoading, addMessage, setRedirectURL, logOut } = sessionSlice.actions;
 // Because we are using createSlice from redux toolkit,
 // we can export the reducer and use it in the store.
 // A lot is happening behind scenes that redux is doing for us.
