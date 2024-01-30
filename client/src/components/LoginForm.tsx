@@ -5,6 +5,7 @@ import { Message, exist, login, signup } from "../state/store/slice/sessionSlice
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Notification from "./Notification";
+import { addMessage } from "../state/store/slice/sessionSlice";
 
 export default function LoginForm() {
 

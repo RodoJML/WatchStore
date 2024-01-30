@@ -18,7 +18,7 @@ const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['sessio
     } else {
         return <>
             <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
-            <FontAwesomeIcon icon={faUserLarge} className="mr-3 fa-bounce" style={{ animationIterationCount: '4' }} />
+            <FontAwesomeIcon icon={faUserLarge} className="mr-2 fa-bounce" style={{ animationIterationCount: '4' }} />
             <FontAwesomeIcon icon={faRightFromBracket} onClick={Logout} />
         </>
     }
