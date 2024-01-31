@@ -5,7 +5,7 @@ import { Message, exist, login, signup } from "../state/store/slice/sessionSlice
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Notification from "./Notification";
-import { addMessage } from "../state/store/slice/sessionSlice";
+import { provinces } from "../model/fetch";
 
 export default function LoginForm() {
 
@@ -28,7 +28,6 @@ export default function LoginForm() {
     const [formInput, setFormInput] = useState(false);
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
-    const provinces = ["San Jose", "Alajuela", "Heredia", "Cartago", "Guanacaste", "Puntarenas", "Limon"];
     const [notification, setNotification] = useState({message: null, type: null} as Message);
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
@@ -40,11 +39,13 @@ export default function LoginForm() {
             dispatch(login(loginFormData)).unwrap().catch((error: any) => {
                 setNotification({message: error.message, type: "danger"});
             });
+            e.currentTarget.reset();
         } else if (submitter.name === "signup") {
             if (!user_name_Exist && !user_email_Exist && !user_id_Exist &&
                 signUpFormData.user_password === signUpFormData.user_password_confirmation) {
                 const cleanForm = { ...signUpFormData, user_password_confirmation: undefined };
                 dispatch(signup(cleanForm));
+                e.currentTarget.reset();
             } else {
                 alert("Por favor revise el formulario, hay campos incorrectos.");
             }

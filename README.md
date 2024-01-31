@@ -71,6 +71,7 @@ These are some notes to self:
     Remember to add pagination to the server DB queries
     Add share button to the listings
     Add a section to see the stores in a list or grid
+    Remmber to add year to the models in the DB
 
     
     Tailwind cheat sheet

@@ -280,3 +280,5 @@ export const apiFetchCalls = {
         }
     },
 }
+
+export const provinces = ["SJO", "ALE", "HER", "CAR", "GUA", "PUN", "LIM"];

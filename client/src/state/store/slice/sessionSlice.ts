@@ -140,7 +140,7 @@ const sessionSlice = createSlice(
 export const apiFetch = createAsyncThunk(
     "session/apiFetch",
     async (args: { url: string, data?: any, method?: string, headers?: any }) => {
-        return await Fetch.api(args.url, args.data, args.method, args.headers).catch((err) => { throw err; });
+        return await Fetch.api(`/fetch/${args.url}`, args.data, args.method, args.headers).catch((err) => { throw err; });
     },
 )
 

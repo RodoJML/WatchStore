@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faCartFlatbed, faUserLarge, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faSearch, faUserLarge, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
 import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../state/store/store";
-import { logOut } from "../state/store/slice/sessionSlice";
+import { AppDispatch, RootState } from "../state/store/store";
+import { apiFetch, logOut } from "../state/store/slice/sessionSlice";
+import { StyleItem, provinces } from "../model/fetch";
 
-const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void)}) => {
+const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
     if (!sessionStatus.signedIn) {
         return <>
             <span className="text-sm">Iniciar Sesión</span>
-            <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '4' }} />
+            <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '5' }} />
         </>
     } else {
         return <>
@@ -30,7 +31,8 @@ export default function Navbar() {
     const sessionState = useSelector((state: RootState) => state.session);
     const [sideMenuActive, setSideMenuActive] = useState(false);
     const [loginFormActive, setLoginFormActive] = useState(false);
-    const dispatch = useDispatch();
+    const [watchStyles, setWatchStyles] = useState([] as StyleItem[]);
+    const dispatch = useDispatch<AppDispatch>();
 
     // Functions
     function toggleSideMenu() {
@@ -41,7 +43,15 @@ export default function Navbar() {
         setLoginFormActive(!loginFormActive);
         return null;
     }
-    
+
+    useEffect(() => {
+        dispatch(apiFetch({ url: 'style' })).then((res) => {
+            if (res.payload) {
+                setWatchStyles(res.payload.data);
+            }
+        });
+    }, []);
+
     // Render
     return (
         <div>
@@ -67,7 +77,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex justify-end col-span-2">
-                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())}/></div>
+                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())} /></div>
                     </div>
                 </nav>
 
@@ -78,17 +88,27 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <nav className="flex h-8 bg-stone-700 text-white text-sm items-center p-4">
-                    <div className="flex flex-grow overflow-scroll">
-                        {/* Load image in assets/images dislay it with an htmnl tag */}
+                <nav className="flex h-8 bg-stone-700 text-white text-sm items-center">
+                    <img className="p-2 max-w-full max-h-full object-contain" src="/src/assets/images/crc.png" />
+                  
+                        <select className="bg-stone-700 focus:outline-none max-w-full -ml-2">
+                            {provinces.map((province) => {
+                                return <option key={province}>{province}</option>
+                            })}
+                        </select>
 
-                        <a className="">Provincia: San Jose</a>
-                    </div>
+                    {false
+                        ? <div className="flex flex-grow overflow-scroll animate-pulse mx-3">
+                            <div>⏳ El presente es el regalo del tiempo ...</div>
+                        </div>
+                        : <div className="flex flex-grow overflow-scroll scroll-smooth justify-between">
+                            {watchStyles.map((style) => {
+                                return <Link key={style.style_id} to={""} className="mx-3">{style.style_name}</Link>
+                            })}
+                        </div>}
                 </nav>
 
             </div>
         </div>
     );
 }
-
-// Styles
