@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../state/store/store";
 
 interface LoginProps {
-    isActive: boolean;
-    onXclick: () => (void);
+    isActive: boolean | undefined;
+    onXclick: () => (void) | null;
 }
 
 export default function Login({ isActive, onXclick }: LoginProps) {
