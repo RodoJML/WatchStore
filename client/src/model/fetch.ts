@@ -281,4 +281,10 @@ export const apiFetchCalls = {
     },
 }
 
+export interface Slide{
+    url: string,
+    title: string,
+    description: string,
+}
+
 export const provinces = ["SJO", "ALE", "HER", "CAR", "GUA", "PUN", "LIM"];
