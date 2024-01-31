@@ -13,7 +13,7 @@ export default function Carousel({ slides }: CarouselProps) {
 
     const carousel_bg_img_style = {
         backgroundImage: `url(${slides[currentIndex].url})`,
-        backgroundPosition: "center",
+        // backgroundPosition: "center", IF NEEDED
         backgroundSize: "cover",
     }
 
@@ -29,6 +29,10 @@ export default function Carousel({ slides }: CarouselProps) {
         setCurrentIndex(newIndex);
     }
 
+    const goToSlide = (index: number) => {
+        setCurrentIndex(index);
+    }
+
     useEffect(() => {
         const interval = setInterval(goToNext, 5000);
         return () => clearInterval(interval);
@@ -38,13 +42,23 @@ export default function Carousel({ slides }: CarouselProps) {
         // Do not set fixed height and width for the slider as we want it to be responsive
         // Width and height will be set by the parent container, wrap the carousel on a div and set dimensions there
         <div className="relative h-full text-white">
-            <FontAwesomeIcon className="absolute top-1/2 left-4 z-10 opacity-65" icon={faChevronLeft}
+            <FontAwesomeIcon className="absolute top-1/2 left-4 z-10 opacity-65 cursor-pointer" icon={faChevronLeft}
                 onClick={goToPrevious} />
-            <div className="w-full h-full rounded shadow shadow-black transition-right duration-500 ease-in-out" style={carousel_bg_img_style}></div>
-            <FontAwesomeIcon className="absolute top-1/2 right-4 z-10 opacity-65" icon={faChevronRight}
+            <div className="bg-white w-full h-full rounded shadow shadow-black transition-right duration-500 ease-in-out" style={carousel_bg_img_style}></div>
+            <FontAwesomeIcon className="absolute top-1/2 right-4 z-10 opacity-65 cursor-pointer" icon={faChevronRight}
                 onClick={goToNext} />
+
+            <div className="flex justify-center items-center">
+                {slides.map((slide, index) => (
+                    <div className={`${index === currentIndex ? dotStyleActive : dotStyleInactive}`} key={index} onClick={() => goToSlide(index)}>·</div>
+                ))}
+            </div>
         </div>
     )
 }
+
+const dotStyle = "cursor-pointer -mt-4 text-6xl transition-opacity duration-500 ease-in-out";
+const dotStyleActive = `${dotStyle} opacity-100`;
+const dotStyleInactive = `${dotStyle} opacity-50`;
 
 
