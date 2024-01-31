@@ -10,21 +10,23 @@ export default function SideMenu({ isActive, onXclick }: SideMenuProps) {
 
     return <div className={`${isActive ? sideMenuActive : sideMenuInactive}`}>
 
-        <div className="flex">
-            <div className="w-full ml-10 mt-4 text-center">
-                <span className="text-white font-bold">⌚️Tico</span><span className="text-white font-light">Toc</span>
-            </div>
-            <a className="w-full mt-4 mr-4 text-right" onClick={onXclick}>
-                <FontAwesomeIcon icon={faCircleXmark} inverse/>              
+        <div className='relative grid grid-cols-1 ml-5'>
+
+            <a className="text-right p-1 mr-1" onClick={onXclick}>
+                <FontAwesomeIcon icon={faCircleXmark} inverse />
             </a>
+
+            <div className="text-white">
+                <span className="font-bold">⌚️Tico</span><span className="font-light">Toc</span>
+            </div>
             
         </div>
-       
+
     </div>;
 
 }
 
-const sideMenuBase = 'fixed bg-transparent w-56 h-full rounded rounded-l-none ease-in-out duration-500 shadow-2xl backdrop-blur border border-white border-opacity-20 z-20';
+const sideMenuBase = 'fixed bg-transparent w-1/2 sm:w-1/3 h-full rounded rounded-l-none ease-in-out duration-500 shadow-2xl backdrop-blur border border-white border-opacity-20 z-20';
 const sideMenuActive = `${sideMenuBase} left-0`;
-const sideMenuInactive = `${sideMenuBase} -left-80`;
+const sideMenuInactive = `${sideMenuBase} -left-1/2 sm:-left-1/3`;
 

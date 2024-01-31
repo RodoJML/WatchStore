@@ -27,7 +27,7 @@ export default function Home() {
 
     return (
         <div>
-            <div className="aspect-video m-2 sm:mx-20 md:mx-28 lg:mx-36 xl:mx-60 2xl:mx-96">
+            <div className="aspect-video m-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96">
                 <Carousel slides={slides} />
             </div>
         </div>
