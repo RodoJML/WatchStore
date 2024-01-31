@@ -18,8 +18,13 @@ export default function Notification({ message }: NotificationProps) {
     useEffect(() => {
         if (message.message !== null) {
             setActive(true);
-            setTimeout(() => setActive(false), 5000);
         }
+
+        const timeout = setTimeout(() => {
+            setActive(false);
+        }, 5000);
+
+        return () => clearTimeout(timeout);
     }, [message]);
 
     return <div className={`${message.type === 'success' ? successNotification : errorNotification}`}>
