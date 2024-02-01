@@ -48,7 +48,7 @@ export default function Carousel({ slides }: CarouselProps) {
             <FontAwesomeIcon className="absolute top-1/2 right-4 z-10 opacity-65 cursor-pointer" icon={faChevronRight}
                 onClick={goToNext} />
 
-            <div className="flex justify-center items-center">
+            <div className="absolute -bottom-2 left-1/2 right-1/2 flex justify-center items-center">
                 {slides.map((slide, index) => (
                     <div className={`${index === currentIndex ? dotStyleActive : dotStyleInactive}`} key={index} onClick={() => goToSlide(index)}>·</div>
                 ))}
@@ -57,7 +57,7 @@ export default function Carousel({ slides }: CarouselProps) {
     )
 }
 
-const dotStyle = "cursor-pointer -mt-4 text-6xl transition-opacity duration-500 ease-in-out";
+const dotStyle = "cursor-pointer text-6xl transition-opacity duration-500 ease-in-out";
 const dotStyleActive = `${dotStyle} opacity-100`;
 const dotStyleInactive = `${dotStyle} opacity-50`;
 

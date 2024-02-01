@@ -5,7 +5,7 @@ import { StockItem, ListingItem } from "../model/fetch";
 export default function ListingCard() {
 
     return (
-        <div className="shadow-2xl shadow-black relative">
+        <div className="shadow-2xl shadow-black relative rounded">
                 
                 <div className="ribbon"><span>Original</span></div>
 
@@ -32,9 +32,9 @@ export default function ListingCard() {
                 </div>
 
                 <div className="grid bg-stone-900 rounded-b aspect-video text-center whitespace-nowrap border-t border-opacity-40 border-white items-center p-2">
-                    <div className="grid col-span-1 p-1">
+                    <div className="grid col-span-1">
 
-                        <div className="-mb-1 overflow-scroll">
+                        <div className="-mb-1 -mt-1 overflow-scroll">
                             <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">Rolex</a>
                         </div>
 

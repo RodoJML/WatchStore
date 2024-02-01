@@ -12,10 +12,10 @@ import { StyleItem, provinces } from "../model/fetch";
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
     if (!sessionStatus.signedIn) {
-        return <>
+        return <div className="cursor-pointer">
             <span className="text-sm">Iniciar Sesión</span>
             <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '5' }} />
-        </>
+        </div>
     } else {
         return <>
             <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
@@ -32,6 +32,7 @@ export default function Navbar() {
     const [sideMenuActive, setSideMenuActive] = useState(false);
     const [loginFormActive, setLoginFormActive] = useState(false);
     const [watchStyles, setWatchStyles] = useState([] as StyleItem[]);
+    const totalWatchStyles = watchStyles.length;
     const dispatch = useDispatch<AppDispatch>();
 
     // Functions
@@ -63,7 +64,7 @@ export default function Navbar() {
                 <nav className="grid grid-cols-5 text-white h-12 items-center p-4">
                     <div className="flex col-span-2 text-left items-center">
 
-                        <div onClick={toggleSideMenu}><BarsIcon /></div>
+                        <div className="cursor-pointer"onClick={toggleSideMenu}><BarsIcon /></div>
 
                         <Link to="/">
                             <span className="font-bold ml-1">⌚️Watch</span>
@@ -91,7 +92,7 @@ export default function Navbar() {
                 <nav className="flex h-8 bg-stone-700 text-white text-sm items-center">
                     <img className="p-2 max-w-full max-h-full object-contain" src="/src/assets/images/crc.png" />
                   
-                        <select className="bg-stone-700 focus:outline-none max-w-full -ml-2">
+                        <select className="bg-stone-700 focus:outline-none max-w-full -ml-2 cursor-pointer">
                             {provinces.map((province) => {
                                 return <option key={province}>{province}</option>
                             })}

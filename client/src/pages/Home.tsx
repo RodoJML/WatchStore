@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import Carousel from "../components/Carousel";
 import { Slide } from "../model/fetch";
 import { RootState } from "../state/store/store";
+import ListingCard from "../components/ListingCard";
 
 export default function Home() {
 
@@ -30,6 +31,21 @@ export default function Home() {
             <div className="aspect-video m-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96">
                 <Carousel slides={slides} />
             </div>
+
+            <div>
+                <div className="flex justify-center">
+                    <div className="bg-white ">Selector</div>
+                </div>
+                <div className="grid grid-cols-2 m-3 gap-4">
+                    <ListingCard />
+                    <ListingCard />
+                    <ListingCard />
+                </div>
+            </div>
+
+
+
+
         </div>
     )
 }
