@@ -1,14 +1,8 @@
-import { useSelector } from "react-redux";
 import Carousel from "../components/Carousel";
 import { Slide } from "../model/fetch";
-import { RootState } from "../state/store/store";
-import ListingCard from "../components/ListingCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGripVertical, faList, faTableCellsLarge } from "@fortawesome/free-solid-svg-icons";
+import Listings from "./Listings";
 
 export default function Home() {
-
-    const sessionState = useSelector((state: RootState) => state.session);
 
     const slides = [
         {
@@ -34,31 +28,7 @@ export default function Home() {
                 <Carousel slides={slides} />
             </div>
 
-            <div className="flex justify-center m-3 text-xs">
-
-                <div className="grid grid-cols-3 gap-4 bg-black bg-opacity-20 text-white border border-black border-opacity-10 rounded p-1 px-2 mr-2 items-center">
-                    <div className="font-extrabold">Todos</div>
-                    <div className="opacity-50">Nuevos</div>
-                    <div className="opacity-50">Usados</div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 bg-black bg-opacity-20 text-white border border-black border-opacity-10 rounded p-1 px-2 items-center">
-                    <FontAwesomeIcon icon={faList} className="opacity-50" />
-                    <FontAwesomeIcon icon={faTableCellsLarge} />
-                </div>
-
-            </div>
-
-            <div>
-                <div className="grid grid-cols-2 m-3 gap-4">
-                    <ListingCard />
-                    <ListingCard />
-                    <ListingCard />
-                </div>
-            </div>
-
-
-
+            <Listings/>
 
         </div>
     )
