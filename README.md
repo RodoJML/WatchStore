@@ -29,6 +29,7 @@ Technologies used:
 - Watches styles, types and movements, keep an updated list of these. 
 
 <h3>EER Diagram (v2.2)</h3>
+Had to add more formalization, previously there was just one table for the stock of both original and generic watches, now generic and original each has its own table for stock, and so listings are now split like that as well. 
 
 ![Screen Shot 2024-02-04 at 2 30 06 PM](https://github.com/RodoJML/WatchStore/assets/63088555/2bb93b6a-95ae-47f8-b2d8-a93f4849354a)
 
