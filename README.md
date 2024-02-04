@@ -28,11 +28,13 @@ Technologies used:
 - Log: Keep a log of users registered and listings
 - Watches styles, types and movements, keep an updated list of these. 
 
+<h3>EER Diagram (v2.2)</h3>
+
+![Screen Shot 2024-02-04 at 2 30 06 PM](https://github.com/RodoJML/WatchStore/assets/63088555/2bb93b6a-95ae-47f8-b2d8-a93f4849354a)
+
 <h3>EER Diagram (v2.1)</h3>
 
 ![Screen Shot 2024-01-22 at 2 30 06 PM](https://github.com/RodoJML/WatchStore/assets/63088555/1933957d-694d-4418-b979-512eeb6d6c19)
-
-
 
 
 
