@@ -15,7 +15,7 @@ const port = 3000;
 const fetchUtil = require('./controllers/fetchUtil.ts');
 const brands = require('./controllers/brands.ts');
 const user = require('./controllers/user.ts');
-const listing = require ('./controllers/listing.ts');
+const listing = require ('./controllers/orig_listing.ts');
 
 // Middleware
 app

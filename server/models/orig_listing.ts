@@ -7,7 +7,8 @@ async function connection() {
 
 async function getAll() {
     const db = await connection();
-    const objects = await db('listing').select('*');
+    const objects = await db('orig_listing').select('*').leftJoin('orig_stock', 
+    'orig_listing.orig_listing_stock_id', 'orig_stock.orig_stock_id').andWhere('orig_listing.orig_listing_stock_store_user_id', 'orig_stock.orig_stock_store_user_id');
     const total = objects.length;
     return {objects, total};
 }

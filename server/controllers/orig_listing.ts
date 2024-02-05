@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 const expressController = require('express');
 const router = expressController.Router();
-const model = require('../models/listing.ts');
+const model = require('../models/orig_listing.ts');
 
 router
     .get('/', (req: Request, res: Response, next: NextFunction) => {
