@@ -12,6 +12,14 @@ async function getAll(table: string) {
     return {objects, total};
 }
 
+// offset((page - 1) * pageSize).limit(pageSize) FOR PAGINATION
+async function getAllbyPage(table: string, page = 1, pageSize = 30) {
+    const db = await connection();
+    const objects = await db(table).select('*').offset((page - 1) * pageSize).limit(pageSize);
+    const total = objects.length;
+    return {objects, total};
+}
+
 async function getOne(table:string, column_id: string, id: string) {
     const db = await connection();
     const object = await db(table).select('*').where(column_id, id);
@@ -43,4 +51,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, getOne, addOne, updateOne, deleteOne, search};
+module.exports = { getAll, getAllbyPage, getOne, addOne, updateOne, deleteOne, search};

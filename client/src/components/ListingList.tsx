@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ListingCard from "./ListingCard";
 import { faCalendarDays, faEye, faStar } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store/store";
 
 export default function ListingList() {
-
 
     return (
         <>
@@ -53,8 +54,8 @@ export default function ListingList() {
                     </div>
 
 
-                    <div className="invisible w-0 h-0 sm:w-40 sm:h-full sm:visible ml-auto mt-6 mr-4 text-stone-800 text-xs">
-                        <div className="invisible sm:visible grid grid-cols-2">
+                    <div className="hidden sm:block sm:w-40 sm:h-full sm:visible sm:ml-auto sm:mt-6 sm:mr-4 text-stone-800 text-xs">
+                        <div className="hidden sm:visible sm:grid sm:grid-cols-2">
                             <div>Rating:</div>
                             <span>
                                 <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
@@ -77,8 +78,5 @@ export default function ListingList() {
                 </div>
             </div>
         </>
-    );
+    )
 }
-
-//w-full h-48 for the white piece
-

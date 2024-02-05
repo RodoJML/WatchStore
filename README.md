@@ -72,6 +72,7 @@ These are some notes to self:
     Add share button to the listings
     Add a section to see the stores in a list or grid
     Remmber to add year to the models in the DB
+    DB needs to be updated fields need to be change from Decimal (3,2) to Decimal (5,2) 
 
     
     Tailwind cheat sheet

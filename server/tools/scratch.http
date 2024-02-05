@@ -25,3 +25,7 @@ Content-Type: application/json
     "user_email": "rodojml@me.com",
     "user_password": "rjml2290111111111"
 }
+
+
+###
+GET http://localhost:3000/api/v1/listing/

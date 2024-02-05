@@ -32,6 +32,7 @@ export default function Navbar() {
     const [sideMenuActive, setSideMenuActive] = useState(false);
     const [loginFormActive, setLoginFormActive] = useState(false);
     const [watchStyles, setWatchStyles] = useState([] as StyleItem[]);
+    const [advancedSearch, setAdvancedSearch] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
 
     // Functions
@@ -58,9 +59,9 @@ export default function Navbar() {
             <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
             <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
-            <div className="bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10">
+            <div className="relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-full">
 
-                <nav className="grid grid-cols-5 text-white h-12 items-center p-4">
+                <nav className="grid grid-cols-5 text-white h-12 items-center">
                     <div className="flex col-span-2 text-left items-center">
 
                         <div className="cursor-pointer" onClick={toggleSideMenu}><BarsIcon /></div>
@@ -81,22 +82,23 @@ export default function Navbar() {
                     </div>
                 </nav>
 
-                <div className="grid mx-4 mt-4">
+                <div className="grid mt-4">
                     <div className="flex items-center space-x-1">
                         <input className="w-full min-h-10 border-gray-500 rounded pl-2" id="searchBar" type="text" placeholder="Buscar"></input>
-                        <div className="bg-lume-100 text-center p-2 rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
+                        <div className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
                             <FontAwesomeIcon icon={faSearch} />
                         </div>
                     </div>
 
-                    <div className="text-white text-xs text-opacity-30 text-right mt-1 mb-2 underline">Busqueda avanzada</div>
+                    <div className="text-white text-xs text-opacity-30 text-right mt-1 mb-2 underline" 
+                    onClick={() => setAdvancedSearch(!advancedSearch)}>Busqueda avanzada</div>
                 </div>
 
-                
+                       
 
 
 
-                <nav className="flex h-8 bg-stone-700 text-white text-sm items-center">
+                <nav className="absolute -ml-4 w-full bottom-0 flex h-8 bg-stone-700 text-white text-sm items-center ">
                     <img className="p-2 max-w-full max-h-full object-contain" src="/src/assets/images/crc.png" />
 
                     <select className="bg-stone-700 focus:outline-none max-w-full -ml-2 cursor-pointer">
