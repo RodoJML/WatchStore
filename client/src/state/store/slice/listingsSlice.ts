@@ -3,7 +3,7 @@ import * as Fetch from './../../../model/fetch';
 import type { DataEnvelopeList, DataEnvelope, ListingItem } from './../../../model/fetch';
 import { type Message } from './sessionSlice';
 
-interface ListingPreviewItem {
+export interface ListingPreviewItem {
     stock_id: number,
     store_user_id: number,
     brand: string,

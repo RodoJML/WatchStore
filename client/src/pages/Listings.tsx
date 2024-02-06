@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import type { DataEnvelopeList, ListingItem } from "../model/fetch";
+import type { ListingItem } from "../model/fetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical, faList } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
@@ -28,6 +28,9 @@ export default function Listing() {
         setViewMode(!viewMode);
     }
 
+    // This use effect is running everytime im at home even though this is not the home rout this is listing route
+    // this is because the home route is the index route and the index route is the default route
+    // to fix this i need to add a condition to check if the route is the home route
     useEffect(() => {
         dispatch(getAll_orig_previews()).then((data: any) => {
             console.log("LOGGED FROM REACT: ", data.payload.data)
