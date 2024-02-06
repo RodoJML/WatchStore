@@ -8,8 +8,22 @@ interface ListingPreviewItem {
     store_user_id: number,
     brand: string,
     model: string,
-    
+    cprice: number,
+    dprice: number | null,
+    movement: string,
+    width: number,
+    condition: number,
+    guarantee: number,
+    store_name: string,
+    quantity: number,
+    location: string | null,
+    user_name: string,
+    date: Date,
+    views: number,
+    listing_type: number,
+    rating: number,
 }
+
 interface listingsState {
     isLoading: boolean,
     messages: Message[],
@@ -27,28 +41,28 @@ const listingSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getAllListings.pending, (state) => {
+        builder.addCase(getAll_orig_previews.pending, (state) => {
             state.messages.push({message: 'Loading...' , type: 'info'});
             state.isLoading = true;
             console.log(state.messages[state.messages.length - 1]);
         }
         );
-        builder.addCase(getAllListings.fulfilled, (state) => {
+        builder.addCase(getAll_orig_previews.fulfilled, (state) => {
             state.messages.push({message: 'Data received' , type: 'success'});
             state.isLoading = false;
             console.log(state.messages[state.messages.length - 1]);
         });
-        builder.addCase(getAllListings.rejected, (state, action) => {
+        builder.addCase(getAll_orig_previews.rejected, (state, action) => {
             state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'}); 
             console.log(state.messages[state.messages.length - 1]);
         });
     },
 });
 
-export const getAllListings = createAsyncThunk(
-    'listings/getAllListings',
-    async (): Promise<DataEnvelopeList<ListingItem>> => {
-        return await Fetch.api('/listing/orig_previews').catch((err) => {throw err;});
+export const getAll_orig_previews = createAsyncThunk(
+    'listings/getAll_orig_previews',
+    async (): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
+        return await Fetch.api('/listing/orig_previews/').catch((err) => {throw err;});
     }
 )
 

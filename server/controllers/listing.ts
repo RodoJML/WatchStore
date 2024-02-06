@@ -9,7 +9,7 @@ router
     model.getAll()
         .then(
             (result: any) => {
-                const data = { data: result.objects, total: result.total, isSuccess: true };
+                const data = { data: result.objects, isSuccess: true, total: result.total };
                 res.send(data);
             }
         ).catch(next);
@@ -19,7 +19,7 @@ router
         .then(
             (result: any) => {
                 // Listing type referes to if its a new(1) or used(2) listing
-                const data = { data: result, isSuccess: true };
+                const data = { data: result.objects, isSuccess: true, total: result.total};
                 res.send(data);
             }
         ).catch(next);
@@ -28,7 +28,7 @@ router
         model.getAll_gen_previews()
         .then(
             (result: any) => {
-                const data = { data: result, isSuccess: true };
+                const data = { data: result.objects, isSuccess: true, total: result.total };
                 res.send(data);
             }
         ).catch(next);

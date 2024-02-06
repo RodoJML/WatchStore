@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical, faList } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
-import { getAllListings } from "../state/store/slice/listingsSlice";
+import { getAll_orig_previews } from "../state/store/slice/listingsSlice";
 
 
 export default function Listing() {
@@ -29,7 +29,9 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        dispatch(getAllListings);
+        dispatch(getAll_orig_previews()).then((data: any) => {
+            console.log("LOGGED FROM REACT: ", data.payload.data)
+        })
     }, []);
 
     return (
