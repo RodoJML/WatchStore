@@ -33,7 +33,7 @@ export default function Listing() {
     // this is because the home route is the index route and the index route is the default route
     // to fix this i need to add a condition to check if the route is the home route
     useEffect(() => {
-        dispatch(getAll_orig_previews()).then((data: any) => {
+        dispatch(getAll_orig_previews({page, pageSize})).then((data: any) => {
             console.log("LOGGED FROM REACT: ", data.payload.data)
         })
     }, []);
