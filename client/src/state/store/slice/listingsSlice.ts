@@ -3,6 +3,13 @@ import * as Fetch from './../../../model/fetch';
 import type { DataEnvelopeList, DataEnvelope, ListingItem } from './../../../model/fetch';
 import { type Message } from './sessionSlice';
 
+interface ListingPreviewItem {
+    stock_id: number,
+    store_user_id: number,
+    brand: string,
+    model: string,
+    
+}
 interface listingsState {
     isLoading: boolean,
     messages: Message[],
@@ -41,7 +48,7 @@ const listingSlice = createSlice({
 export const getAllListings = createAsyncThunk(
     'listings/getAllListings',
     async (): Promise<DataEnvelopeList<ListingItem>> => {
-        return await Fetch.api('/fetch/orig_listing/').catch((err) => {throw err;});
+        return await Fetch.api('/listing/orig_previews').catch((err) => {throw err;});
     }
 )
 
