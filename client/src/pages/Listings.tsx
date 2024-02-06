@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import type { ListingItem } from "../model/fetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical, faList } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
-import { getAll_orig_previews } from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem, getAll_orig_previews } from "../state/store/slice/listingsSlice";
 
 
 export default function Listing() {
@@ -16,7 +15,9 @@ export default function Listing() {
 
     const [condition, setCondition] = useState(1);
     const [viewMode, setViewMode] = useState(true);
-    const [listings, setListings] = useState([] as ListingItem[]);  // This is the state that will hold the listings // useState<DataEnvelopeList<ListingItem>>();
+    const [listingsPreviews, setlistingsPreviews] = useState([] as ListingPreviewItem[]);  // This is the state that will hold the listings // useState<DataEnvelopeList<ListingItem>>();
+    const [page, setPage] = useState(1);
+    const [pageSize, setpageSize] = useState(5);
 
     function watchCondition(condition: number) {
         // Condition 1: "todos", 2: "nuevos", 3: "usados"
