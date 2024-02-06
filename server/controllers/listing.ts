@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 const expressController = require('express');
 const router = expressController.Router();
-const model = require('../models/orig_listing.ts');
+const model = require('../models/listing.ts');
 
 router
     .get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -14,10 +14,11 @@ router
             }
         ).catch(next);
     })
-    .get('/previews', (req: Request, res: Response, next: NextFunction) => {
-        model.getAll_previews()
+    .get('/orig_previews', (req: Request, res: Response, next: NextFunction) => {
+        model.getAll_orig_previews()
         .then(
             (result: any) => {
+                // Listing type referes to if its a new(1) or used(2) listing
                 const data = { data: result, isSuccess: true };
                 res.send(data);
             }

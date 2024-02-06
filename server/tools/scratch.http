@@ -28,4 +28,4 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/api/v1/orig_listing/previews/
+GET http://localhost:3000/api/v1/listing/orig_previews/
