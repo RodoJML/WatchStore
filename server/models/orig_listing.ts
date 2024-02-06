@@ -17,7 +17,6 @@ async function getAll_previews() {
         'ORIGINAL_SPECS.orig_specs_width',
         'ORIG_STOCK.orig_stock_condition',
         'ORIG_LISTING.orig_listing_guarantee',
-        'AVG(orig_listingReview_rating) as rating',
         'STORE.store_name',
         'ORIG_STOCK.orig_stock_quantity',
         'USER_INFO.info_user_province',
@@ -25,6 +24,7 @@ async function getAll_previews() {
         'ORIG_LISTING.orig_listing_date',
         'ORIG_LISTING.orig_listing_views'
     )
+    .avg('LISTING_REVIEW.orig_listingReview_rating as rating')
         .leftJoin('ORIG_STOCK',
             function () {
                 this.on('ORIG_LISTING.orig_listing_stock_id', '=', 'ORIG_STOCK.orig_stock_id')
