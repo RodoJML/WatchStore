@@ -15,7 +15,7 @@ router
         ).catch(next);
     })
     .get('/orig_previews', (req: Request, res: Response, next: NextFunction) => {
-        model.getAll_orig_previews()
+        model.getAll_orig_previews(req.query.page as number | undefined, req.query.pageSize as number | undefined)
         .then(
             (result: any) => {
                 // Listing type referes to if its a new(1) or used(2) listing

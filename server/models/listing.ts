@@ -5,7 +5,7 @@ async function connection() {
     return db;
 }
 
-async function getAll_orig_previews() {
+async function getAll_orig_previews(page = 1, pageSize = 5) {
     const db = await connection();
     const objects = await db('ORIG_LISTING').select(
         'ORIG_LISTING.orig_listing_stock_id as stock_id',
@@ -51,7 +51,7 @@ async function getAll_orig_previews() {
             this.andOn('ORIG_MODEL.orig_brand_id', '=', 'ORIGINAL_SPECS.orig_specs_brand_id')
         })
         .leftJoin('MOVEMENT', 'ORIGINAL_SPECS.orig_specs_movement_id', 'MOVEMENT.movement_id')
-        .groupBy('ORIG_LISTING.orig_listing_stock_id', 'ORIG_LISTING.orig_listing_stock_store_user_id');
+        .groupBy('ORIG_LISTING.orig_listing_stock_id', 'ORIG_LISTING.orig_listing_stock_store_user_id').offset((page - 1) * pageSize).limit(pageSize);
 
     const total = objects.length;
     return { objects, total };
