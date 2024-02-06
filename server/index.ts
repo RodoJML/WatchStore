@@ -15,7 +15,7 @@ const port = 3000;
 const fetchUtil = require('./controllers/fetchUtil.ts');
 const brands = require('./controllers/brands.ts');
 const user = require('./controllers/user.ts');
-const listing = require ('./controllers/orig_listing.ts');
+const orig_listing = require ('./controllers/orig_listing.ts');
 
 // Middleware
 app
@@ -43,7 +43,7 @@ app
     .use('/api/v1/brands', brands)
     .use('/api/v1/fetch', fetchUtil)
     .use('/api/v1/user', user)
-    .use('/api/v1/listing', listing)
+    .use('/api/v1/orig_listing', orig_listing)
 
 // Error handling middleware
 app

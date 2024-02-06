@@ -41,7 +41,7 @@ const listingSlice = createSlice({
 export const getAllListings = createAsyncThunk(
     'listings/getAllListings',
     async (): Promise<DataEnvelopeList<ListingItem>> => {
-        return await Fetch.api('/listing/').catch((err) => {throw err;});
+        return await Fetch.api('/fetch/orig_listing/').catch((err) => {throw err;});
     }
 )
 

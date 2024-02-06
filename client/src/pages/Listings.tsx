@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical, faList } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
+import { getAllListings } from "../state/store/slice/listingsSlice";
 
 
 export default function Listing() {
@@ -27,15 +28,9 @@ export default function Listing() {
         setViewMode(!viewMode);
     }
 
-   
-
-    
-
-    // useEffect(() => {
-    //     dispatch(getAllListings()).then((res) => {
-    //         setData(res.payload as DataEnvelopeList<ListingItem>)
-    //     })
-    // }, []);
+    useEffect(() => {
+        dispatch(getAllListings);
+    }, []);
 
     return (
         <div>
@@ -66,13 +61,7 @@ export default function Listing() {
                     <div className={listingGridStyle}>
                         {/* The loading style for grid view happens inside the component */}
                         <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
-                        <ListingCard isLoading={sessionState.isLoading} />
+
                     </div>
                 )
                 :
@@ -89,14 +78,7 @@ export default function Listing() {
                     :
                     <div className={listingListStyle} >
                         <ListingList />
-                        <ListingList />
-                        <ListingList />
-                        <ListingList />
-                        <ListingList />
-                        <ListingList />
-                        <ListingList />
-                        <ListingList />
-                        <ListingList />
+
                     </div>
                 )
             }
