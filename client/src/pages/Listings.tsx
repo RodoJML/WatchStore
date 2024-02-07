@@ -32,7 +32,7 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        dispatch(getAll_orig_previews({ page: 1, pageSize: 4 })).then((data: any) => {
+        dispatch(getAll_orig_previews({ page, pageSize })).then((data: any) => {
             setlistingsPreviews(data.payload.data);
             console.log(listingsPreviews);
         }).catch((err) => {
@@ -62,10 +62,10 @@ export default function Listing() {
                 // In the if we check if the listingState.isLoading is false, because if the listingState.isLoading
                 // is true then we are already loading the data so we don't want to load the data again, so if the
                 // listingState.isLoading is false then we can load the data.
-                setPage(page + 1);
+                setPage((prevPage) => prevPage + 1);
 
-                dispatch(getAll_orig_previews({ page: page, pageSize: pageSize })).then((data: any) => {
-                    setlistingsPreviews([...listingsPreviews, ...data.payload.data]);
+                dispatch(getAll_orig_previews({ page: page + 1, pageSize: pageSize })).then((data: any) => {
+                    setlistingsPreviews((prevListings) => [...prevListings, ...data.payload.data]);
                     console.log(listingsPreviews);
                 })
 
@@ -81,7 +81,7 @@ export default function Listing() {
         // The use effect is set to the loading state, so when the loading state changes the use effect is going to run
         // we are not doing it directly when the scroll changes because we don't want to run the use effect every time
         // the scroll changes, we only want to run the use effect when the loading state changes.
-    }, [listingState.isLoading, scrollPosition]);
+    }, [listingState.isLoading, scrollPosition, page, pageSize, dispatch]);
 
     return (
         <div>
