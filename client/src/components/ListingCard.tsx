@@ -1,13 +1,25 @@
 import { faCalendarDays, faExpand, faEye, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StockItem, ListingItem } from "../model/fetch";
+import { ListingPreviewItem } from "../state/store/slice/listingsSlice";
+import { useState } from "react";
 
-export default function ListingCard({ isLoading }: { isLoading: boolean }) {
+interface ListingCardProps {
+    isLoading: boolean;
+    listingPreview: ListingPreviewItem;
+}
+
+export default function ListingCard({ isLoading, listingPreview }: ListingCardProps) {
+
+    const [listingDate, setListingDate] = useState(new Date(listingPreview.date));
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const days = Math.floor((currentDate.getTime() - listingDate.getTime()) / (1000 * 60 * 60 * 24));
 
     return (
         <div className="shadow-2xl shadow-black relative rounded">
 
-            <div className="ribbon"><span>Original</span></div>
+            {listingPreview.listing_type === 1 &&
+                <div className="ribbon"><span>Original</span></div>
+            }
 
             <div className="border border-white rounded-t border-opacity-30 border-b-0">
 
@@ -21,13 +33,13 @@ export default function ListingCard({ isLoading }: { isLoading: boolean }) {
 
                         <div className="absolute bottom-1 left-1 text-xs text-white opacity-50">
                             <FontAwesomeIcon icon={faCalendarDays} style={{ color: "#ffffff", opacity: 0.7 }} />
-                            <i> 7 dias</i>
+                            <i> {days} dias</i>
                         </div>
 
                         <div>
                             <div className="absolute bottom-1 right-1 text-xs text-white opacity-50 z-10">
                                 <FontAwesomeIcon icon={faEye} style={{ color: "#ffffff", opacity: 0.7 }} />
-                                <i> 347</i>
+                                <i>{listingPreview.views ? listingPreview.views : 0}</i>
                             </div>
                         </div>
                     </div>
@@ -38,27 +50,27 @@ export default function ListingCard({ isLoading }: { isLoading: boolean }) {
                 <div className="grid col-span-1">
 
                     <div className="-mb-1 -mt-1 overflow-scroll">
-                        <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">Rolex</a>
+                        <a className="text-white uppercase font-extrabold font-serif text-4vw sm:text-lg">{listingPreview.brand}</a>
                     </div>
 
                     <div className="grid">
-                        <a className="text-white font-thin capitalize text-4vw sm:text-lg -mb-1 overflow-scroll">submariner</a>
+                        <a className="text-white font-thin capitalize text-4vw sm:text-lg -mb-1 overflow-scroll">{listingPreview.model}</a>
 
                         <div className="flex text-white overflow-scroll justify-center items-center">
-                            <span className="text-3vw sm:text-xs">₡</span><span className="text-4vw sm:text-lg font-extrabold text-lume-100">100.000</span>
-                            <span className="text-3vw sm:text-xs ml-1 text-white text-opacity-50">($200)</span>
+                            <span className="text-3vw sm:text-xs">₡</span><span className="text-4vw sm:text-lg font-extrabold text-lume-100">{listingPreview.cprice.toLocaleString()}</span>
+                            <span className="text-3vw sm:text-xs ml-1 text-white text-opacity-50">(${listingPreview.dprice ? listingPreview.dprice : (listingPreview.cprice / 500).toLocaleString()})</span>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 text-white text-3vw sm:text-xs mt-2">
                         <div className="items-center overflow-visible text-left">
                             <FontAwesomeIcon icon={faGear} className="fa-spin" />
-                            <span className="ml-1">Automatico</span>
+                            <span className="ml-1">{listingPreview.movement}</span>
                         </div>
 
                         <div className="items-center overflow-visible text-right">
                             <FontAwesomeIcon icon={faExpand} />
-                            <span className="ml-1">44mm</span>
+                            <span className="ml-1">{listingPreview.width} mm</span>
                         </div>
                     </div>
 

@@ -61,7 +61,7 @@ const listingSlice = createSlice({
 
 export const getAll_orig_previews = createAsyncThunk(
     'listings/getAll_orig_previews',
-    async ({page, pageSize}: { page: number, pageSize: number }): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
+    async ({page, pageSize}: { page: number, pageSize: number | undefined}): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
         return await Fetch.api(`/listing/orig_previews?page=${page}&pageSize=${pageSize}`).catch((err) => {throw err;});
     }
 )
