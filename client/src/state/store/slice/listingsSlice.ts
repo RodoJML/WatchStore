@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelopeList, DataEnvelope, ListingItem } from './../../../model/fetch';
+import type { DataEnvelopeList } from './../../../model/fetch';
 import { type Message } from './sessionSlice';
 
 export interface ListingPreviewItem {
@@ -47,7 +47,7 @@ const listingSlice = createSlice({
             console.log(state.messages[state.messages.length - 1]);
         }
         );
-        builder.addCase(getAll_orig_previews.fulfilled, (state) => {
+        builder.addCase(getAll_orig_previews.fulfilled, (state, action) => {
             state.messages.push({message: 'Data received' , type: 'success'});
             state.isLoading = false;
             console.log(state.messages[state.messages.length - 1]);
@@ -61,8 +61,8 @@ const listingSlice = createSlice({
 
 export const getAll_orig_previews = createAsyncThunk(
     'listings/getAll_orig_previews',
-    async ({page, pageSize}: { page: number, pageSize: number | undefined}): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/orig_previews?page=${page}&pageSize=${pageSize}`).catch((err) => {throw err;});
+    async (page: number): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
+        return await Fetch.api(`/listing/orig_previews?page=${page}&pageSize=${8}`).catch((err) => {throw err;});
     }
 )
 

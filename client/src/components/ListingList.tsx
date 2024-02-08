@@ -1,27 +1,37 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ListingCard from "./ListingCard";
 import { faCalendarDays, faEye, faStar } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
-import { RootState } from "../state/store/store";
+import { ListingPreviewItem } from "../state/store/slice/listingsSlice";
+import { useState } from "react";
 
-export default function ListingList() {
+interface ListingListProps {
+    listingPreview: ListingPreviewItem;
+}
+
+export default function ListingList({ listingPreview }: ListingListProps) {
+
+    const [listingDate, setListingDate] = useState(new Date(listingPreview.date));
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const days = Math.floor((currentDate.getTime() - listingDate.getTime()) / (1000 * 60 * 60 * 24));
 
     return (
         <>
             <div className="relative bg-wooden-pattern bg-2xl rounded-lg p-2 shadow shadow-black mb-4 h-40">
-                <div className="ribbon"><span>Original</span></div>
+
+                {listingPreview.listing_type === 1 &&
+                    <div className="ribbon"><span>Original</span></div>
+                }
 
                 <div className="flex bg-amber-50 w-full h-full p-2 rounded shadow shadow-black border border-stone-800">
 
                     <div className="absolute bottom-5 left-6 text-xs text-white opacity-50">
                         <FontAwesomeIcon icon={faCalendarDays} style={{ color: "#ffffff", opacity: 0.7 }} />
-                        <i> 7 dias</i>
+                        <i> {days} dias</i>
                     </div>
 
                     <div>
                         <div className="absolute bottom-5 left-24 text-xs text-white opacity-50 z-10">
                             <FontAwesomeIcon icon={faEye} style={{ color: "#ffffff", opacity: 0.7 }} />
-                            <i> 347</i>
+                            <i> {listingPreview.views ? listingPreview.views : 0}</i>
                         </div>
                     </div>
 
@@ -30,24 +40,24 @@ export default function ListingList() {
 
                     <div className="grid">
                         <div className="block overflow-hidden">
-                            <div className="text-amber-900 opacity-60 font-serif font-extrabold text-lg uppercase whitespace-nowrap overflow-scroll -mb-2 -mt-1">AUDEMARS PIGET</div>
-                            <div className="text-md text-amber-950 font-light capitalize -mb-1">luminor</div>
+                            <div className="text-amber-900 opacity-60 font-serif font-extrabold text-lg uppercase whitespace-nowrap overflow-scroll -mb-2 -mt-1">{listingPreview.brand}</div>
+                            <div className="text-md text-amber-950 font-light capitalize -mb-1">{listingPreview.model}</div>
 
                             <div className="align-middle">
                                 <span className="text-xs">₡</span>
-                                <span className="text-lg text-stone-700 font-extrabold">100.000</span>
-                                <span className="text-xs ml-1 text-stone-700">$200</span>
+                                <span className="text-lg text-stone-700 font-extrabold">{listingPreview.cprice.toLocaleString()}</span>
+                                <span className="text-xs ml-1 text-stone-700">(${listingPreview.dprice ? listingPreview.dprice : (listingPreview.cprice / 500).toLocaleString()})</span>
                             </div>
 
                             <div className="grid grid-cols-2 text-2xs text-stone-700">
                                 <div className="font-bold">Movimiento:</div>
-                                <div>Automatico</div>
+                                <div>{listingPreview.movement}</div>
                                 <div className="font-bold">Condicion:</div>
-                                <div>Usado</div>
+                                <div>{listingPreview.condition == 1 ? "Nuevo" : "Usado"}</div>
                                 <div className="font-bold">Garantia:</div>
-                                <div>3 meses</div>
+                                {listingPreview.guarantee == 1 ? <div>{listingPreview.guarantee} mes</div> : <div>{listingPreview.guarantee} meses</div>}
                                 <div className="font-bold">Tamaño:</div>
-                                <div>44mm</div>
+                                <div>{listingPreview.width}mm</div>
                             </div>
 
                         </div>
@@ -58,20 +68,58 @@ export default function ListingList() {
                         <div className="hidden sm:visible sm:grid sm:grid-cols-2">
                             <div>Rating:</div>
                             <span>
-                                <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
-                                <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.06s' }} />
-                                <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.12s' }} />
-                                <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.18s' }} />
-                                <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.24s' }} />
+
+                                {listingPreview.rating < 1 &&
+                                <i>No reviews</i>
+                                }
+
+                                {listingPreview.rating >= 1 && listingPreview.rating < 2 &&
+                                    <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
+                                }
+
+                                {listingPreview.rating >= 2 && listingPreview.rating < 3 &&
+                                    <div>
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.06s' }} />
+                                    </div>
+                                }
+
+                                {listingPreview.rating >= 3 && listingPreview.rating < 4 &&
+                                    <div>
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.06s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.12s' }} />
+                                    </div>
+                                }
+
+                                {listingPreview.rating >= 4 && listingPreview.rating < 5 &&
+                                    <div>
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.06s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.12s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.18s' }} />
+                                    </div>
+                                }
+
+                                {listingPreview.rating >= 5 &&
+                                    <div>
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.06s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.12s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.18s' }} />
+                                        <FontAwesomeIcon icon={faStar} className="fa-bounce" style={{ animationIterationCount: '1', animationDelay: '0.24s' }} />
+                                    </div>
+                                }
+
                             </span>
                             <div>Tienda:</div>
-                            <div>My Store</div>
+                            <div>{listingPreview.store_name}</div>
                             <div>Cantidad:</div>
-                            <div>1</div>
+                            <div>{listingPreview.quantity}</div>
                             <div>Ubicación:</div>
-                            <div>San Jose</div>
+                            <div>{listingPreview.location}</div>
                             <div>Vendedor: </div>
-                            <div>John Doe</div>
+                            <div>{listingPreview.user_name}</div>
                         </div>
 
                     </div>

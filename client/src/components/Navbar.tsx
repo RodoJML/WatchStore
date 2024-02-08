@@ -59,7 +59,7 @@ export default function Navbar() {
             <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
             <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
-            <div className="relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-full">
+            <div className="relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-3">
 
                 <nav className="grid grid-cols-5 text-white h-12 items-center">
                     <div className="flex col-span-2 text-left items-center">

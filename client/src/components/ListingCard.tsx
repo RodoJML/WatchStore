@@ -63,7 +63,7 @@ export default function ListingCard({ isLoading, listingPreview }: ListingCardPr
                     </div>
 
                     <div className="grid grid-cols-2 text-white text-3vw sm:text-xs mt-2">
-                        <div className="items-center overflow-visible text-left">
+                        <div className="items-center overflow-hidden text-left">
                             <FontAwesomeIcon icon={faGear} className="fa-spin" />
                             <span className="ml-1">{listingPreview.movement}</span>
                         </div>
