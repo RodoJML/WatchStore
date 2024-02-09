@@ -117,7 +117,7 @@ export default function Navbar() {
                 </nav>
             </div>
 
-            {advancedSearch && <div className="fixed bg-transparent transition-all ease-in-out duration-1000 backdrop-blur w-full h-screen left-0 z-10"></div>}
+            <div className={`fixed bg-transparent transition-all ease-in-out duration-1000 backdrop-blur w-full h-full left-0 z-10 ${advancedSearch ? 'top-0 h-screen' : '-top-full'}`}></div>
             
         </div>
     );
