@@ -55,12 +55,11 @@ export default function Navbar() {
 
     // Render
     return (
-        <div>
+        <div className="w-full h-40">
             <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
             <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
-            <div className={`relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-20 transition-all ease-in-out duration-500 px-4 pt-1 w-full ${advancedSearch ? 'h-96' : 'h-40'}`}>
-
+            <div className={`absolute bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-20 transition-all ease-in-out duration-500 px-4 pt-1 w-full ${advancedSearch ? 'h-96' : 'h-40'}`}>
                 <nav className="grid grid-cols-5 text-white h-12 items-center">
                     <div className="flex col-span-2 text-left items-center">
 
@@ -96,11 +95,7 @@ export default function Navbar() {
                     onClick={() => setAdvancedSearch(!advancedSearch)}>Busqueda avanzada</div>
                 </div>
 
-                       
-
-
-
-                <nav className="absolute -ml-4 w-full bottom-0 flex h-8 bg-stone-700 text-white text-sm items-center ">
+                <nav className="absolute -ml-4 w-full bottom-0 flex h-8 bg-stone-700 text-white text-sm items-center">
                     <img className="p-2 max-w-full max-h-full object-contain" src="/src/assets/images/crc.png" />
 
                     <select className="bg-stone-700 focus:outline-none max-w-full -ml-2 cursor-pointer">
@@ -120,8 +115,10 @@ export default function Navbar() {
                             })}
                         </div>}
                 </nav>
-
             </div>
+
+            {advancedSearch && <div className="fixed bg-transparent transition-all ease-in-out duration-1000 backdrop-blur w-full h-screen left-0 z-10"></div>}
+            
         </div>
     );
 }

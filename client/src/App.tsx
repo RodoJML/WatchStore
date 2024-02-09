@@ -6,8 +6,8 @@ function App() {
   return (
     <div>
       <Navbar />
-      
-        <Outlet />
+
+        <Outlet/>
 
     </div>
   )
