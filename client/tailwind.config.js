@@ -100,6 +100,8 @@ export default {
         '90vw': '90vw',
         '95vw': '95vw',
         '100vw': '100vw',
+        '100': '25rem',
+        '41': '10.25rem',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

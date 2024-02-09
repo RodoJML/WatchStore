@@ -33,6 +33,7 @@ export default function Navbar() {
     const [loginFormActive, setLoginFormActive] = useState(false);
     const [watchStyles, setWatchStyles] = useState([] as StyleItem[]);
     const [advancedSearch, setAdvancedSearch] = useState(false);
+    const [advancedSearchOptions, setAdvancedSearchOptions] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
 
     // Functions
@@ -55,11 +56,11 @@ export default function Navbar() {
 
     // Render
     return (
-        <div className="w-full h-40">
+        <div className="w-full h-41">
             <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
             <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
-            <div className={`absolute bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-20 transition-all ease-in-out duration-500 px-4 pt-1 w-full ${advancedSearch ? 'h-96' : 'h-40'}`}>
+            <div className={`absolute bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-20 transition-all ease-in-out duration-500 px-4 pt-1 w-full ${advancedSearch ? 'h-100' : 'h-41'}`}>
                 <nav className="grid grid-cols-5 text-white h-12 items-center">
                     <div className="flex col-span-2 text-left items-center">
 
@@ -76,7 +77,7 @@ export default function Navbar() {
                         <span className="absolute font-extralight text-4xs z-0 mt-4 -ml-3">EST '24</span>
                     </div>
 
-                
+
                     <div className="flex justify-end col-span-2">
                         <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())} /></div>
                         {/* <div className="w-5"><img src="./src/assets/images/crcflag.png" alt="" /></div> */}
@@ -91,8 +92,151 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    <div className="text-white text-2xs text-opacity-30 text-right mt-1 underline cursor-pointer" 
-                    onClick={() => setAdvancedSearch(!advancedSearch)}>Busqueda avanzada</div>
+                    <div className="text-white text-2xs text-opacity-30 text-right mt-1 mb-1 underline cursor-pointer"
+                        onClick={() => {
+                            setAdvancedSearch(!advancedSearch)
+                            if (!advancedSearch) {
+                                setTimeout(() => {setAdvancedSearchOptions(!advancedSearchOptions)}, 200);
+                            } else {
+                                setAdvancedSearchOptions(!advancedSearchOptions)
+                            }
+                        }}>Busqueda avanzada</div>
+
+                    {advancedSearchOptions && <div className="grid grid-cols-2 gap-2 text-sm text-white mt-1">
+
+                        <div className="grid grid-cols-2 gap-2">
+
+                            <div>
+                                <div>Tipo</div>
+                                <div>Peso</div>
+                                <div>Estilo</div>
+                                <div>Forma</div>
+                                <div>Cristal</div>
+                                <div>Grosor</div>
+                                <div>Genero</div>
+                                <div>Tamaño</div>
+                                <div>Movimiento</div>
+                                <div>WaterProof</div>
+                                <div>WaterResist</div>
+
+                            </div>
+
+                            <div className="grid text-lume-100">
+                                <select className="bg-transparent" name="Luminiscencia" id="">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+
+                            <div>
+                                <div>Bisel</div>
+                                <div>C:Dial</div>
+                                <div>Hebilla</div>
+                                <div>Reserva</div>
+                                <div>M: Bisel</div>
+                                <div>M:Cristal</div>
+                                <div>C: Correa</div>
+                                <div>M: Correa</div>
+                                <div>C: Carcasa</div>
+                                <div>M: Carcasa</div>
+                                <div>Luminiscen</div>
+                            </div>
+
+                            <div className="grid text-lume-100">
+                                <select className="bg-transparent" name="Luminiscencia" id="">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                                <select className="bg-transparent" name="Luminiscencia">
+                                    <option value="0">No</option>
+                                    <option value="1">Si</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>}
+
+
                 </div>
 
                 <nav className="absolute -ml-4 w-full bottom-0 flex h-8 bg-stone-700 text-white text-sm items-center">
@@ -118,7 +262,7 @@ export default function Navbar() {
             </div>
 
             <div className={`fixed bg-transparent transition-all ease-in-out duration-1000 backdrop-blur w-full h-full left-0 z-10 ${advancedSearch ? 'top-0 h-screen' : '-top-full'}`}></div>
-            
+
         </div>
     );
 }
