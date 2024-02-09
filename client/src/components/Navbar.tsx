@@ -122,6 +122,3 @@ export default function Navbar() {
         </div>
     );
 }
-
-const NavBarStyleSearchOFF = "relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-40";
-const NavBarStyleSearchON = "relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-96";
