@@ -23,7 +23,7 @@ export default function ListingCard({ isLoading, listingPreview }: ListingCardPr
 
             <div className="border border-white rounded-t border-opacity-30 border-b-0">
 
-                {isLoading
+                {false
                     ?
                     <div className="bg-green-900 aspect-square animate-pulse opacity-30"></div>
                     :

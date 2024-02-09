@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
-import { ListingPreviewItem, getAll_orig_previews } from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem, getAll_previews} from "../state/store/slice/listingsSlice";
 
 
 export default function Listing() {
@@ -32,7 +32,7 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        dispatch(getAll_orig_previews(1)).then((data: any) => {
+        dispatch(getAll_previews(1)).then((data: any) => {
             setlistingsPreviews(data.payload.data);
         }).catch((err) => { console.log(err) })
     }, []);
@@ -48,7 +48,7 @@ export default function Listing() {
 
                 setPage((prevPage) => prevPage + 1);
 
-                dispatch(getAll_orig_previews(page + 1)).then((data: any) => {
+                dispatch(getAll_previews(page + 1)).then((data: any) => {
                     setHasMore(data.payload.data.length);
                     setlistingsPreviews((prevListings) => [...prevListings, ...data.payload.data]);
                 })
@@ -100,8 +100,8 @@ export default function Listing() {
 
                         {listingState.isLoading &&
                             <div className="flex justify-center my-4">
-                                <div className="text-white">Loading...</div>
                                 <FontAwesomeIcon icon={faSpinner} className="fa-spin text-xl" inverse />
+                                <div className="text-white ml-1">Cargando...</div>
                             </div>
                         }
                     </div>
@@ -119,8 +119,8 @@ export default function Listing() {
 
                     {listingState.isLoading &&
                         <div className="flex justify-center my-4">
-                            <div className="text-white">Loading...</div>
                             <FontAwesomeIcon icon={faSpinner} className="fa-spin text-xl" inverse />
+                            <div className="text-white ml-1">Cargando...</div>
                         </div>
                     }
                 </div>

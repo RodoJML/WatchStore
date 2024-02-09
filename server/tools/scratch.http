@@ -28,7 +28,7 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/api/v1/listing/orig_previews
+GET http://localhost:3000/api/v1/listing/getAll_previews
 
 ###
 GET http://localhost:3000/api/v1/listing/orig_previews?page=2&pageSize=5

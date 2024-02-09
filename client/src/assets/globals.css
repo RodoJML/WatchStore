@@ -14,7 +14,7 @@ body {
     width: 80px;
     height: 5px;
     position: absolute;
-    top: 15%;
+    top: 24px;
     left: calc(50% - 10px);
     transform: rotate(0deg);
     animation: 10s seconds linear infinite;
@@ -30,7 +30,7 @@ body {
     content: "";
     display: block; 
     position: absolute; 
-    left: 5px;
+    left: 6px;
     top: -2px; 
     height: 8px; 
     width: 8px;

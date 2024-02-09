@@ -59,7 +59,7 @@ export default function Navbar() {
             <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
             <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
-            <div className="relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-3">
+            <div className={`relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-20 transition-all ease-in-out duration-500 px-4 pt-1 w-full ${advancedSearch ? 'h-96' : 'h-40'}`}>
 
                 <nav className="grid grid-cols-5 text-white h-12 items-center">
                     <div className="flex col-span-2 text-left items-center">
@@ -77,12 +77,14 @@ export default function Navbar() {
                         <span className="absolute font-extralight text-4xs z-0 mt-4 -ml-3">EST '24</span>
                     </div>
 
+                
                     <div className="flex justify-end col-span-2">
                         <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())} /></div>
+                        {/* <div className="w-5"><img src="./src/assets/images/crcflag.png" alt="" /></div> */}
                     </div>
                 </nav>
 
-                <div className="grid mt-4">
+                <div className="grid mt-3">
                     <div className="flex items-center space-x-1">
                         <input className="w-full min-h-10 border-gray-500 rounded pl-2" id="searchBar" type="text" placeholder="Buscar"></input>
                         <div className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
@@ -90,7 +92,7 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    <div className="text-white text-xs text-opacity-30 text-right mt-1 mb-2 underline" 
+                    <div className="text-white text-2xs text-opacity-30 text-right mt-1 underline cursor-pointer" 
                     onClick={() => setAdvancedSearch(!advancedSearch)}>Busqueda avanzada</div>
                 </div>
 
@@ -123,3 +125,6 @@ export default function Navbar() {
         </div>
     );
 }
+
+const NavBarStyleSearchOFF = "relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-40";
+const NavBarStyleSearchON = "relative bg-gradient-to-b from-stone-700 to-black whitespace-nowrap overflow-visible z-10 transition-all ease-in-out duration-500 px-4 pt-1 h-96";

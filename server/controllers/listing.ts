@@ -14,22 +14,13 @@ router
             }
         ).catch(next);
     })
-    .get('/orig_previews', (req: Request, res: Response, next: NextFunction) => {
-        model.getAll_orig_previews(req.query.page as number | undefined, req.query.pageSize as number | undefined)
+    .get('/previews', (req: Request, res: Response, next: NextFunction) => {
+        model.getAll_previews(req.query.page as number | undefined, req.query.pageSize as number | undefined)
         // In the model the page and number is defined that if no query is passed it will default to 1 and 5 respectively
         .then(
             (result: any) => {
                 // Listing type referes to if its a new(1) or used(2) listing
                 const data = { data: result.objects, isSuccess: true, total: result.total};
-                res.send(data);
-            }
-        ).catch(next);
-    })
-    .get('/gen_previews', (req: Request, res: Response, next: NextFunction) => {
-        model.getAll_gen_previews()
-        .then(
-            (result: any) => {
-                const data = { data: result.objects, isSuccess: true, total: result.total };
                 res.send(data);
             }
         ).catch(next);

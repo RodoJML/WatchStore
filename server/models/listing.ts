@@ -5,9 +5,9 @@ async function connection() {
     return db;
 }
 
-async function getAll_orig_previews(page = 1, pageSize = 5) {
+async function getAll_previews(page = 1, pageSize = 5) {
     const db = await connection();
-    const objects = await db('ORIG_LISTING').select(
+    const originals = await db('ORIG_LISTING').select(
         'ORIG_LISTING.orig_listing_stock_id as stock_id',
         'ORIG_LISTING.orig_listing_stock_store_user_id as store_user_id',
         'BRAND.brand_name as brand',
@@ -53,73 +53,57 @@ async function getAll_orig_previews(page = 1, pageSize = 5) {
         .leftJoin('MOVEMENT', 'ORIGINAL_SPECS.orig_specs_movement_id', 'MOVEMENT.movement_id')
         .groupBy('ORIG_LISTING.orig_listing_stock_id', 'ORIG_LISTING.orig_listing_stock_store_user_id').offset((page - 1) * pageSize).limit(pageSize);
 
-    const total = objects.length;
-    return { objects, total };
-}
-
-async function getAll_gen_previews() {
-    const db = await connection();
-    const objects = await db('GEN_LISTING').select(
-        'GEN_LISTING.gen_listing_stock_id as stock_id',
-        'GEN_LISTING.gen_listing_stock_store_user_id as store_user_id',
-        'BRAND.brand_name as brand',
-        'GEN_MODEL.gen_model_name as model',
-        'GEN_LISTING.gen_listing_unit_cprice as cprice',
-        'GEN_LISTING.gen_listing_unit_dprice as dprice',
-        'MOVEMENT.movement_name as movement',
-        'GEN_SPECS.gen_specs_width as width',
-        'GEN_STOCK.gen_stock_condition as condition',
-        'GEN_LISTING.gen_listing_guarantee as guarantee',
-        'STORE.store_name as store_name',
-        'GEN_STOCK.gen_stock_quantity as quantity',
-        'USER_INFO.info_user_province as location',
-        'USER.user_name as user_name',
-        'GEN_LISTING.gen_listing_date as date',
-        'GEN_LISTING.gen_listing_views as views',
-        // This next line indicates the listing type, 1 for new and 2 for used
-        // We are not storing this in the database because tables are normalized
-        db.raw("2 as listing_type"),
-    )
-    .avg('GEN_LISTING_REVIEW.gen_listingReview_rating as rating')
-        .leftJoin('GEN_STOCK',
-            function () {
-                this.on('GEN_LISTING.gen_listing_stock_id', '=', 'GEN_STOCK.gen_stock_id')
-                this.andOn('GEN_LISTING.gen_listing_stock_store_user_id', '=', 'GEN_STOCK.gen_stock_store_user_id')
+        const gens = await db('GEN_LISTING').select(
+            'GEN_LISTING.gen_listing_stock_id as stock_id',
+            'GEN_LISTING.gen_listing_stock_store_user_id as store_user_id',
+            'BRAND.brand_name as brand',
+            'GEN_MODEL.gen_model_name as model',
+            'GEN_LISTING.gen_listing_unit_cprice as cprice',
+            'GEN_LISTING.gen_listing_unit_dprice as dprice',
+            'MOVEMENT.movement_name as movement',
+            'GEN_SPECS.gen_specs_width as width',
+            'GEN_STOCK.gen_stock_condition as condition',
+            'GEN_LISTING.gen_listing_guarantee as guarantee',
+            'STORE.store_name as store_name',
+            'GEN_STOCK.gen_stock_quantity as quantity',
+            'USER_INFO.info_user_province as location',
+            'USER.user_name as user_name',
+            'GEN_LISTING.gen_listing_date as date',
+            'GEN_LISTING.gen_listing_views as views',
+            // This next line indicates the listing type, 1 for new and 2 for used
+            // We are not storing this in the database because tables are normalized
+            db.raw("2 as listing_type"),
+        )
+        .avg('GEN_LISTING_REVIEW.gen_listingReview_rating as rating')
+            .leftJoin('GEN_STOCK',
+                function () {
+                    this.on('GEN_LISTING.gen_listing_stock_id', '=', 'GEN_STOCK.gen_stock_id')
+                    this.andOn('GEN_LISTING.gen_listing_stock_store_user_id', '=', 'GEN_STOCK.gen_stock_store_user_id')
+                })
+            .leftJoin('STORE', 'GEN_STOCK.gen_stock_store_user_id', 'STORE.store_user_id')
+            .leftJoin('USER', 'STORE.store_user_id', 'USER.user_id')
+            .leftJoin('USER_INFO', 'USER.user_id', 'USER_INFO.info_user_id')
+            .leftJoin('GEN_LISTING_REVIEW', function () {
+                this.on('GEN_LISTING.gen_listing_stock_id', '=', 'GEN_LISTING_REVIEW.gen_listingReview_stock_id')
+                this.andOn('GEN_LISTING.gen_listing_stock_store_user_id', '=', 'GEN_LISTING_REVIEW.gen_listingReview_stock_store_user_id')
             })
-        .leftJoin('STORE', 'GEN_STOCK.gen_stock_store_user_id', 'STORE.store_user_id')
-        .leftJoin('USER', 'STORE.store_user_id', 'USER.user_id')
-        .leftJoin('USER_INFO', 'USER.user_id', 'USER_INFO.info_user_id')
-        .leftJoin('GEN_LISTING_REVIEW', function () {
-            this.on('GEN_LISTING.gen_listing_stock_id', '=', 'GEN_LISTING_REVIEW.gen_listingReview_stock_id')
-            this.andOn('GEN_LISTING.gen_listing_stock_store_user_id', '=', 'GEN_LISTING_REVIEW.gen_listingReview_stock_store_user_id')
-        })
-        .leftJoin('GEN_MODEL', function () {
-            this.on('GEN_STOCK.gen_stock_watch_model_id', '=', 'GEN_MODEL.gen_model_id')
-            this.andOn('GEN_STOCK.gen_stock_watch_brand_id', '=', 'GEN_MODEL.gen_brand_id')
-        })
-        .leftJoin('BRAND', 'GEN_MODEL.gen_brand_id', 'BRAND.brand_id')
-        .leftJoin('GEN_SPECS', function () {
-            this.on('GEN_MODEL.gen_model_id', '=', 'GEN_SPECS.gen_specs_model_id')
-            this.andOn('GEN_MODEL.gen_brand_id', '=', 'GEN_SPECS.gen_specs_brand_id')
-        })
-        .leftJoin('MOVEMENT', 'GEN_SPECS.gen_specs_movement_id', 'MOVEMENT.movement_id')
-        .groupBy('GEN_LISTING.gen_listing_stock_id', 'GEN_LISTING.gen_listing_stock_store_user_id');
+            .leftJoin('GEN_MODEL', function () {
+                this.on('GEN_STOCK.gen_stock_watch_model_id', '=', 'GEN_MODEL.gen_model_id')
+                this.andOn('GEN_STOCK.gen_stock_watch_brand_id', '=', 'GEN_MODEL.gen_brand_id')
+            })
+            .leftJoin('BRAND', 'GEN_MODEL.gen_brand_id', 'BRAND.brand_id')
+            .leftJoin('GEN_SPECS', function () {
+                this.on('GEN_MODEL.gen_model_id', '=', 'GEN_SPECS.gen_specs_model_id')
+                this.andOn('GEN_MODEL.gen_brand_id', '=', 'GEN_SPECS.gen_specs_brand_id')
+            })
+            .leftJoin('MOVEMENT', 'GEN_SPECS.gen_specs_movement_id', 'MOVEMENT.movement_id')
+            .groupBy('GEN_LISTING.gen_listing_stock_id', 'GEN_LISTING.gen_listing_stock_store_user_id').offset((page - 1) * pageSize).limit(pageSize);
 
-    const total = objects.length;
+    const total = originals.length + gens.length;
+    const objects = [...originals, ...gens];
+
     return { objects, total };
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -255,4 +239,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, getAll_orig_previews, getAll_gen_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search };
+module.exports = { getAll, getAll_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search };

@@ -41,30 +41,31 @@ const listingSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getAll_orig_previews.pending, (state) => {
+        builder.addCase(getAll_previews.pending, (state) => {
             state.messages.push({message: 'Loading...' , type: 'info'});
             state.isLoading = true;
             console.log(state.messages[state.messages.length - 1]);
         }
         );
-        builder.addCase(getAll_orig_previews.fulfilled, (state, action) => {
-            state.messages.push({message: 'Data received' , type: 'success'});
+        builder.addCase(getAll_previews.fulfilled, (state, action) => {
+            state.messages.push({message: 'Data received' , type: 'success'}); 
             state.isLoading = false;
             console.log(state.messages[state.messages.length - 1]);
         });
-        builder.addCase(getAll_orig_previews.rejected, (state, action) => {
+        builder.addCase(getAll_previews.rejected, (state, action) => {
             state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'}); 
             console.log(state.messages[state.messages.length - 1]);
         });
     },
 });
 
-export const getAll_orig_previews = createAsyncThunk(
-    'listings/getAll_orig_previews',
+export const getAll_previews = createAsyncThunk(
+    'listings/getAll_previews',
     async (page: number): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/orig_previews?page=${page}&pageSize=${8}`).catch((err) => {throw err;});
+        return await Fetch.api(`/listing/previews?page=${page}&pageSize=${2}`).catch((err) => {throw err;});
     }
 )
+
 
 export default listingSlice.reducer;
 

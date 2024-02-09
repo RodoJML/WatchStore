@@ -28,6 +28,6 @@ export default function Login({ isActive, onXclick }: LoginProps) {
     )
 }
 
-const loginPage = 'absolute grid items-center text-center bg-transparent w-full h-full ease-in-out duration-500 shadow-2xl backdrop-blur border border-white border-opacity-20 z-10 p-10 sm:p-20 md:p-40 lg:p-60 xl:p-80 z-20 overflow-scroll';
+const loginPage = 'fixed grid items-center text-center bg-transparent w-full h-full ease-in-out duration-500 shadow-2xl backdrop-blur border border-white border-opacity-20 z-30 p-10 sm:p-20 md:p-40 lg:p-60 xl:p-80 z-20 overflow-scroll';
 const loginPageActive = `${loginPage} top-0`;
 const loginPageInactive = `${loginPage} -top-full`;

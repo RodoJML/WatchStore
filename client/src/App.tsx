@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Navbar />
-        
+      
         <Outlet />
 
     </div>
@@ -14,3 +14,6 @@ function App() {
 }
 
 export default App
+
+
+
