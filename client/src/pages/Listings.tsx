@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesDown, faArrowDownShortWide, faGripVertical, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDownWideShort, faGripVertical, faHand, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
 import { ListingPreviewItem, getAll_previews } from "../state/store/slice/listingsSlice";
@@ -19,8 +19,6 @@ export default function Listing() {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [previousScrollTop, setPreviousScrollTop] = useState(0); // Used in handleScroll to determine if we are scrolling up or down
-    const [pageIncremented, setPageIncremented] = useState(false); // Used to prevent multiple page increments in handleScroll
-
 
     function watchCondition(condition: number) {
         // Condition 1: "todos", 2: "nuevos", 3: "usados"
@@ -33,25 +31,25 @@ export default function Listing() {
     }
 
     useEffect(() => {
-
+        // All isMounted can be removed in production since React.StrictMode is not used
+        // It is used to avoid a warning in the console of duplicated values
         let isMounted = true;
         const fetchData = async () => {
 
-            try {
-                // For some reason the response is an array of arrays, so we flatten it with reduce
-                const response = (await dispatch(getAll_previews(page)).unwrap()).data;
-                const morePreviews = response.reduce((acc, val) => acc.concat(val), []);
-                setHasMore(morePreviews.length > 0);
+            // For some reason the response is an array of arrays, so we flatten it with reduce
+            const response = (await dispatch(getAll_previews(page)).unwrap()).data;
+            const morePreviews = response.reduce((acc, val) => acc.concat(val), []);
+            setHasMore(morePreviews.length > 0);
 
-                if (isMounted) {
-                    setlistingsPreviews((prevPreviews) => [...prevPreviews, ...morePreviews]);
-                }
-
-            } catch (error) { console.log(error) }
+            if (isMounted) {
+                setlistingsPreviews((prevPreviews) => [...prevPreviews, ...morePreviews]);
+            }
         };
 
         if (isMounted && hasMore) fetchData();
+
         return () => { isMounted = false };
+
     }, [page]);
 
     const handleScroll = () => {
@@ -62,9 +60,8 @@ export default function Listing() {
 
         // If met, you are at the bottom of the page (windowHeight + top) + 1 >= height
         // If met, you are scrolling down (top > previousScrollTop)
-        if ((windowHeight + top) + 1 >= height && top > previousScrollTop) {
+        if ((windowHeight + top) + 1 >= height && top > previousScrollTop && hasMore) {
             setPage(previousPage => previousPage + 1);
-            setPageIncremented(true);
         }
 
         // Update the previous scroll position for the next check
@@ -86,7 +83,7 @@ export default function Listing() {
                 </div>
 
 
-                <select className="bg-black bg-opacity-20 text-white border border-black border-opacity-10 rounded p-1 mr-1">
+                <select className="bg-black bg-opacity-20 text-white border border-black border-opacity-10 rounded p-1 mr-1" name="priceFilter" id="priceFilter">
                     <option value="desc">Mayor a menor ₡</option>
                     <option value="asc">Menor a mayor ₡</option>
                 </select>
@@ -112,15 +109,7 @@ export default function Listing() {
                                 />
                             })}
                         </div>
-
-                        {listingState.isLoading &&
-                            <div className="flex justify-center my-4">
-                                <FontAwesomeIcon icon={faSpinner} className="fa-spin text-xl" inverse />
-                                <div className="text-white ml-1">Cargando...</div>
-                            </div>
-                        }
                     </div>
-
                 )
                 :
                 <div>
@@ -131,15 +120,32 @@ export default function Listing() {
                             />
                         ))}
                     </div>
-
-                    {listingState.isLoading &&
-                        <div className="flex justify-center my-4">
-                            <FontAwesomeIcon icon={faSpinner} className="fa-spin text-xl" inverse />
-                            <div className="text-white ml-1">Cargando...</div>
-                        </div>
-                    }
                 </div>
             }
+
+            {listingsPreviews.length > 0 &&
+                <div className="flex justify-center text-white text-center mt-8 mb-14">
+                    <div className="bg-black bg-opacity-20 border border-black border-opacity-20 rounded w-2/3 p-1">
+                        {hasMore ?
+                            (
+                                listingState.isLoading
+                                    ? <div>
+                                        <FontAwesomeIcon icon={faSpinner} className="animate-spin ml-1" />
+                                    </div>
+                                    : <div>Ver más resultados
+                                        <FontAwesomeIcon icon={faArrowDownWideShort} className="ml-1" />
+                                    </div>
+                            )
+                            : <div>
+                                No hay más resultados
+                                <FontAwesomeIcon icon={faHand} className="ml-1"/>
+                            </div>}
+                    </div>
+                </div>
+            }
+
+
+
 
         </div>
     )

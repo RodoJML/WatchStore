@@ -242,7 +242,7 @@ export default function Navbar() {
                 <nav className="absolute -ml-4 w-full bottom-0 flex h-8 bg-stone-700 text-white text-sm items-center">
                     <img className="p-2 max-w-full max-h-full object-contain" src="/src/assets/images/crc.png" />
 
-                    <select className="bg-stone-700 focus:outline-none max-w-full -ml-2 cursor-pointer">
+                    <select className="bg-stone-700 focus:outline-none max-w-full -ml-2 cursor-pointer" name="province" id="province">
                         <option key="CRC">Todo</option>
                         {provinces.map((province) => {
                             return <option key={province}>{province}</option>
