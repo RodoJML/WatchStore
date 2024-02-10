@@ -20,8 +20,10 @@ const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['sessio
     } else {
         return <>
             <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
-            <FontAwesomeIcon icon={faUserLarge} className="mr-2"/>
-            <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket} onClick={Logout} />
+            <FontAwesomeIcon icon={faUserLarge} className="mr-2" />
+            <a href="/" onClick={Logout}>
+                <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket}/>
+            </a>
         </>
     }
 };

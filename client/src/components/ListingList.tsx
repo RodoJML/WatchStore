@@ -15,7 +15,7 @@ export default function ListingList({ listingPreview }: ListingListProps) {
 
     return (
         <>
-            <div className="relative bg-wooden-pattern bg-2xl rounded-lg p-2 shadow shadow-black mb-4 h-40">
+            <div className="relative bg-wooden-pattern bg-2xl rounded-lg p-2 shadow shadow-black mb-5 h-40">
 
                 {listingPreview.listing_type === 1 &&
                     <div className="ribbon"><span>Original</span></div>
@@ -23,20 +23,22 @@ export default function ListingList({ listingPreview }: ListingListProps) {
 
                 <div className="flex bg-amber-50 w-full h-full p-2 rounded shadow shadow-black border border-stone-800">
 
-                    <div className="absolute bottom-5 left-6 text-xs text-white opacity-50">
-                        <FontAwesomeIcon icon={faCalendarDays} style={{ color: "#ffffff", opacity: 0.7 }} />
-                        <i> {days} dias</i>
-                    </div>
+                    <div className="relative aspect-square mr-2">
+                        <img className="w-full h-full object-cover rounded shadow shadow-black"
+                            src="https://www.watchesandcrystals.com/cdn/shop/articles/mens-gucci-watches-for-sale-that-is-worth-it-562855.jpg?v=1659676055" />
 
-                    <div>
-                        <div className="absolute bottom-5 left-24 text-xs text-white opacity-50">
+                        <div className="absolute bottom-1 left-2 text-xs text-white opacity-50">
+                            <FontAwesomeIcon icon={faCalendarDays} style={{ color: "#ffffff", opacity: 0.7 }} />
+                            <i> {days} dias</i>
+                        </div>
+
+                        <div className="absolute bottom-1 right-2 text-xs text-white opacity-50">
                             <FontAwesomeIcon icon={faEye} style={{ color: "#ffffff", opacity: 0.7 }} />
                             <i> {listingPreview.views ? listingPreview.views : 0}</i>
                         </div>
+
                     </div>
 
-                    <img className="aspect-square h-full object-cover rounded shadow shadow-black mr-4"
-                        src="https://www.watchesandcrystals.com/cdn/shop/articles/mens-gucci-watches-for-sale-that-is-worth-it-562855.jpg?v=1659676055" />
 
                     <div className="grid">
                         <div className="block overflow-hidden">
@@ -70,7 +72,7 @@ export default function ListingList({ listingPreview }: ListingListProps) {
                             <span>
 
                                 {listingPreview.rating < 1 &&
-                                <i>No reviews</i>
+                                    <i>No reviews</i>
                                 }
 
                                 {listingPreview.rating >= 1 && listingPreview.rating < 2 &&

@@ -20,7 +20,7 @@ export default function Home() {
             url: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e3c80936323781.57188fa682761.jpg",
             title: "Hublot Watch",
             description: "Hublot is a Swiss luxury watchmaker founded in 1980 by Italian Carlo Crocco. The company operates as a wholly owned subsidiary of France's LVMH.",
-        }
+        },
     ] as Slide[];
 
     return (

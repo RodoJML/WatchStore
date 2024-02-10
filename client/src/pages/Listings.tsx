@@ -40,13 +40,10 @@ export default function Listing() {
             const morePreviews = response.reduce((acc, val) => acc.concat(val), []);
             setHasMore(morePreviews.length > 0);
 
-            if (isMounted) {
-                setlistingsPreviews((prevPreviews) => [...prevPreviews, ...morePreviews]);
-            }
+            if (isMounted) setlistingsPreviews((prevPreviews) => [...prevPreviews, ...morePreviews]);
         };
-
+        
         if (isMounted && hasMore) fetchData();
-
         return () => { isMounted = false };
 
     }, [page]);
@@ -116,7 +113,7 @@ export default function Listing() {
                 )
                 :
                 <div>
-                    <div className={listingListStyleNB}>
+                    <div className={listingListStyle}>
                         {listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => (
                             <ListingList key={listingPreview.listing_type.toString() + listingPreview.store_user_id.toString() + listingPreview.stock_id.toString()}
                                 listingPreview={listingPreview}
@@ -150,7 +147,6 @@ export default function Listing() {
                             </div>
                         }
                     </div>
-
                 </div>
             }
 
