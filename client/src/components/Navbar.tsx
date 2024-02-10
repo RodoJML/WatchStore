@@ -9,18 +9,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut } from "../state/store/slice/sessionSlice";
 import { StyleItem, provinces } from "../model/fetch";
+import bellsAudio from "../assets/audio/Bells.mp3";
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
     if (!sessionStatus.signedIn) {
         return <div className="cursor-pointer">
             <span className="text-sm">Iniciar Sesión</span>
-            <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '5' }} />
+            <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '10' }} />
         </div>
     } else {
         return <>
             <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
-            <FontAwesomeIcon icon={faUserLarge} className="mr-2 fa-bounce" style={{ animationIterationCount: '4' }} />
-            <FontAwesomeIcon icon={faRightFromBracket} onClick={Logout} />
+            <FontAwesomeIcon icon={faUserLarge} className="mr-2"/>
+            <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket} onClick={Logout} />
         </>
     }
 };
@@ -35,6 +36,11 @@ export default function Navbar() {
     const [advancedSearch, setAdvancedSearch] = useState(false);
     const [advancedSearchOptions, setAdvancedSearchOptions] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
+
+    const playSound = () => {
+        const audio = new Audio(bellsAudio);
+        audio.play();
+    }
 
     // Functions
     function toggleSideMenu() {
@@ -54,9 +60,16 @@ export default function Navbar() {
         });
     }, []);
 
+    useEffect(() => {
+        if (sessionState.signedIn) {
+            playSound();
+        }
+    }, [sessionState.signedIn]);
+
     // Render
     return (
         <div className="w-full h-41">
+
             <SideMenu isActive={sideMenuActive} onXclick={() => toggleSideMenu()} />
             <Login isActive={loginFormActive} onXclick={() => toggleLoginForm()} />
 
@@ -96,7 +109,7 @@ export default function Navbar() {
                         onClick={() => {
                             setAdvancedSearch(!advancedSearch)
                             if (!advancedSearch) {
-                                setTimeout(() => {setAdvancedSearchOptions(!advancedSearchOptions)}, 200);
+                                setTimeout(() => { setAdvancedSearchOptions(!advancedSearchOptions) }, 200);
                             } else {
                                 setAdvancedSearchOptions(!advancedSearchOptions)
                             }

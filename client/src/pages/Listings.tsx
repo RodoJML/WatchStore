@@ -7,7 +7,6 @@ import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
 import { ListingPreviewItem, getAll_previews } from "../state/store/slice/listingsSlice";
 
-
 export default function Listing() {
 
     const listingState = useSelector((state: RootState) => state.listings);
@@ -68,6 +67,10 @@ export default function Listing() {
         setPreviousScrollTop(top);
     }
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -124,7 +127,7 @@ export default function Listing() {
             }
 
             {listingsPreviews.length > 0 &&
-                <div className="flex justify-center text-white text-center mt-8 mb-14">
+                <div className="flex justify-center text-white text-center mt-8 mb-10">
                     <div className="bg-black bg-opacity-20 border border-black border-opacity-20 rounded w-2/3 p-1">
                         {hasMore ?
                             (
@@ -136,15 +139,20 @@ export default function Listing() {
                                         <FontAwesomeIcon icon={faArrowDownWideShort} className="ml-1" />
                                     </div>
                             )
-                            : <div>
-                                No hay más resultados
-                                <FontAwesomeIcon icon={faHand} className="ml-1"/>
-                            </div>}
+                            : <div className="cursor-pointer" onClick={scrollToTop}>
+                                <div>
+                                    No hay más resultados
+                                    <FontAwesomeIcon icon={faHand} className="ml-1" />
+                                </div>
+                                <div className="absolute left-1/4 right-1/4 text-xs mt-2 text-white text-opacity-80">
+                                    Toca para volver al inicio
+                                </div>
+                            </div>
+                        }
                     </div>
+
                 </div>
             }
-
-
 
 
         </div>
