@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGripVertical, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faArrowDownShortWide, faGripVertical, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
-import { ListingPreviewItem, getAll_previews} from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem, getAll_previews } from "../state/store/slice/listingsSlice";
 
 
 export default function Listing() {
@@ -16,9 +16,10 @@ export default function Listing() {
     const [condition, setCondition] = useState(1);
     const [viewMode, setViewMode] = useState(true);
     const [listingsPreviews, setlistingsPreviews] = useState([] as ListingPreviewItem[]);  // This is the state that will hold the listings // useState<DataEnvelopeList<ListingItem>>();
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [previousScrollTop, setPreviousScrollTop] = useState(0); // Used in handleScroll to determine if we are scrolling up or down
+    const [pageIncremented, setPageIncremented] = useState(false); // Used to prevent multiple page increments in handleScroll
 
 
     function watchCondition(condition: number) {
@@ -32,34 +33,48 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        dispatch(getAll_previews(1)).then((data: any) => {
-            setlistingsPreviews(data.payload.data);
-        }).catch((err) => { console.log(err) })
-    }, []);
 
-    useEffect(() => {
-        console.log("function run");
-        console.log(listingsPreviews);
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
+        let isMounted = true;
+        const fetchData = async () => {
 
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight
-                && !listingState.isLoading && currentScrollPos > scrollPosition && hasMore) {
+            try {
+                // For some reason the response is an array of arrays, so we flatten it with reduce
+                const response = (await dispatch(getAll_previews(page)).unwrap()).data;
+                const morePreviews = response.reduce((acc, val) => acc.concat(val), []);
+                setHasMore(morePreviews.length > 0);
 
-                setPage((prevPage) => prevPage + 1);
+                if (isMounted) {
+                    setlistingsPreviews((prevPreviews) => [...prevPreviews, ...morePreviews]);
+                }
 
-                dispatch(getAll_previews(page + 1)).then((data: any) => {
-                    setHasMore(data.payload.data.length);
-                    setlistingsPreviews((prevListings) => [...prevListings, ...data.payload.data]);
-                })
-            }
-            setScrollPosition(currentScrollPos);
+            } catch (error) { console.log(error) }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => { window.removeEventListener('scroll', handleScroll); }
+        if (isMounted && hasMore) fetchData();
+        return () => { isMounted = false };
+    }, [page]);
 
-    }, [listingState.isLoading]);
+    const handleScroll = () => {
+        // When we scroll all the way down (Top + windowHeight) summed together are equal to Height
+        var height = document.documentElement.scrollHeight;
+        var top = document.documentElement.scrollTop;
+        var windowHeight = window.innerHeight;
+
+        // If met, you are at the bottom of the page (windowHeight + top) + 1 >= height
+        // If met, you are scrolling down (top > previousScrollTop)
+        if ((windowHeight + top) + 1 >= height && top > previousScrollTop) {
+            setPage(previousPage => previousPage + 1);
+            setPageIncremented(true);
+        }
+
+        // Update the previous scroll position for the next check
+        setPreviousScrollTop(top);
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <div>

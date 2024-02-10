@@ -29,7 +29,7 @@ export default function ListingList({ listingPreview }: ListingListProps) {
                     </div>
 
                     <div>
-                        <div className="absolute bottom-5 left-24 text-xs text-white opacity-50 z-10">
+                        <div className="absolute bottom-5 left-24 text-xs text-white opacity-50">
                             <FontAwesomeIcon icon={faEye} style={{ color: "#ffffff", opacity: 0.7 }} />
                             <i> {listingPreview.views ? listingPreview.views : 0}</i>
                         </div>
