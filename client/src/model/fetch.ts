@@ -241,6 +241,24 @@ export interface Slide{
     description: string,
 }
 
-export const provinces = ["SJO", "ALE", "HER", "CAR", "GUA", "PUN", "LIM"];
+export interface SearchForm {
+    model: string,
+    brand: number,
+    condition: number,
+    certification: number,
+    movement: number,
+    width: number,
+    style: number,
+    type: number,
+    bezel: number,
+    glass: number,
+    shape: number,
+    gender: number,
+    province: string,
+    lume: number,
+}
+
+
+export const provinces = ["SanJose", "Alajuela", "Heredia", "Cartago", "Guanacaste", "Puntarenas", "Limon"];
 export const watchSizes = [28, 30, 32, 34, 36, 38, 40, 42];
 export const watchDialColors = ["Negro", "Blanco", "Azul", "Verde", "Rojo", "Amarillo", "Naranja", "Morado", "Rosado", "Cafe", "Gris", "Plateado", "Dorado", "Oro Rosa", "Multicolor", "Carbon"];
