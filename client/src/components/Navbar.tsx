@@ -278,10 +278,35 @@ export default function Navbar() {
                                     </select>
 
                                     <select className="bg-transparent" name="clasp_type" id="clasp_type">
-                                        <option value="all">Todos</option>
+                                        <option key="all" value="all">Todos</option>
                                         {sessionState.clasps.map((clasp) => {
                                             return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option>
                                         })}
+                                    </select>
+
+                                    <select className="bg-transparent" name="power_reserve" id="power_reserve">
+                                        <option key="all" value="all">Todos</option>
+                                        <option key="24" value="24">24hr</option> 
+                                        <option key="48" value="48">48hr</option> 
+                                        <option key="72" value="72">72hr</option>
+                                        <option key="96" value="96">96hr</option>
+                                        <option key="120" value="120">120hr</option>
+                                        <option key="120" value="120">148hr</option>
+                                        <option key="120" value="120">172hr</option>
+                                        <option key="120" value="120">196hr</option>
+                                        <option key="999" value="999">Batería</option>
+                                    </select>
+
+                                    <select className="bg-transparent" name="water_proof" id="water_proof">
+                                        <option key="all" value="all">Todos</option>
+                                        <option key="1" value="1">Sí</option>
+                                        <option key="2" value="2">No</option>
+                                    </select>
+
+                                    <select className="bg-transparent" name="water_resistant" id="water_resistant">
+                                        <option key="all" value="all">Todos</option>
+                                        <option key="1" value="1">Sí</option>
+                                        <option key="2" value="2">No</option>
                                     </select>
 
                                     <select className="bg-transparent" name="Luminiscencia">
@@ -290,14 +315,8 @@ export default function Navbar() {
                                             return <option key={color} value={color}>{color}</option>
                                         })}
                                     </select>
-                                    <select className="bg-transparent" name="Luminiscencia">
-                                        <option value="0">No</option>
-                                        <option value="1">Si</option>
-                                    </select>
-                                    <select className="bg-transparent" name="Luminiscencia">
-                                        <option value="0">No</option>
-                                        <option value="1">Si</option>
-                                    </select>
+                                    
+                                    
                                     <select className="bg-transparent" name="Luminiscencia">
                                         <option value="0">No</option>
                                         <option value="1">Si</option>
