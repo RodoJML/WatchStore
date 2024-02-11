@@ -112,57 +112,6 @@ export interface StockItem {
     stock_quantity: number,
 }
 
-export interface TypeItem {
-    type_id: number,
-    type_name: string,
-}
-
-export interface MovementItem {
-    movement_id: number,
-    movement_name: string,
-}
-
-export interface StyleItem {
-    style_id: number,
-    style_name: string,
-}
-
-export interface CaseMaterialItem {
-    case_material_id: number,
-    case_material_name: string,
-}
-
-export interface GlassMaterialItem {
-    glass_material_id: number,
-    glass_material_name: string,
-}
-
-export interface shapeItem {
-    shape_id: number,
-    shape_name: string,
-}
-
-export interface StrapMaterialItem {
-    strap_material_id: number,
-    strap_material_name: string,
-}
-
-export interface BezelTypeItem {
-    bezel_type_id: number,
-    bezel_type_name: string,
-}
-
-export interface BezelMaterialItem {
-    bezel_material_id: number,
-    bezel_material_name: string,
-}
-
-export interface ClaspTypeItem {
-    clasp_type_id: number,
-    clasp_type_name: string,
-}
-
-
 export interface OriginalSpecsItem {
     orig_specs_model_id: number,
     orig_specs_brand_id: number,
@@ -213,6 +162,11 @@ export interface GenSpecsItem {
     gen_specs_pw_reserve_hr: number,
     gen_specs_lume: number,
     gen_specs_clasp_type_id: number,
+}
+
+export interface SpecItem{
+    spec_id: number,
+    spec_name: string,
 }
 
 export interface ListingItem {
@@ -288,3 +242,5 @@ export interface Slide{
 }
 
 export const provinces = ["SJO", "ALE", "HER", "CAR", "GUA", "PUN", "LIM"];
+export const watchSizes = [28, 30, 32, 34, 36, 38, 40, 42];
+export const watchDialColors = ["Negro", "Blanco", "Azul", "Verde", "Rojo", "Amarillo", "Naranja", "Morado", "Rosado", "Cafe", "Gris", "Plateado", "Dorado", "Oro Rosa", "Multicolor", "Carbon"];

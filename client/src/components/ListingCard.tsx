@@ -25,7 +25,7 @@ export default function ListingCard({ isLoading, listingPreview }: ListingCardPr
 
                 {false
                     ?
-                    <div className="bg-green-900 aspect-square animate-pulse opacity-30"></div>
+                    <div className="bg-green-900 aspect-square animate-pulse opacity-30"></div> // Unused code only if loading state is needed
                     :
                     <div className="relative aspect-square border-4 rounded-t border-green-900 border-b-0 border-opacity-40 drop-shadow-2xl-white">
                         <img className="w-full h-full object-cover"

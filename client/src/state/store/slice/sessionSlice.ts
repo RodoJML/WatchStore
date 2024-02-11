@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelope, AuthenticationEnvelope, UserItem } from './../../../model/fetch';
+import type { DataEnvelope, AuthenticationEnvelope, UserItem, SpecItem } from './../../../model/fetch';
 
 export interface Message {
     message: string | null,
@@ -12,6 +12,17 @@ interface SessionState {
     user: UserItem,
     isLoading: boolean,
     messages: Message[],
+    brands: any[],
+    styles: any[],
+    types: any[],
+    shapes: any[],
+    movements: any[],
+    bezels: any[],
+    clasps: any[],
+    bezel_materials: any[],
+    case_materials: any[],
+    glass_materials: any[],
+    strap_materials: any[],
     redirectURL: string | null,
 }
 
@@ -29,6 +40,17 @@ const initialState: SessionState = {
     },
     isLoading: false,
     messages: [],
+    brands: [],
+    styles: [],
+    types: [],
+    shapes: [],
+    movements: [],
+    bezels: [],
+    clasps: [],
+    bezel_materials: [],
+    case_materials: [],
+    glass_materials: [],
+    strap_materials: [],
     redirectURL: null,
 }
 
@@ -71,7 +93,22 @@ const sessionSlice = createSlice(
                 state.messages.push({ message: 'Loading...', type: 'info' });
                 console.log(state.messages[state.messages.length - 1]);
             });
-            builder.addCase(apiFetch.fulfilled, (state) => {
+            builder.addCase(apiFetch.fulfilled, (state, action) => {
+                if(action.meta.arg.url === "brand") {
+                    const sortedArray = action.payload.data.slice().sort((a: any, b: any) => a.brand_name.localeCompare(b.brand_name));
+                    state.brands = sortedArray;
+                }
+                if(action.meta.arg.url === "style") state.styles = action.payload.data;
+                if(action.meta.arg.url === "type") state.types = action.payload.data;
+                if(action.meta.arg.url === "shape") state.shapes = action.payload.data;
+                if(action.meta.arg.url === "movement") state.movements = action.payload.data;
+                if(action.meta.arg.url === "bezel_type") state.bezels = action.payload.data;
+                if(action.meta.arg.url === "clasp_type") state.clasps = action.payload.data;
+                if(action.meta.arg.url === "bezel_material") state.bezel_materials = action.payload.data;
+                if(action.meta.arg.url === "case_material") state.case_materials = action.payload.data;
+                if(action.meta.arg.url === "glass_material") state.glass_materials = action.payload.data;
+                if(action.meta.arg.url === "strap_material") state.strap_materials = action.payload.data;
+
                 state.isLoading = false;
                 state.messages.push({ message: 'Data received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);

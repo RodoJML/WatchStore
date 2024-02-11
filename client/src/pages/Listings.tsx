@@ -103,7 +103,7 @@ export default function Listing() {
                         <div className={listingGridStyle}>
                             {listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => {
                                 return <ListingCard
-                                    key={listingPreview.listing_type.toString() + listingPreview.store_user_id.toString() + listingPreview.stock_id.toString()}
+                                    key={listingPreview.listing_type.toString() + listingPreview.stock_id.toString() + listingPreview.store_user_id.toString()}
                                     isLoading={listingState.isLoading}
                                     listingPreview={listingPreview}
                                 />
@@ -115,7 +115,8 @@ export default function Listing() {
                 <div>
                     <div className={listingListStyle}>
                         {listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => (
-                            <ListingList key={listingPreview.listing_type.toString() + listingPreview.store_user_id.toString() + listingPreview.stock_id.toString()}
+                            <ListingList 
+                                key={listingPreview.listing_type.toString() + listingPreview.stock_id.toString() + listingPreview.store_user_id.toString()}
                                 listingPreview={listingPreview}
                             />
                         ))}

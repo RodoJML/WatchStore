@@ -138,7 +138,7 @@ export default function LoginForm() {
 
             {signupFormActive && <input className={signupFormStyle} type="text" pattern="^[^\s]+$" name="user_name" placeholder="Alias | Sin espacios - Min 6 letras" minLength={6} maxLength={20} onChange={handleChange} required />}
             {signupFormActive && <input className={signupFormStyle} type="tel" minLength={8} maxLength={8} name="user_id" placeholder="Telefono | 8 Digitos" onChange={handleChange} required />}
-            <input className="h-10 mb-4 rounded border pl-2" type="text" name="user_email" placeholder="Correo" onChange={handleChange} required />
+            <input className="h-10 mb-4 rounded border pl-2" type="email" name="user_email" placeholder="Correo" onChange={handleChange} required />
             <input className="h-10 mb-4 rounded pl-2" type="password" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*-]).{8,}$" minLength={8} name="user_password" placeholder="Contraseña" onChange={handleChange} required title="test" />
             {signupFormActive && <input className={signupFormStyle} type="password" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*-]).{8,}$" minLength={8} name="user_password_confirmation" placeholder="Confirmar contraseña" onChange={handleChange} required />}
             {signupFormActive &&

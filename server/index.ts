@@ -8,7 +8,7 @@ const app = express();
 const path = require('path');
 
 // Socket
-const hostname = '192.168.0.4' || 'localhost';
+const hostname = '192.168.0.14' || 'localhost';
 const port = 3000;
 
 // Controllers
