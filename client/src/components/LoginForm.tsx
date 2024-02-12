@@ -5,7 +5,6 @@ import { Message, exist, login, signup } from "../state/store/slice/sessionSlice
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Notification from "./Notification";
-import { provinces } from "../model/fetch";
 
 export default function LoginForm() {
 
@@ -144,7 +143,7 @@ export default function LoginForm() {
             {signupFormActive &&
                 <select name="info_user_province" className="h-10 mb-4 rounded border pl-2" defaultValue="" required>
                     <option value="" disabled>Provincia</option>
-                    {provinces.map((province, index) => (
+                    {sessionState.provinces.map((province, index) => (
                         <option key={index} value={province}>{province}</option>
                     ))}
                 </select>}

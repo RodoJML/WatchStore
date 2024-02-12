@@ -164,7 +164,7 @@ export interface GenSpecsItem {
     gen_specs_clasp_type_id: number,
 }
 
-export interface SpecItem{
+export interface SpecItem {
     spec_id: number,
     spec_name: string,
 }
@@ -235,30 +235,38 @@ export const apiFetchCalls = {
     },
 }
 
-export interface Slide{
+export interface Slide {
     url: string,
     title: string,
     description: string,
 }
 
 export interface SearchForm {
-    model: string,
-    brand: number,
-    condition: number,
-    certification: number,
-    movement: number,
-    width: number,
-    style: number,
-    type: number,
-    bezel: number,
-    glass: number,
-    shape: number,
-    gender: number,
-    province: string,
-    lume: number,
+    model: string | undefined,
+    brand: number | undefined,
+    condition: number | undefined,
+    certification: number | undefined,
+    movement: number | undefined,
+    width: number | undefined,
+    style: number | undefined,
+    type: number | undefined,
+    bezel_type: number | undefined,
+    glass_material: number | undefined,
+    shape: number | undefined,
+    gender: number | undefined,
+    province: string | undefined,
+    lume: number | undefined,
+    weight: string | undefined,
+    depth: string | undefined,
+    clasp_type: number | undefined,
+    power_reserve: number | undefined,
+    guarantee: number | undefined,
+    water_proof: number | undefined,
+    water_resistant: number | undefined,
+    case_material: number | undefined,
+    strap_material: number | undefined,
+    bezel_material: number | undefined,
+    case_color: string | undefined,
+    strap_color: string | undefined,
+    dial_color: string | undefined,
 }
-
-
-export const provinces = ["SanJose", "Alajuela", "Heredia", "Cartago", "Guanacaste", "Puntarenas", "Limon"];
-export const watchSizes = [28, 30, 32, 34, 36, 38, 40, 42];
-export const watchDialColors = ["Negro", "Blanco", "Azul", "Verde", "Rojo", "Amarillo", "Naranja", "Morado", "Rosado", "Cafe", "Gris", "Plateado", "Dorado", "Oro Rosa", "Multicolor", "Carbon"];

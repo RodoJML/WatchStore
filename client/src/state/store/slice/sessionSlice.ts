@@ -23,6 +23,9 @@ interface SessionState {
     case_materials: any[],
     glass_materials: any[],
     strap_materials: any[],
+    provinces: any[],
+    colors: any[],
+    sizes: any[],
     redirectURL: string | null,
 }
 
@@ -51,6 +54,9 @@ const initialState: SessionState = {
     case_materials: [],
     glass_materials: [],
     strap_materials: [],
+    provinces: [],
+    colors: [],
+    sizes: [],
     redirectURL: null,
 }
 
@@ -108,6 +114,9 @@ const sessionSlice = createSlice(
                 if(action.meta.arg.url === "case_material") state.case_materials = action.payload.data;
                 if(action.meta.arg.url === "glass_material") state.glass_materials = action.payload.data;
                 if(action.meta.arg.url === "strap_material") state.strap_materials = action.payload.data;
+                if(action.meta.arg.url === "provinces") state.provinces = action.payload.data;
+                if(action.meta.arg.url === "colors") state.colors = action.payload.data;
+                if(action.meta.arg.url === "sizes") state.sizes = action.payload.data;
 
                 state.isLoading = false;
                 state.messages.push({ message: 'Data received', type: 'success' });

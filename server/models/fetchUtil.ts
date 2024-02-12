@@ -1,4 +1,7 @@
 import { connect } from './knex';
+const data1 = require('../data/provinces.json');
+const data2 = require('../data/colors.json');
+const data3 = require('../data/sizes.json');
 
 async function connection() {
     const db = await connect();
@@ -6,6 +9,10 @@ async function connection() {
 }
 
 async function getAll(table: string) {
+    if(table === 'provinces') return { objects: data1.provinces, total: data1.provinces.length };
+    if(table === 'colors') return { objects: data2.colors, total: data2.colors.length };
+    if(table === 'sizes') return { objects: data3.sizes, total: data3.sizes.length };
+
     const db = await connection();
     const objects = await db(table).select('*');
     const total = objects.length;

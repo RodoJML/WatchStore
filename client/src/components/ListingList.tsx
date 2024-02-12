@@ -66,7 +66,7 @@ export default function ListingList({ listingPreview }: ListingListProps) {
                     </div>
 
 
-                    <div className="hidden sm:block sm:w-40 sm:h-full sm:visible sm:ml-auto sm:mt-6 sm:mr-4 text-stone-800 text-xs">
+                    <div className="hidden sm:flex sm:items-center sm:h-full sm:visible sm:ml-auto sm:mr-4 text-stone-800 text-2xs">
                         <div className="hidden sm:visible sm:grid sm:grid-cols-2">
                             <div>Rating:</div>
                             <span>

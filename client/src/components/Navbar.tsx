@@ -8,7 +8,7 @@ import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut } from "../state/store/slice/sessionSlice";
-import { provinces, watchSizes, watchDialColors } from "../model/fetch";
+import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
@@ -36,10 +36,14 @@ export default function Navbar() {
     const [loginFormActive, setLoginFormActive] = useState(false);
     const [advancedSearch, setAdvancedSearch] = useState(false);
     const [advancedSearchOptions, setAdvancedSearchOptions] = useState(false);
-    const [queryParameters, setQueryParameters] = useState({} as any);
+    const [queryParameters, setQueryParameters] = useState({} as SearchForm);
     const dispatch = useDispatch<AppDispatch>();
 
 
+    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+        e.preventDefault();
+
+    }
 
     const playSound = () => {
         const audio = new Audio(bellsAudio);
@@ -68,6 +72,9 @@ export default function Navbar() {
         dispatch(apiFetch({ url: 'bezel_type' }));
         dispatch(apiFetch({ url: 'bezel_material' }));
         dispatch(apiFetch({ url: 'clasp_type' }));
+        dispatch(apiFetch({ url: 'provinces' }));
+        dispatch(apiFetch({ url: 'colors' }));
+        dispatch(apiFetch({ url: 'sizes' }));
     }, []);
 
     useEffect(() => {
@@ -157,20 +164,20 @@ export default function Navbar() {
                                     <div className="grid text-lume-100 overflow-hidden ">
 
                                         <select className="bg-transparent focus:outline-none" name="brand" id="brand" >
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.brands.map((brand) => {
                                                 return <option key={brand.brand_id} value={brand.brand_id}>{brand.brand_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="condition" id="condition">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Nuevo</option>
                                             <option key="2" value="2">Usado</option>
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="certification" id="certification">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Original</option>
                                             <option key="2" value="2">AAA</option>
                                             <option key="3" value="3">AA</option>
@@ -178,56 +185,56 @@ export default function Navbar() {
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="movement">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.movements.map((movement) => {
                                                 return <option key={movement.movement_id} value={movement.movement_id}>{movement.movement_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="width">
-                                            <option key="*" value="*">Todos</option>
-                                            {watchSizes.map((size) => {
+                                            <option key="all" value="all">Todos</option>
+                                            {sessionState.sizes.map((size) => {
                                                 return <option key={size} value={size}>{size}mm</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="style" id="style">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.styles.map((style) => {
                                                 return <option key={style.style_id} value={style.style_id}>{style.style_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="type" id="type">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.types.map((type) => {
                                                 return <option key={type.type_id} value={type.type_id}>{type.type_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="bezel" id="bezel">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.bezels.map((bezel) => {
                                                 return <option key={bezel.bezelType_id} value={bezel.bezelType_id}>{bezel.bezelType_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="glass" id="glass">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.glass_materials.map((glass_material) => {
                                                 return <option key={glass_material.glass_id} value={glass_material.glass_id}>{glass_material.glass_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="shape" id="shape">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.shapes.map((shape) => {
                                                 return <option key={shape.shape_id} value={shape.shape_id}>{shape.shape_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="gender">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="1" value="male">Hombre</option>
                                             <option key="2" value="female">Mujer</option>
                                             <option key="3" value="unisex">Unisex</option>
@@ -235,14 +242,14 @@ export default function Navbar() {
 
 
                                         <select className="bg-transparent focus:outline-none" name="province" id="province">
-                                            <option key="*" value="*">Todos</option>
-                                            {provinces.map((province) => {
+                                            <option key="all" value="all">Todos</option>
+                                            {sessionState.provinces.map((province) => {
                                                 return <option key={province} value={province}>{province}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="lume" id="lume">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option value="1">Si</option>
                                             <option value="0">No</option>
                                         </select>
@@ -255,13 +262,13 @@ export default function Navbar() {
                                     <div>
                                         <div>Peso</div>
                                         <div>Grosor</div>
-                                        <div>Hebilla</div>
+                                        <div>Cierre</div>
                                         <div>Reserva</div>
+                                        <div>Garantía</div>
                                         <div>W. Proof</div>
                                         <div>W. Resistant</div>
                                         <div>M: Carcasa</div>
                                         <div>M: Correa</div>
-                                        <div>M: Cristal</div>
                                         <div>M: Bisel</div>
                                         <div>C: Carcasa</div>
                                         <div>C: Correa</div>
@@ -271,53 +278,61 @@ export default function Navbar() {
                                     <div className="grid text-lume-100 overflow-hidden">
 
                                         <select className="bg-transparent focus:outline-none" name="weight">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="light" value="30">Liviano</option> {/* 30 - 100g*/}
                                             <option key="medium" value="100">Normal</option> {/* 100 - 150g*/}
                                             <option key="heavy" value="150">Pesado</option> {/* 150 - 200g*/}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="depth">
-                                            <option key="*" value="*">Todos</option>
-                                            <option key="slim" value="6">6-10mm</option> {/* 6-10mm */}
-                                            <option key="average" value="10">10-14mm</option> {/* 10 - 14mm */}
-                                            <option key="thick" value="14">14-18mm</option> {/* 14 - 18mm */}
+                                            <option key="all" value="all">Todos</option>
+                                            <option key="ultra_slim" value="ultra_slim">Ultra-slim</option> {/* 2-6mm */}
+                                            <option key="slim" value="slim">Slim</option> {/* 6-9mm */}
+                                            <option key="standard" value="standard">Standard</option> {/* 10 - 12mm */}
+                                            <option key="thick" value="thick">Thick</option> {/* 13 - 15mm */}
+                                            <option key="bulky" value="bulky">Bulky</option> {/* >15mm */}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="clasp_type" id="clasp_type">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.clasps.map((clasp) => {
                                                 return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="power_reserve" id="power_reserve">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="24" value="24">24hr</option>
                                             <option key="48" value="48">48hr</option>
                                             <option key="72" value="72">72hr</option>
                                             <option key="96" value="96">96hr</option>
                                             <option key="120" value="120">120hr</option>
-                                            <option key="120" value="120">148hr</option>
-                                            <option key="120" value="120">172hr</option>
-                                            <option key="120" value="120">196hr</option>
+                                            <option key="148" value="120">148hr</option>
+                                            <option key="172" value="120">172hr</option>
+                                            <option key="196" value="120">96hr</option>
                                             <option key="999" value="999">Batería</option>
                                         </select>
 
+                                        <select className="bg-transparent focus:outline-none" name="guarantee" id="guarantee">
+                                            <option key="all" value="all">Todos</option>
+                                            <option key="1" value="1">Sí</option>
+                                            <option key="2" value="2">No</option>
+                                        </select>
+
                                         <select className="bg-transparent focus:outline-none" name="water_proof" id="water_proof">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Sí</option>
                                             <option key="2" value="2">No</option>
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="water_resistant" id="water_resistant">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Sí</option>
                                             <option key="2" value="2">No</option>
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="case_material" id="case_material">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.case_materials.map((case_material) => {
                                                 return <option key={case_material.caseMaterial_id}
                                                     value={case_material.caseMaterial_id}>
@@ -326,7 +341,7 @@ export default function Navbar() {
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="strap_material" id="strap_material">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.strap_materials.map((strap_material) => {
                                                 return <option key={strap_material.strapMaterial_id}
                                                     value={strap_material.strapMaterial_id}>
@@ -334,17 +349,8 @@ export default function Navbar() {
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="glass_material" id="glass_material">
-                                            <option key="*" value="*">Todos</option>
-                                            {sessionState.glass_materials.map((glass_material) => {
-                                                return <option key={glass_material.glass_id}
-                                                    value={glass_material.glass_id}>
-                                                    {glass_material.glass_name}</option>
-                                            })}
-                                        </select>
-
                                         <select className="bg-transparent focus:outline-none" name="bezel_material" id="bezel_material">
-                                            <option key="*" value="*">Todos</option>
+                                            <option key="all" value="all">Todos</option>
                                             {sessionState.bezel_materials.map((bezel_material) => {
                                                 return <option key={bezel_material.bezelMaterial_id}
                                                     value={bezel_material.bezelMaterial_id}>
@@ -353,22 +359,22 @@ export default function Navbar() {
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="Luminiscencia">
-                                            <option key="*" value="*">Todos</option>
-                                            {watchDialColors.map((color) => {
+                                            <option key="all" value="all">Todos</option>
+                                            {sessionState.colors.map((color) => {
                                                 return <option key={color} value={color}>{color}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="Luminiscencia">
-                                            <option key="*" value="*">Todos</option>
-                                            {watchDialColors.map((color) => {
+                                            <option key="all" value="all">Todos</option>
+                                            {sessionState.colors.map((color) => {
                                                 return <option key={color} value={color}>{color}</option>
                                             })}
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="Luminiscencia">
-                                            <option key="*" value="*">Todos</option>
-                                            {watchDialColors.map((color) => {
+                                            <option key="all" value="all">Todos</option>
+                                            {sessionState.colors.map((color) => {
                                                 return <option key={color} value={color}>{color}</option>
                                             })}
                                         </select>
@@ -393,7 +399,7 @@ export default function Navbar() {
 
                         <select className="bg-stone-700 focus:outline-none max-w-full -ml-2 cursor-pointer" name="province" id="province">
                             <option key="CRC">Costa Rica</option>
-                            {provinces.map((province) => {
+                            {sessionState.provinces.map((province) => {
                                 return <option key={province}>{province}</option>
                             })}
                         </select>
