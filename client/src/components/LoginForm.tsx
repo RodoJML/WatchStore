@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { Message, exist, login, signup } from "../state/store/slice/sessionSlice";
+import { exist, login, setNotification, signup } from "../state/store/slice/sessionSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import Notification from "./Notification";
 
 export default function LoginForm() {
 
@@ -27,7 +26,6 @@ export default function LoginForm() {
     const [formInput, setFormInput] = useState(false);
     const [signupFormActive, setsignupFormActive] = useState(false);
     const [signupFormStyle, setsignupFormStyle] = useState(signupFormStyle0);
-    const [notification, setNotification] = useState({message: null, type: null} as Message);
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
@@ -36,7 +34,7 @@ export default function LoginForm() {
         // event listener is the submit button
         if (submitter.name === "login") {
             dispatch(login(loginFormData)).unwrap().catch((error: any) => {
-                setNotification({message: error.message, type: "danger"});
+                dispatch(setNotification({message: error.message, type: "danger"}));
             });
             e.currentTarget.reset();
         } else if (submitter.name === "signup") {
@@ -114,8 +112,6 @@ export default function LoginForm() {
 
     return (
         <form className="relative grid" onSubmit={handleSubmit}>
-
-            <Notification message={notification}/>
 
             <div className="flex text-white text-3xl">
                 <span className="font-bold text-shadow shadow-black">⌚️Watch</span>

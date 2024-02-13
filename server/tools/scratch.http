@@ -35,3 +35,7 @@ GET http://localhost:3000/api/v1/listing/previews?page=2&pageSize=2
 
 ###
 GET http://localhost:3000/api/v1/fetch/sizes
+
+
+###
+GET http://localhost:3000/api/v1/listing/previews?key=sub

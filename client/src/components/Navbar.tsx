@@ -7,9 +7,11 @@ import BarsIcon from "../assets/BarsIcon";
 import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { apiFetch, logOut } from "../state/store/slice/sessionSlice";
+import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
+import Notification from "./Notification";
+
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
     if (!sessionStatus.signedIn) {
@@ -36,13 +38,40 @@ export default function Navbar() {
     const [loginFormActive, setLoginFormActive] = useState(false);
     const [advancedSearch, setAdvancedSearch] = useState(false);
     const [advancedSearchOptions, setAdvancedSearchOptions] = useState(false);
-    const [queryParameters, setQueryParameters] = useState({} as SearchForm);
+    const [advancedSearchParameters, setadvancedSearchParameters] = useState({} as SearchForm);
+    const [normalSearchParameters, setnormalSearchParameters] = useState("");
     const dispatch = useDispatch<AppDispatch>();
 
 
+    // The next two functions handle the form submission and changes on the input fields
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
 
+        if (advancedSearch) {
+            console.log("form submitted: ", advancedSearchParameters);
+
+        } else {
+            if (normalSearchParameters === "") {
+                dispatch(setNotification({ message: "Por favor ingrese un término de búsqueda", type: "warning" }));
+            }
+            console.log("form submitted: ", normalSearchParameters);
+        }
+
+
+
+    }
+
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        // name is the name of the input field
+        // value is the value of the input field
+        const { name, value } = e.target;
+        setadvancedSearchParameters({ ...advancedSearchParameters, [name]: value });
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        if(e.target.id === 'model'){setadvancedSearchParameters({ ...advancedSearchParameters, [name]: value });}
+        if(e.target.id === 'searchBar'){setnormalSearchParameters(value);}
     }
 
     const playSound = () => {
@@ -117,29 +146,33 @@ export default function Navbar() {
                 <form onSubmit={handleSubmit}>
                     <div className="grid mt-3">
                         <div className="flex items-center space-x-1">
-                            <input className="w-full min-h-10 border-gray-500 rounded pl-2" id="searchBar" type="text" placeholder="Buscar"></input>
-                            <div className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
+                            <input className="w-full min-h-10 border-gray-500 rounded px-2"
+                                id={advancedSearch ? 'model' : 'searchBar'}
+                                name={advancedSearch ? 'model' : 'searchBar'}
+                                type="search"
+                                placeholder={advancedSearch ? 'Modelo' : 'Buscar'}
+                                onChange={handleInputChange}></input>
+                            <button type="submit" className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
                                 <FontAwesomeIcon icon={faSearch} />
-                            </div>
+                            </button>
                         </div>
 
                         <div className="text-white text-2xs text-opacity-30 text-right mt-1 underline cursor-pointer"
                             onClick={() => {
                                 setAdvancedSearch(!advancedSearch)
                                 if (!advancedSearch) {
+                                    setadvancedSearchParameters({ ...advancedSearchParameters, model: normalSearchParameters});
                                     setTimeout(() => { setAdvancedSearchOptions(!advancedSearchOptions) }, 200);
                                 } else {
                                     setAdvancedSearchOptions(!advancedSearchOptions)
+                                    setnormalSearchParameters(advancedSearchParameters.model ?? '');
                                 }
                             }}>
                             Busqueda avanzada
                         </div>
 
 
-
                         {advancedSearchOptions &&
-
-
                             <div className="grid grid-cols-2 gap-2 text-sm text-white mt-1">
 
                                 <div className="grid grid-cols-2 gap-2">
@@ -163,20 +196,20 @@ export default function Navbar() {
 
                                     <div className="grid text-lume-100 overflow-hidden ">
 
-                                        <select className="bg-transparent focus:outline-none" name="brand" id="brand" >
+                                        <select className="bg-transparent focus:outline-none" name="brand" id="brand" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.brands.map((brand) => {
                                                 return <option key={brand.brand_id} value={brand.brand_id}>{brand.brand_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="condition" id="condition">
+                                        <select className="bg-transparent focus:outline-none" name="condition" id="condition" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Nuevo</option>
                                             <option key="2" value="2">Usado</option>
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="certification" id="certification">
+                                        <select className="bg-transparent focus:outline-none" name="certification" id="certification" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Original</option>
                                             <option key="2" value="2">AAA</option>
@@ -184,56 +217,56 @@ export default function Navbar() {
                                             <option key="4" value="4">A</option>
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="movement">
+                                        <select className="bg-transparent focus:outline-none" name="movement" id="movement" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.movements.map((movement) => {
                                                 return <option key={movement.movement_id} value={movement.movement_id}>{movement.movement_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="width">
+                                        <select className="bg-transparent focus:outline-none" name="width" id="width" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.sizes.map((size) => {
                                                 return <option key={size} value={size}>{size}mm</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="style" id="style">
+                                        <select className="bg-transparent focus:outline-none" name="style" id="style" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.styles.map((style) => {
                                                 return <option key={style.style_id} value={style.style_id}>{style.style_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="type" id="type">
+                                        <select className="bg-transparent focus:outline-none" name="type" id="type" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.types.map((type) => {
                                                 return <option key={type.type_id} value={type.type_id}>{type.type_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="bezel" id="bezel">
+                                        <select className="bg-transparent focus:outline-none" name="bezel_type" id="bezel_type" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.bezels.map((bezel) => {
                                                 return <option key={bezel.bezelType_id} value={bezel.bezelType_id}>{bezel.bezelType_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="glass" id="glass">
+                                        <select className="bg-transparent focus:outline-none" name="glass_material" id="glass_material" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.glass_materials.map((glass_material) => {
                                                 return <option key={glass_material.glass_id} value={glass_material.glass_id}>{glass_material.glass_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="shape" id="shape">
+                                        <select className="bg-transparent focus:outline-none" name="shape" id="shape" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.shapes.map((shape) => {
                                                 return <option key={shape.shape_id} value={shape.shape_id}>{shape.shape_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="gender">
+                                        <select className="bg-transparent focus:outline-none" name="gender" id="gender" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="1" value="male">Hombre</option>
                                             <option key="2" value="female">Mujer</option>
@@ -241,14 +274,14 @@ export default function Navbar() {
                                         </select>
 
 
-                                        <select className="bg-transparent focus:outline-none" name="province" id="province">
+                                        <select className="bg-transparent focus:outline-none" name="province" id="province" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.provinces.map((province) => {
                                                 return <option key={province} value={province}>{province}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="lume" id="lume">
+                                        <select className="bg-transparent focus:outline-none" name="lume" id="lume" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option value="1">Si</option>
                                             <option value="0">No</option>
@@ -277,14 +310,14 @@ export default function Navbar() {
 
                                     <div className="grid text-lume-100 overflow-hidden">
 
-                                        <select className="bg-transparent focus:outline-none" name="weight">
+                                        <select className="bg-transparent focus:outline-none" name="weight" id="weight" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="light" value="30">Liviano</option> {/* 30 - 100g*/}
                                             <option key="medium" value="100">Normal</option> {/* 100 - 150g*/}
                                             <option key="heavy" value="150">Pesado</option> {/* 150 - 200g*/}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="depth">
+                                        <select className="bg-transparent focus:outline-none" name="depth" id="depth" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="ultra_slim" value="ultra_slim">Ultra-slim</option> {/* 2-6mm */}
                                             <option key="slim" value="slim">Slim</option> {/* 6-9mm */}
@@ -293,14 +326,14 @@ export default function Navbar() {
                                             <option key="bulky" value="bulky">Bulky</option> {/* >15mm */}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="clasp_type" id="clasp_type">
+                                        <select className="bg-transparent focus:outline-none" name="clasp_type" id="clasp_type" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.clasps.map((clasp) => {
                                                 return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="power_reserve" id="power_reserve">
+                                        <select className="bg-transparent focus:outline-none" name="power_reserve" id="power_reserve" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="24" value="24">24hr</option>
                                             <option key="48" value="48">48hr</option>
@@ -313,25 +346,25 @@ export default function Navbar() {
                                             <option key="999" value="999">Batería</option>
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="guarantee" id="guarantee">
+                                        <select className="bg-transparent focus:outline-none" name="guarantee" id="guarantee" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Sí</option>
                                             <option key="2" value="2">No</option>
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="water_proof" id="water_proof">
+                                        <select className="bg-transparent focus:outline-none" name="water_proof" id="water_proof" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Sí</option>
                                             <option key="2" value="2">No</option>
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="water_resistant" id="water_resistant">
+                                        <select className="bg-transparent focus:outline-none" name="water_resistant" id="water_resistant" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             <option key="1" value="1">Sí</option>
                                             <option key="2" value="2">No</option>
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="case_material" id="case_material">
+                                        <select className="bg-transparent focus:outline-none" name="case_material" id="case_material" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.case_materials.map((case_material) => {
                                                 return <option key={case_material.caseMaterial_id}
@@ -340,7 +373,7 @@ export default function Navbar() {
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="strap_material" id="strap_material">
+                                        <select className="bg-transparent focus:outline-none" name="strap_material" id="strap_material" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.strap_materials.map((strap_material) => {
                                                 return <option key={strap_material.strapMaterial_id}
@@ -349,7 +382,7 @@ export default function Navbar() {
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="bezel_material" id="bezel_material">
+                                        <select className="bg-transparent focus:outline-none" name="bezel_material" id="bezel_material" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.bezel_materials.map((bezel_material) => {
                                                 return <option key={bezel_material.bezelMaterial_id}
@@ -358,21 +391,21 @@ export default function Navbar() {
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="Luminiscencia">
+                                        <select className="bg-transparent focus:outline-none" name="case_color" id="case_color" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.colors.map((color) => {
                                                 return <option key={color} value={color}>{color}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="Luminiscencia">
+                                        <select className="bg-transparent focus:outline-none" name="strap_color" id="strap_color" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.colors.map((color) => {
                                                 return <option key={color} value={color}>{color}</option>
                                             })}
                                         </select>
 
-                                        <select className="bg-transparent focus:outline-none" name="Luminiscencia">
+                                        <select className="bg-transparent focus:outline-none" name="dial_color" id="dial_color" onChange={handleSelectChange}>
                                             <option key="all" value="all">Todos</option>
                                             {sessionState.colors.map((color) => {
                                                 return <option key={color} value={color}>{color}</option>

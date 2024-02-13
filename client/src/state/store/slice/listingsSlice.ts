@@ -66,6 +66,13 @@ export const getAll_previews = createAsyncThunk(
     }
 )
 
+export const search = createAsyncThunk(
+    'listings/search',
+    async (query: string | undefined): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
+        return await Fetch.api(`/listing/previews?key=${query}`).catch((err) => {throw err;});
+    }
+)
+
 
 export default listingSlice.reducer;
 
