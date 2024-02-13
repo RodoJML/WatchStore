@@ -26,12 +26,18 @@ export interface ListingPreviewItem {
 
 interface listingsState {
     isLoading: boolean,
+    listingsPreviews: ListingPreviewItem[],
+    hasMore: boolean,
+    searchMode: boolean,
     messages: Message[],
     redirectURL: string | null,
 }
 
 const initialState: listingsState = {
     isLoading: false,
+    listingsPreviews: [],
+    searchMode: false,
+    hasMore: true,
     messages: [],
     redirectURL: null,
 }
@@ -42,18 +48,42 @@ const listingSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getAll_previews.pending, (state) => {
-            state.messages.push({message: 'Loading...' , type: 'info'});
+            state.messages.push({ message: 'Loading...', type: 'info' });
             state.isLoading = true;
             console.log(state.messages[state.messages.length - 1]);
         }
         );
         builder.addCase(getAll_previews.fulfilled, (state, action) => {
-            state.messages.push({message: 'Data received' , type: 'success'}); 
+            state.messages.push({ message: 'Data received', type: 'success' });
             state.isLoading = false;
+            state.hasMore = action.payload.total > 0;
+            state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            // to remove duplicates from  state.listingsPreviews
+            state.listingsPreviews = state.listingsPreviews.filter(
+                (value, index, self) =>
+                    self.findIndex(v => v.stock_id === value.stock_id && v.store_user_id === value.store_user_id) === index);
+
             console.log(state.messages[state.messages.length - 1]);
         });
         builder.addCase(getAll_previews.rejected, (state, action) => {
-            state.messages.push({message: action.error.message ?? JSON.stringify(action.error) , type: 'danger'}); 
+            state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+            console.log(state.messages[state.messages.length - 1]);
+        });
+        builder.addCase(search.pending, (state) => {
+            state.messages.push({ message: 'Loading...', type: 'info' });
+            state.isLoading = true;
+            console.log(state.messages[state.messages.length - 1]);
+        }
+        );
+        builder.addCase(search.fulfilled, (state, action) => {
+            state.messages.push({ message: 'Data received', type: 'success' });
+            state.isLoading = false;
+            state.hasMore = action.payload.total > 0;
+            state.listingsPreviews = [...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            console.log(state.messages[state.messages.length - 1]);
+        });
+        builder.addCase(search.rejected, (state, action) => {
+            state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
             console.log(state.messages[state.messages.length - 1]);
         });
     },
@@ -62,18 +92,19 @@ const listingSlice = createSlice({
 export const getAll_previews = createAsyncThunk(
     'listings/getAll_previews',
     async (page: number): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/previews?page=${page}&pageSize=${2}`).catch((err) => {throw err;});
+        console.log('dispatching');
+        return await Fetch.api(`/listing/previews?page=${page}&pageSize=${2}`).catch((err) => { throw err; });
     }
 )
 
 export const search = createAsyncThunk(
     'listings/search',
     async (query: string | undefined): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/previews?key=${query}`).catch((err) => {throw err;});
+        return await Fetch.api(`/listing/previews?key=${query}`).catch((err) => { throw err; });
     }
 )
 
 
 export default listingSlice.reducer;
 
-    
+

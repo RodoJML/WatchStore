@@ -14,9 +14,8 @@ export default function Listing() {
 
     const [condition, setCondition] = useState(1);
     const [viewMode, setViewMode] = useState(true);
-    const [listingsPreviews, setlistingsPreviews] = useState([] as ListingPreviewItem[]);  // This is the state that will hold the listings // useState<DataEnvelopeList<ListingItem>>();
+    // const [listingsPreviews, setlistingsPreviews] = useState([] as ListingPreviewItem[]);  // This is the state that will hold the listings // useState<DataEnvelopeList<ListingItem>>();
     const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
     const [previousScrollTop, setPreviousScrollTop] = useState(0); // Used in handleScroll to determine if we are scrolling up or down
 
     function watchCondition(condition: number) {
@@ -30,22 +29,7 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        // All isMounted can be removed in production since React.StrictMode is not used
-        // It is used to avoid a warning in the console of duplicated values
-        let isMounted = true;
-        const fetchData = async () => {
-
-            // For some reason the response is an array of arrays, so we flatten it with reduce
-            const response = (await dispatch(getAll_previews(page)).unwrap()).data;
-            const morePreviews = response.reduce((acc, val) => acc.concat(val), []);
-            setHasMore(morePreviews.length > 0);
-
-            if (isMounted) setlistingsPreviews((prevPreviews) => [...prevPreviews, ...morePreviews]);
-        };
-        
-        if (isMounted && hasMore) fetchData();
-        return () => { isMounted = false };
-
+        dispatch(getAll_previews(page));
     }, [page]);
 
     const handleScroll = () => {
@@ -56,11 +40,12 @@ export default function Listing() {
 
         // If met, you are at the bottom of the page (windowHeight + top) + 1 >= height
         // If met, you are scrolling down (top > previousScrollTop)
-        if ((windowHeight + top) + 1 >= height && top > previousScrollTop && hasMore) {
+        if ((windowHeight + top) + 1 >= height
+            && top > previousScrollTop
+            && listingState.hasMore
+            && !listingState.isLoading) {
             setPage(previousPage => previousPage + 1);
         }
-
-        // Update the previous scroll position for the next check
         setPreviousScrollTop(top);
     }
 
@@ -71,7 +56,7 @@ export default function Listing() {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [listingState.hasMore]);
 
     return (
         <div>
@@ -101,7 +86,7 @@ export default function Listing() {
                 (
                     <div>
                         <div className={listingGridStyle}>
-                            {listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => {
+                            {listingState.listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => {
                                 return <ListingCard
                                     key={listingPreview.listing_type.toString() + listingPreview.stock_id.toString() + listingPreview.store_user_id.toString()}
                                     isLoading={listingState.isLoading}
@@ -114,8 +99,8 @@ export default function Listing() {
                 :
                 <div>
                     <div className={listingListStyle}>
-                        {listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => (
-                            <ListingList 
+                        {listingState.listingsPreviews.map((listingPreview: ListingPreviewItem, index: number) => (
+                            <ListingList
                                 key={listingPreview.listing_type.toString() + listingPreview.stock_id.toString() + listingPreview.store_user_id.toString()}
                                 listingPreview={listingPreview}
                             />
@@ -124,10 +109,10 @@ export default function Listing() {
                 </div>
             }
 
-            {listingsPreviews.length > 0 &&
+            {listingState.listingsPreviews.length > 0 &&
                 <div className="flex justify-center text-white text-center mt-8 mb-10">
                     <div className="bg-black bg-opacity-20 border border-black border-opacity-20 rounded w-2/3 p-1">
-                        {hasMore ?
+                        {listingState.hasMore ?
                             (
                                 listingState.isLoading
                                     ? <div>
@@ -150,12 +135,12 @@ export default function Listing() {
                     </div>
                 </div>
             }
-
-
         </div>
     )
+
 }
 
 const listingListStyle = "bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-2 shadow shadow-black mx-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96"
 const listingListStyleNB = "mx-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96"
-const listingGridStyle = "grid grid-cols-2 m-2 gap-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-8 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10" 
+const listingGridStyle = "grid grid-cols-2 m-2 gap-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-8 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10"
+

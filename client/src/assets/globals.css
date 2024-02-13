@@ -28,68 +28,83 @@ body {
 
 .seconds:after {
     content: "";
-    display: block; 
-    position: absolute; 
+    display: block;
+    position: absolute;
     left: 6px;
-    top: -2px; 
-    height: 8px; 
+    top: -2px;
+    height: 8px;
     width: 8px;
     box-shadow: 0 0 10px 0 rgb(0, 0, 0);
     border: 1.5px solid rgb(0, 0, 0);
-    background-color: whitesmoke; 
-    border-radius: 50%; 
+    background-color: whitesmoke;
+    border-radius: 50%;
     z-index: 1;
 }
 
- .ribbon {
+.ribbon {
     position: absolute;
-    right: -5px; top: -5px;
+    right: -5px;
+    top: -5px;
     z-index: 1;
     overflow: hidden;
-    width: 75px; height: 75px; 
+    width: 75px;
+    height: 75px;
     text-align: right;
- }
- .ribbon span {
+}
+
+.ribbon span {
     font-size: 10px;
-    color: #fff; 
-    text-transform: uppercase; 
+    color: #fff;
+    text-transform: uppercase;
     text-align: center;
-    font-weight: bold; line-height: 20px;
+    font-weight: bold;
+    line-height: 20px;
     transform: rotate(45deg);
-    -webkit-transform: rotate(45deg); /* Needed for Safari */
-    width: 100px; display: block;
+    -webkit-transform: rotate(45deg);
+    /* Needed for Safari */
+    width: 100px;
+    display: block;
     background: linear-gradient(#1297f0 0%, #0a64a1 100%);
     box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
     position: absolute;
-    top: 19px; right: -21px;
- }
- .ribbon span::before {
+    top: 19px;
+    right: -21px;
+}
+
+.ribbon span::before {
     content: '';
-    position: absolute; 
-    left: 0px; top: 100%;
+    position: absolute;
+    left: 0px;
+    top: 100%;
     z-index: -1;
     border-left: 3px solid #0d74c9;
     border-right: 3px solid transparent;
     border-bottom: 3px solid transparent;
     border-top: 3px solid #0d74c9;
- }
- .ribbon span::after {
+}
+
+.ribbon span::after {
     content: '';
-    position: absolute; 
-    right: 0%; top: 100%;
+    position: absolute;
+    right: 0%;
+    top: 100%;
     z-index: -1;
     border-right: 3px solid #0d74c9;
     border-left: 3px solid transparent;
     border-bottom: 3px solid transparent;
     border-top: 3px solid #0d74c9;
- }
- 
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+}
+
 @keyframes seconds {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
 }
-

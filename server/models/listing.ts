@@ -5,7 +5,7 @@ async function connection() {
     return db;
 }
 
-async function getAll_previews(page = 1, pageSize = 5, search: string, advancedSearch: string) {
+async function get_previews(page = 1, pageSize = 30, search: string, advancedSearch: string) {
     const db = await connection();
 
     const queryOriginals = db('ORIG_LISTING').select(
@@ -111,15 +111,19 @@ async function getAll_previews(page = 1, pageSize = 5, search: string, advancedS
             if (index === 0) {
                 queryOriginals.where('ORIG_MODEL.orig_model_name', 'like', `%${word}%`);
                 queryOriginals.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+                queryOriginals.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
 
                 queryGens.where('GEN_MODEL.gen_model_name', 'like', `%${word}%`);
                 queryGens.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+                queryGens.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
             } else {
                 queryOriginals.orWhere('ORIG_MODEL.orig_model_name', 'like', `%${word}%`);
                 queryOriginals.orWhere('BRAND.brand_name', 'like', `%${word}%`);
-
+                queryOriginals.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
+               
                 queryGens.orWhere('GEN_MODEL.gen_model_name', 'like', `%${word}%`);
                 queryGens.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+                queryGens.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`); 
             }
         })
     }
@@ -270,4 +274,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, getAll_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search };
+module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search };

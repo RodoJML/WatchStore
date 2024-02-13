@@ -15,9 +15,7 @@ router
         ).catch(next);
     })
     .get('/previews', (req: Request, res: Response, next: NextFunction) => {
-        model.getAll_previews(
-            req.query.page as number | undefined, 
-            req.query.pageSize as number | undefined,
+        model.get_previews(req.query.page as number | undefined, req.query.pageSize as number | undefined,
             req.query.key as string | undefined)
         // In the model the page and number is defined that if no query is passed it will default to 1 and 5 respectively
         .then(

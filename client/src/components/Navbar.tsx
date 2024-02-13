@@ -11,6 +11,7 @@ import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionS
 import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
 import Notification from "./Notification";
+import { search } from "../state/store/slice/listingsSlice";
 
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
@@ -53,12 +54,11 @@ export default function Navbar() {
         } else {
             if (normalSearchParameters === "") {
                 dispatch(setNotification({ message: "Por favor ingrese un término de búsqueda", type: "warning" }));
+            } else {
+                dispatch(search(normalSearchParameters));
             }
             console.log("form submitted: ", normalSearchParameters);
         }
-
-
-
     }
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
