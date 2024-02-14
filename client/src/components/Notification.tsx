@@ -39,7 +39,7 @@ export default function Notification({ message }: NotificationProps) {
             {message?.type === 'danger' &&
                 <span className="text-red-800 capitalize">🚨 {message.type}</span>}
             {message?.type === 'warning' &&
-                <span className="text-yellow-800 capitalize">{message.type}</span>}
+                <span className="text-yellow-800 capitalize">🔔 {message.type}</span>}
             {message?.type === 'info' &&
                 <span>ℹ️ {message.type}</span>}
         </div>

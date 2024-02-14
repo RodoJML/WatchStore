@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
 import type { DataEnvelopeList } from './../../../model/fetch';
 import { type Message } from './sessionSlice';
@@ -29,6 +29,8 @@ interface listingsState {
     listingsPreviews: ListingPreviewItem[],
     hasMore: boolean,
     searchMode: boolean,
+    lastSearch: string | undefined,
+    page: number,
     messages: Message[],
     redirectURL: string | null,
 }
@@ -37,6 +39,8 @@ const initialState: listingsState = {
     isLoading: false,
     listingsPreviews: [],
     searchMode: false,
+    lastSearch: undefined,
+    page: 1,
     hasMore: true,
     messages: [],
     redirectURL: null,
@@ -45,7 +49,24 @@ const initialState: listingsState = {
 const listingSlice = createSlice({
     name: 'listings',
     initialState,
-    reducers: {},
+    reducers: {
+        searchModeOn: (state) => {
+            state.searchMode = true;
+            state.page = 1;
+        },
+        searchModeOff: (state) => {
+            state.searchMode = false;
+        },
+        incrementPage: (state) => {
+            state.page++;
+        },
+        setLastSearch: (state, action: PayloadAction<string>) => {
+            state.lastSearch = action.payload;
+        },
+        setRedirectURL: (state, action) => {
+            state.redirectURL = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getAll_previews.pending, (state) => {
             state.messages.push({ message: 'Loading...', type: 'info' });
@@ -57,6 +78,7 @@ const listingSlice = createSlice({
             state.messages.push({ message: 'Data received', type: 'success' });
             state.isLoading = false;
             state.hasMore = action.payload.total > 0;
+
             state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
             // to remove duplicates from  state.listingsPreviews
             state.listingsPreviews = state.listingsPreviews.filter(
@@ -99,11 +121,12 @@ export const getAll_previews = createAsyncThunk(
 
 export const search = createAsyncThunk(
     'listings/search',
-    async (query: string | undefined): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/previews?key=${query}`).catch((err) => { throw err; });
+    async ({query, page} : {query: string | undefined, page: number | undefined }): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
+        return await Fetch.api(`/listing/previews?key=${query}&page${page}&pageSize=${2}`).catch((err) => { throw err; });
     }
 )
 
+export const { searchModeOn, searchModeOff, incrementPage, setLastSearch } = listingSlice.actions;
 
 export default listingSlice.reducer;
 

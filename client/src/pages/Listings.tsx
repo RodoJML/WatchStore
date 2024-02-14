@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownWideShort, faGripVertical, faHand, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
-import { ListingPreviewItem, getAll_previews } from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem, getAll_previews, incrementPage, search } from "../state/store/slice/listingsSlice";
 
 export default function Listing() {
 
@@ -29,8 +29,13 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        dispatch(getAll_previews(page));
-    }, [page]);
+        if(listingState.searchMode){
+            dispatch(search({query: listingState.lastSearch, page: listingState.page}));
+        }else{
+            dispatch(getAll_previews(listingState.page));
+        }
+        
+    }, [listingState.page]);
 
     const handleScroll = () => {
         // When we scroll all the way down (Top + windowHeight) summed together are equal to Height
@@ -44,7 +49,8 @@ export default function Listing() {
             && top > previousScrollTop
             && listingState.hasMore
             && !listingState.isLoading) {
-            setPage(previousPage => previousPage + 1);
+            console.log('bottom');
+            dispatch(incrementPage());
         }
         setPreviousScrollTop(top);
     }

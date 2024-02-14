@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import { Slide } from "../model/fetch";
 import Listings from "./Listings";
@@ -17,7 +16,7 @@ export default function Home() {
             description: "Louis Vuitton Malletier, commonly known as Louis Vuitton, is a French luxury fashion and leather goods brand and company, headquartered in Paris, France.",
         },
         {
-            url: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e3c80936323781.57188fa682761.jpg",
+            url: "https://i0.wp.com/media2.giphy.com/media/5xtDarqPCe4BofVSz3W/giphy.gif",
             title: "Hublot Watch",
             description: "Hublot is a Swiss luxury watchmaker founded in 1980 by Italian Carlo Crocco. The company operates as a wholly owned subsidiary of France's LVMH.",
         },

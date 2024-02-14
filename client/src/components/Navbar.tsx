@@ -10,8 +10,7 @@ import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
-import Notification from "./Notification";
-import { search } from "../state/store/slice/listingsSlice";
+import { search, searchModeOn, setLastSearch } from "../state/store/slice/listingsSlice";
 
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
@@ -35,6 +34,7 @@ export default function Navbar() {
 
     // State
     const sessionState = useSelector((state: RootState) => state.session);
+    const listingState = useSelector((state: RootState) => state.listings);
     const [sideMenuActive, setSideMenuActive] = useState(false);
     const [loginFormActive, setLoginFormActive] = useState(false);
     const [advancedSearch, setAdvancedSearch] = useState(false);
@@ -55,7 +55,8 @@ export default function Navbar() {
             if (normalSearchParameters === "") {
                 dispatch(setNotification({ message: "Por favor ingrese un término de búsqueda", type: "warning" }));
             } else {
-                dispatch(search(normalSearchParameters));
+                dispatch(search({query: normalSearchParameters, page:1}));
+                dispatch(setLastSearch(normalSearchParameters));
             }
             console.log("form submitted: ", normalSearchParameters);
         }
@@ -152,7 +153,8 @@ export default function Navbar() {
                                 type="search"
                                 placeholder={advancedSearch ? 'Modelo' : 'Buscar'}
                                 onChange={handleInputChange}></input>
-                            <button type="submit" className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
+                            <button type="submit" className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]" 
+                            onClick={() => {dispatch(searchModeOn())}}>
                                 <FontAwesomeIcon icon={faSearch} />
                             </button>
                         </div>
