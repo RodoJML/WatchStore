@@ -52,8 +52,6 @@ const listingSlice = createSlice({
     reducers: {
         searchModeOn: (state) => {
             state.searchMode = true;
-            state.listingsPreviews = [];
-            state.page = 1;
         },
         searchModeOff: (state) => {
             state.searchMode = false;
@@ -62,6 +60,9 @@ const listingSlice = createSlice({
             state.lastSearch = undefined;
             state.hasMore = true;
             console.log('searchModeOff');
+        },
+        resetPage: (state) => {
+            state.page = 1;
         },
         incrementPage: (state) => {
             state.page++;
@@ -105,8 +106,16 @@ const listingSlice = createSlice({
             state.isLoading = false;
             state.hasMore = action.payload.total > 0;
             
-            if(action.meta.arg.query !== state.lastSearch) state.listingsPreviews = [];
-            state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            if(action.meta.arg.query !== state.lastSearch){
+                state.page = 1;
+                state.listingsPreviews = [];
+            } 
+
+            if(action.meta.arg.query === state.lastSearch && action.meta.arg.page === 1){
+                state.listingsPreviews = [...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            } else {
+                state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            }
             
             state.lastSearch = action.meta.arg.query;
             console.log(state.messages[state.messages.length - 1]);

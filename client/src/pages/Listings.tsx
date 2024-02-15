@@ -30,8 +30,10 @@ export default function Listing() {
 
     useEffect(() => {
         if(listingState.searchMode){
+            console.log('triggered search mode');
             dispatch(search({query: listingState.lastSearch, page: listingState.page}));
         }else{
+            console.log('triggered get all previews mode');
             dispatch(getAll_previews(listingState.page));
         }
         
@@ -46,9 +48,9 @@ export default function Listing() {
         // If met, you are at the bottom of the page (windowHeight + top) + 1 >= height
         // If met, you are scrolling down (top > previousScrollTop)
         if ((windowHeight + top) + 1 >= height
-            && top > previousScrollTop
-            && listingState.hasMore
-            && !listingState.isLoading) {
+            && top >= previousScrollTop
+            && listingState.hasMore == true
+            && listingState.isLoading == false) {
             console.log('bottom');
             dispatch(incrementPage());
         }
