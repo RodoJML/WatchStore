@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
-import { search, searchModeOn, setLastSearch } from "../state/store/slice/listingsSlice";
+import { search, searchModeOn } from "../state/store/slice/listingsSlice";
 
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
@@ -56,7 +56,6 @@ export default function Navbar() {
                 dispatch(setNotification({ message: "Por favor ingrese un término de búsqueda", type: "warning" }));
             } else {
                 dispatch(search({query: normalSearchParameters, page:1}));
-                dispatch(setLastSearch(normalSearchParameters));
             }
             console.log("form submitted: ", normalSearchParameters);
         }

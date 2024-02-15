@@ -52,16 +52,15 @@ const listingSlice = createSlice({
     reducers: {
         searchModeOn: (state) => {
             state.searchMode = true;
+            state.listingsPreviews = [];
             state.page = 1;
         },
         searchModeOff: (state) => {
             state.searchMode = false;
+            state.listingsPreviews = [];
         },
         incrementPage: (state) => {
             state.page++;
-        },
-        setLastSearch: (state, action: PayloadAction<string>) => {
-            state.lastSearch = action.payload;
         },
         setRedirectURL: (state, action) => {
             state.redirectURL = action.payload;
@@ -101,7 +100,12 @@ const listingSlice = createSlice({
             state.messages.push({ message: 'Data received', type: 'success' });
             state.isLoading = false;
             state.hasMore = action.payload.total > 0;
-            state.listingsPreviews = [...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            
+            if(action.meta.arg.query !== state.lastSearch) state.listingsPreviews = [];
+
+            state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
+            
+            state.lastSearch = action.meta.arg.query;
             console.log(state.messages[state.messages.length - 1]);
         });
         builder.addCase(search.rejected, (state, action) => {
@@ -114,7 +118,6 @@ const listingSlice = createSlice({
 export const getAll_previews = createAsyncThunk(
     'listings/getAll_previews',
     async (page: number): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        console.log('dispatching');
         return await Fetch.api(`/listing/previews?page=${page}&pageSize=${2}`).catch((err) => { throw err; });
     }
 )
@@ -122,11 +125,11 @@ export const getAll_previews = createAsyncThunk(
 export const search = createAsyncThunk(
     'listings/search',
     async ({query, page} : {query: string | undefined, page: number | undefined }): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/previews?key=${query}&page${page}&pageSize=${2}`).catch((err) => { throw err; });
+        return await Fetch.api(`/listing/previews?key=${query}&page=${page}&pageSize=${2}`).catch((err) => { throw err; });
     }
 )
 
-export const { searchModeOn, searchModeOff, incrementPage, setLastSearch } = listingSlice.actions;
+export const { searchModeOn, searchModeOff, incrementPage } = listingSlice.actions;
 
 export default listingSlice.reducer;
 
