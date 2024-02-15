@@ -103,27 +103,32 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
 
     if (search) {
         const searchToArray = search.split(' ');
-        
+
         console.log("Entered");
         console.log(searchToArray);
-        
+
         searchToArray.forEach((word: string, index: number) => {
             if (index === 0) {
-                queryOriginals.where('ORIG_MODEL.orig_model_name', 'like', `%${word}%`);
-                queryOriginals.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+
+                if (searchToArray.length == 1) {
+                    queryOriginals.where('ORIG_MODEL.orig_model_name', 'like', `%${word}%`);
+                    queryOriginals.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+                    queryOriginals.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
+
+                    queryGens.where('GEN_MODEL.gen_model_name', 'like', `%${word}%`);
+                    queryGens.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+                    queryGens.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
+                } else {
+                    queryOriginals.where('BRAND.brand_name', 'like', `%${word}%`);
+                    queryGens.where('BRAND.brand_name', 'like', `%${word}%`);
+                }
+
+            } else {
+                queryOriginals.andWhere('ORIG_MODEL.orig_model_name', 'like', `%${word}%`);
                 queryOriginals.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
 
-                queryGens.where('GEN_MODEL.gen_model_name', 'like', `%${word}%`);
-                queryGens.orWhere('BRAND.brand_name', 'like', `%${word}%`);
+                queryGens.andWhere('GEN_MODEL.gen_model_name', 'like', `%${word}%`);
                 queryGens.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
-            } else {
-                queryOriginals.orWhere('ORIG_MODEL.orig_model_name', 'like', `%${word}%`);
-                queryOriginals.orWhere('BRAND.brand_name', 'like', `%${word}%`);
-                queryOriginals.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`);
-               
-                queryGens.orWhere('GEN_MODEL.gen_model_name', 'like', `%${word}%`);
-                queryGens.orWhere('BRAND.brand_name', 'like', `%${word}%`);
-                queryGens.orWhere('MOVEMENT.movement_name', 'like', `%${word}%`); 
             }
         })
     }
