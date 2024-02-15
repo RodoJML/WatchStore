@@ -62,7 +62,7 @@ export default function Listing() {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [listingState.hasMore]);
+    }, [listingState.hasMore, listingState.isLoading]);
 
     return (
         <div>

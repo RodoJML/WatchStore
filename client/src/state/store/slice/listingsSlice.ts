@@ -57,7 +57,11 @@ const listingSlice = createSlice({
         },
         searchModeOff: (state) => {
             state.searchMode = false;
+            state.page = 1;
             state.listingsPreviews = [];
+            state.lastSearch = undefined;
+            state.hasMore = true;
+            console.log('searchModeOff');
         },
         incrementPage: (state) => {
             state.page++;
@@ -102,7 +106,6 @@ const listingSlice = createSlice({
             state.hasMore = action.payload.total > 0;
             
             if(action.meta.arg.query !== state.lastSearch) state.listingsPreviews = [];
-
             state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
             
             state.lastSearch = action.meta.arg.query;

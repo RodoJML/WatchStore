@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
-import { search, searchModeOn } from "../state/store/slice/listingsSlice";
+import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
 
 
 const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
@@ -55,7 +55,7 @@ export default function Navbar() {
             if (normalSearchParameters === "") {
                 dispatch(setNotification({ message: "Por favor ingrese un término de búsqueda", type: "warning" }));
             } else {
-                dispatch(search({query: normalSearchParameters, page:1}));
+                dispatch(search({ query: normalSearchParameters, page: 1 }));
             }
             console.log("form submitted: ", normalSearchParameters);
         }
@@ -70,8 +70,8 @@ export default function Navbar() {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if(e.target.id === 'model'){setadvancedSearchParameters({ ...advancedSearchParameters, [name]: value });}
-        if(e.target.id === 'searchBar'){setnormalSearchParameters(value);}
+        if (e.target.id === 'model') { setadvancedSearchParameters({ ...advancedSearchParameters, [name]: value }); }
+        if (e.target.id === 'searchBar') { setnormalSearchParameters(value); }
     }
 
     const playSound = () => {
@@ -111,6 +111,21 @@ export default function Navbar() {
             playSound();
         }
     }, [sessionState.signedIn]);
+
+    useEffect(() => {
+        console.log("from navbar searparams: " + normalSearchParameters);
+        console.log("from navbar searchmode: " + listingState.searchMode);
+
+        if (normalSearchParameters !== "") {
+            dispatch(searchModeOn());
+        } else {
+            if (listingState.searchMode) {
+                dispatch(searchModeOff());
+                dispatch(getAll_previews(listingState.page));
+            }
+        }
+
+    }, [normalSearchParameters])
 
     // Render
     return (
@@ -152,8 +167,7 @@ export default function Navbar() {
                                 type="search"
                                 placeholder={advancedSearch ? 'Modelo' : 'Buscar'}
                                 onChange={handleInputChange}></input>
-                            <button type="submit" className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]" 
-                            onClick={() => {dispatch(searchModeOn())}}>
+                            <button type="submit" className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
                                 <FontAwesomeIcon icon={faSearch} />
                             </button>
                         </div>
@@ -162,7 +176,7 @@ export default function Navbar() {
                             onClick={() => {
                                 setAdvancedSearch(!advancedSearch)
                                 if (!advancedSearch) {
-                                    setadvancedSearchParameters({ ...advancedSearchParameters, model: normalSearchParameters});
+                                    setadvancedSearchParameters({ ...advancedSearchParameters, model: normalSearchParameters });
                                     setTimeout(() => { setAdvancedSearchOptions(!advancedSearchOptions) }, 200);
                                 } else {
                                     setAdvancedSearchOptions(!advancedSearchOptions)
@@ -445,8 +459,8 @@ export default function Navbar() {
                             </div>
                             :
                             <div className="flex flex-grow overflow-scroll scroll-smooth justify-between">
-                                {sessionState.styles.map((style) => {
-                                    return <Link key={style.style_id} to={""} className="mx-3">{style.style_name}</Link>
+                                {sessionState.brands.map((brand) => {
+                                    return <Link key={brand.brand_id} to={""} className="mx-3">{brand.brand_name}</Link>
                                 })}
                             </div>
                         }
