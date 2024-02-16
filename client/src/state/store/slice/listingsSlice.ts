@@ -130,14 +130,14 @@ const listingSlice = createSlice({
 export const getAll_previews = createAsyncThunk(
     'listings/getAll_previews',
     async (page: number): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/previews?page=${page}&pageSize=${2}`).catch((err) => { throw err; });
+        return await Fetch.api(`/listing/previews?page=${page}&pageSize=${10}`).catch((err) => { throw err; });
     }
 )
 
 export const search = createAsyncThunk(
     'listings/search',
     async ({query, page} : {query: string | undefined, page: number | undefined }): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
-        return await Fetch.api(`/listing/previews?key=${query}&page=${page}&pageSize=${2}`).catch((err) => { throw err; });
+        return await Fetch.api(`/listing/previews?key=${query}&page=${page}&pageSize=${10}`).catch((err) => { throw err; });
     }
 )
 

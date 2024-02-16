@@ -15,7 +15,6 @@ export default function Listing() {
     const [condition, setCondition] = useState(1);
     const [viewMode, setViewMode] = useState(true);
     // const [listingsPreviews, setlistingsPreviews] = useState([] as ListingPreviewItem[]);  // This is the state that will hold the listings // useState<DataEnvelopeList<ListingItem>>();
-    const [page, setPage] = useState(1);
     const [previousScrollTop, setPreviousScrollTop] = useState(0); // Used in handleScroll to determine if we are scrolling up or down
 
     function watchCondition(condition: number) {
@@ -29,14 +28,14 @@ export default function Listing() {
     }
 
     useEffect(() => {
-        if(listingState.searchMode){
+        if (listingState.searchMode) {
             console.log('triggered search mode');
-            dispatch(search({query: listingState.lastSearch, page: listingState.page}));
-        }else{
+            dispatch(search({ query: listingState.lastSearch, page: listingState.page }));
+        } else {
             console.log('triggered get all previews mode');
             dispatch(getAll_previews(listingState.page));
         }
-        
+
     }, [listingState.page]);
 
     const handleScroll = () => {
@@ -55,10 +54,6 @@ export default function Listing() {
             dispatch(incrementPage());
         }
         setPreviousScrollTop(top);
-    }
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     useEffect(() => {
@@ -118,7 +113,7 @@ export default function Listing() {
             }
 
             {listingState.listingsPreviews.length > 0 &&
-                <div className="flex justify-center text-white text-center mt-8 mb-10">
+                <div className="flex justify-center text-white text-center mt-8 mb-8">
                     <div className="bg-black bg-opacity-20 border border-black border-opacity-20 rounded w-2/3 p-1">
                         {listingState.hasMore ?
                             (
@@ -126,18 +121,14 @@ export default function Listing() {
                                     ? <div>
                                         <FontAwesomeIcon icon={faSpinner} className="animate-spin ml-1" />
                                     </div>
-                                    : <div>Ver más resultados
+                                    : <div>Cargar más resultados
                                         <FontAwesomeIcon icon={faArrowDownWideShort} className="ml-1" />
                                     </div>
                             )
-                            : <div className="cursor-pointer" onClick={scrollToTop}>
-                                <div>
-                                    No hay más resultados
-                                    <FontAwesomeIcon icon={faHand} className="ml-1" />
-                                </div>
-                                <div className="absolute left-1/4 right-1/4 text-xs mt-2 text-white text-opacity-80">
-                                    Toca para volver al inicio
-                                </div>
+                            :
+                            <div>
+                                No hay más resultados
+                                <FontAwesomeIcon icon={faHand} className="ml-1" />
                             </div>
                         }
                     </div>

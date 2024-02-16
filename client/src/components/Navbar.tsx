@@ -109,6 +109,7 @@ export default function Navbar() {
     useEffect(() => {
         if (sessionState.signedIn) {
             playSound();
+            dispatch(setNotification({ message: `Bienvenido ${sessionState.user.user_name}`, type: "success" }));
         }
     }, [sessionState.signedIn]);
 

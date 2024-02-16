@@ -1,8 +1,7 @@
 import App from '../App';
 import Home from '../pages/Home';
+import ViewListing from '../pages/ViewListing';
 import { createBrowserRouter} from 'react-router-dom';
-import Brands from '../components/Brands';
-import Listings from '../pages/Listings';
 
 export const router = createBrowserRouter([
     {
@@ -14,14 +13,9 @@ export const router = createBrowserRouter([
                 element: <Home/>,
             },
             {
-                path: '/brands',
-                element: <Brands/>,
+                path: '/listing/:listingid',
+                element: <ViewListing/>,
             },
-            {
-                path: '/listings',
-                element: <Listings/>,
-            }
-
         ]
     }
 ]);
