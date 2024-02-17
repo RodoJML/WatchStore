@@ -44,7 +44,7 @@ export default function MessagesCenter({ sessionStatus, onClick, isActive }: { s
                                 }
                             </div>
                         </div>
-                        <div className="block">----</div>
+                        
                     </div>
 
 
