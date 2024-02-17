@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faUserLarge, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faCircleDot, faComment, faEnvelope, faMessage, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
@@ -11,24 +11,7 @@ import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionS
 import { SearchForm } from "../model/fetch";
 import bellsAudio from "../assets/audio/Bells.mp3";
 import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
-
-
-const LoginArea = ({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) => {
-    if (!sessionStatus.signedIn) {
-        return <div className="cursor-pointer">
-            <span className="text-sm">Iniciar Sesión</span>
-            <FontAwesomeIcon icon={faUserLarge} className="ml-1 fa-bounce" style={{ animationIterationCount: '10' }} />
-        </div>
-    } else {
-        return <>
-            <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
-            <FontAwesomeIcon icon={faUserLarge} className="mr-2" />
-            <a href="/" onClick={Logout}>
-                <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket} />
-            </a>
-        </>
-    }
-};
+import LoginArea from "./LoginArea";
 
 export default function Navbar() {
 
@@ -128,6 +111,10 @@ export default function Navbar() {
 
     }, [normalSearchParameters])
 
+    useEffect(() =>{
+
+    }, [sessionState.messages])
+
     // Render
     return (
         <div className="w-full h-41">
@@ -155,7 +142,11 @@ export default function Navbar() {
 
                     <div className="flex justify-end col-span-2">
                         <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())} /></div>
-                        {/* <div className="w-5"><img src="./src/assets/images/crcflag.png" alt="" /></div> */}
+                        <div className="relative bg-black border border-stone-700 ml-2 w-7 flex items-center justify-center rounded-sm overflow-hidden">
+                            <div className="absolute text-sm font-extrabold text-amber-200 opacity-90 transition-all ease-in-out top-0">{sessionState.messages.length}</div>
+                            {/* <div className="absolute block text-black text-2xs left-3.5 bottom-1.5 font-extrabold">1</div>
+                            <FontAwesomeIcon icon={faComment} className="ml-2 text-lg text-lume-100"/> */}
+                        </div>
                     </div>
                 </nav>
 

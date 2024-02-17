@@ -101,7 +101,7 @@ const sessionSlice = createSlice(
         extraReducers: (builder) => {
             builder.addCase(apiFetch.pending, (state) => {
                 state.isLoading = true;
-                state.messages.push({ message: 'Loading...', type: 'info' });
+                // state.messages.push({ message: 'Loading...', type: 'info' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(apiFetch.fulfilled, (state, action) => {
@@ -124,22 +124,22 @@ const sessionSlice = createSlice(
                 if(action.meta.arg.url === "sizes") state.sizes = action.payload.data;
 
                 state.isLoading = false;
-                state.messages.push({ message: 'Data received', type: 'success' });
+                // state.messages.push({ message: 'Data received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(apiFetch.rejected, (state, action) => {
                 state.isLoading = false;
-                state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+                // state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(login.pending, (state) => {
                 state.isLoading = true;
-                state.messages.push({ message: 'Loading...', type: 'info' });
+                // state.messages.push({ message: 'Loading...', type: 'info' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.messages.push({ message: 'User received', type: 'success' });
+                // state.messages.push({ message: 'User received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
                 state.user = action.payload.data.user;
                 // action.payload.data.token is also available, use it when you need it.
@@ -147,33 +147,33 @@ const sessionSlice = createSlice(
             });
             builder.addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
-                state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+                // state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
                 console.log(state.messages[state.messages.length - 1]);
                 state.signedIn = false;
             });
             builder.addCase(exist.pending, (state) => {
                 state.isLoading = true;
-                state.messages.push({ message: 'Loading...', type: 'info' });
+                // state.messages.push({ message: 'Loading...', type: 'info' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(exist.fulfilled, (state) => {
                 state.isLoading = false;
-                state.messages.push({ message: 'Data received', type: 'success' });
+                // state.messages.push({ message: 'Data received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(exist.rejected, (state, action) => {
                 state.isLoading = false;
-                state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+                // state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(signup.pending, (state) => {
                 state.isLoading = true;
-                state.messages.push({ message: 'Loading...', type: 'info' });
+                // state.messages.push({ message: 'Loading...', type: 'info' });
                 console.log(state.messages[state.messages.length - 1]);
             });
             builder.addCase(signup.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.messages.push({ message: 'User received', type: 'success' });
+                // state.messages.push({ message: 'User received', type: 'success' });
                 console.log(state.messages[state.messages.length - 1]);
                 state.user = action.payload.data.user;
                 // action.payload.data.token is also available, use it when you need it.
@@ -181,7 +181,7 @@ const sessionSlice = createSlice(
             });
             builder.addCase(signup.rejected, (state, action) => {
                 state.isLoading = false;
-                state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
+                // state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
                 console.log(state.messages[state.messages.length - 1]);
                 state.signedIn = false;
             });
