@@ -60,7 +60,9 @@ export default function LoginForm() {
     const handleRegFormToggle = () => {
         setsignupFormActive(!signupFormActive);
         setsignupFormStyle(signupFormStyle1);
-        setTimeout(() => setsignupFormStyle(signupFormStyle2), 50);
+        const timeout =  setTimeout(() => setsignupFormStyle(signupFormStyle2), 50);
+       
+        return () => { clearTimeout(timeout) };
     };
 
     useEffect(() => {

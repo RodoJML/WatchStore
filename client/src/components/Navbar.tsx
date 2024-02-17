@@ -11,6 +11,7 @@ import { apiFetch, clearMessages, logOut, setNotification } from "../state/store
 import { SearchForm } from "../model/fetch";
 import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
 import LoginArea from "./LoginArea";
+import MessagesCenter from "./messagesCenter";
 
 export default function Navbar() {
 
@@ -26,7 +27,8 @@ export default function Navbar() {
     const [messagesTotal, setMessagesTotal] = useState(0);
     const [messagesCountStyle, setMessagesCountStyle] = useState("top-0");
     const [messagesPane, setMessagesPane] = useState(false);
-    const [messagesPaneOpacity, setMessagesPaneOpacity] = useState(false);
+    const [messagesUnread, setMessagesUnread] = useState(true);
+
     const dispatch = useDispatch<AppDispatch>();
 
 
@@ -101,20 +103,21 @@ export default function Navbar() {
         }
 
     }, [normalSearchParameters])
+    
+    useEffect(() => {
+        if(messagesPane === true) setMessagesUnread(false);
+    }, [messagesPane])
 
     useEffect(() => {
         setMessagesCountStyle("transition-all ease-in-out duration-500 top-5");
         const timeout2 = setTimeout(() => { setMessagesCountStyle("-top-5"); setMessagesTotal(sessionState.messages.length) }, 550);
-        const timeout3 = setTimeout(() => { setMessagesCountStyle(`transition-all ease-in-out duration-500 top-0.25 ${sessionState.messages.length > 0 && "animate-pulse"}`); }, 600);
+        const timeout3 = setTimeout(() => { setMessagesCountStyle("transition-all ease-in-out duration-500 top-0.25"); }, 600);
+        setMessagesUnread(sessionState.messages.length > 0);
+
         return () => { clearTimeout(timeout2), clearTimeout(timeout3) };
     }, [sessionState.messages])
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setMessagesPaneOpacity(!messagesPaneOpacity);
-        }, 50);
-        return () => { clearTimeout(timeout) };
-    }, [messagesPane])
+    
 
     // Render
     return (
@@ -146,30 +149,13 @@ export default function Navbar() {
 
                         <div className="relative bg-black border border-stone-700 ml-2 w-7 flex items-center justify-center rounded-sm overflow-hidden cursor-pointer"
                             onClick={() => setMessagesPane(!messagesPane)}>
-                            <div className={`absolute text-sm font-extrabold text-amber-200 opacity-90 ${messagesCountStyle}`}>{messagesTotal}</div>
+                            <div className={`absolute text-sm font-extrabold text-amber-200 opacity-90 ${messagesCountStyle} ${messagesUnread ? "animate-pulse" : ""}`}>{messagesTotal}</div>
                         </div>
 
-                        {messagesPane &&
-                            <div className={`grid grid-cols-1 gap-4 bg-white backdrop-blur absolute top-8 rounded z-40 transition-opacity ease-in-out w-72 bg-opacity-30 p-4 border-solid border border-white border-opacity-50  ${!messagesPaneOpacity ? "opacity-100" : "opacity-0"}`}>
-                                {sessionState.messages.map((message, index) => {
-                                    return <div key={index} className="text-black text-sm flex">
-                                        <div className="flex bg-red-600 rounded-full w-5 mr-1 text-white drop-shadow shadow-black overflow-visible justify-center">{index + 1}</div>
-                                        <div className="overflow-scroll">{message.message}</div>
-                                    </div>
-                                })}
-
-                                <div className="flex justify-center items-center" onClick={() => dispatch(clearMessages())}>
-                                    <FontAwesomeIcon icon={faCircleXmark}/>
-                                </div>
-
-                                
-                            </div>
-                        }
-
-
-
-
+                        <MessagesCenter sessionStatus={sessionState} onClick={(arg0: boolean) => setMessagesPane(arg0)} isActive={messagesPane} />
                     </div>
+
+
                 </nav>
 
                 <form onSubmit={handleSubmit}>
