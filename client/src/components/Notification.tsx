@@ -8,7 +8,7 @@ interface NotificationProps {
 export default function Notification({ message }: NotificationProps) {
 
     const [active, setActive] = useState(false);
-    const NotificationStyle = 'grid fixed left-4 right-4 h-20 ease-in-out duration-500 shadow-2xl justify-start items-center rounded-lg bg-white pl-3 text-left bg-white bg-opacity-90 z-40';
+    const NotificationStyle = 'grid fixed left-4 right-4 h-20 ease-in-out duration-500 shadow-2xl justify-start items-center rounded-lg pl-3 text-left bg-white backdrop-blur bg-opacity-50 z-40';
     const NotificationActive = `${NotificationStyle} top-3`;
     const NotificationInactive = `${NotificationStyle} -top-20`;
     // These styles are technically not used but can be useful for future reference

@@ -33,6 +33,9 @@ export default {
         "25vw": "25vw",
         "30vw": "30vw",
       },
+      spacing: {
+        '0.25': '0.0625rem',
+      },
       colors: {
         lume: {
           100: "#a3ff91",

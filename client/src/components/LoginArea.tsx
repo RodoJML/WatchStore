@@ -1,10 +1,36 @@
 import { faRightFromBracket, faRightToBracket, faStore, faUserAstronaut, faUserLarge, faUserXmark } from "@fortawesome/free-solid-svg-icons"
 import { faUser } from "@fortawesome/free-regular-svg-icons"
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { RootState } from "../state/store/store"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { addMessage, setNotification } from "../state/store/slice/sessionSlice"
+import bellsAudio from "../assets/audio/Bells.mp3";
+
 
 export default function LoginArea({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) {
+
+    const dispatch = useDispatch();
+
+    const playSound = () => {
+        const audio = new Audio(bellsAudio);
+        audio.play();
+    }
+
+
+    useEffect(() => {
+        if (sessionStatus.signedIn) {
+            playSound();
+            dispatch(setNotification({ message: `Bienvenido ${sessionStatus.user.user_name}`, type: "success" }));
+        }
+
+        if(sessionStatus.user.user_type === 3){
+            playSound();
+            dispatch(addMessage({ message: `Regístrarse es grátis, ir a iniciar sesion!`, type: "info" }));
+        }
+
+    }, [sessionStatus.signedIn]);
+
 
     if (!sessionStatus.signedIn) {
         return <div className="cursor-pointer">
