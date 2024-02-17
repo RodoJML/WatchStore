@@ -31,19 +31,27 @@ export default function MessagesCenter({ sessionStatus, onClick, isActive }: { s
                 ?
                 <div className="text-white text-sm text-shadow shadow-black">No hay mensajes nuevos</div>
                 : (sessionStatus.messages.map((message, index) => {
-                    return <div key={index} className="flex text-white text-sm text-shadow shadow-black">
-                        {/* <div className="flex bg-red-600 rounded-full w-5 mr-1 drop-shadow shadow-black overflow-visible justify-center">{index + 1}</div> */}
-                        <div className={`overflow-scroll ${clickedIndex == index ? messagesWrap ? "text-wrap whitespace-normal" : "text-nowrap whitespace-nowrap" : ""}`}>{message.message}</div>
-                        <div className="ml-3" onClick={() => { setMessagesWrap(!messagesWrap); setClickedIndex(index); }}>
-                            {clickedIndex == index && messagesWrap
-                                ?
-                                <FontAwesomeIcon icon={faEnvelopeOpen} />
-                                :
-                                <FontAwesomeIcon icon={faEnvelope} />
-                            }
+                    return <div key={index}>
+                        <div className="flex text-white text-sm text-shadow shadow-black">
+                            {/* <div className="flex bg-red-600 rounded-full w-5 mr-1 drop-shadow shadow-black overflow-visible justify-center">{index + 1}</div> */}
+                            <div className={`overflow-scroll ${clickedIndex == index ? messagesWrap ? "text-wrap whitespace-normal" : "text-nowrap whitespace-nowrap" : ""}`}>{message.message}</div>
+                            <div className="ml-3" onClick={() => { setMessagesWrap(!messagesWrap); setClickedIndex(index); }}>
+                                {clickedIndex == index && messagesWrap
+                                    ?
+                                    <FontAwesomeIcon icon={faEnvelopeOpen} />
+                                    :
+                                    <FontAwesomeIcon icon={faEnvelope} />
+                                }
+                            </div>
                         </div>
-
+                        <div className="block">----</div>
                     </div>
+
+
+
+
+
+
                 }))
             }
 

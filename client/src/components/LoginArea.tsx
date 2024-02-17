@@ -11,21 +11,15 @@ import bellsAudio from "../assets/audio/Bells.mp3";
 export default function LoginArea({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) {
 
     const dispatch = useDispatch();
-
-    const playSound = () => {
-        const audio = new Audio(bellsAudio);
-        audio.play();
-    }
-
+    const audio = new Audio(bellsAudio);
 
     useEffect(() => {
         if (sessionStatus.signedIn) {
-            playSound();
+            audio.play();
             dispatch(setNotification({ message: `Bienvenido ${sessionStatus.user.user_name}`, type: "success" }));
         }
 
         if(sessionStatus.user.user_type === 3){
-            playSound();
             dispatch(addMessage({ message: `Regístrarse es grátis, ir a iniciar sesion!`, type: "info" }));
         }
 
