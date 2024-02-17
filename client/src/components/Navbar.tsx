@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
 import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
+import { apiFetch, clearMessages, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
 import LoginArea from "./LoginArea";
@@ -149,16 +149,20 @@ export default function Navbar() {
                             <div className={`absolute text-sm font-extrabold text-amber-200 opacity-90 ${messagesCountStyle}`}>{messagesTotal}</div>
                         </div>
 
-                        {true &&
-                            <div className={`grid grid-cols-1 gap-4 bg-white backdrop-blur absolute top-8 rounded z-40 transition-opacity ease-in-out w-60 bg-opacity-50 p-4 ${!messagesPaneOpacity ? "opacity-100" : "opacity-0"}`}>
+                        {messagesPane &&
+                            <div className={`grid grid-cols-1 gap-4 bg-white backdrop-blur absolute top-8 rounded z-40 transition-opacity ease-in-out w-72 bg-opacity-30 p-4 border-solid border border-white border-opacity-50  ${!messagesPaneOpacity ? "opacity-100" : "opacity-0"}`}>
                                 {sessionState.messages.map((message, index) => {
-                                    return <div key={index} className="text-black text-xs overflow-scroll">
-                                        <span className="bg-red-600 rounded-full w-5">{index + 1}</span><span>{message.message}</span>
-                                        
+                                    return <div key={index} className="text-black text-sm flex">
+                                        <div className="flex bg-red-600 rounded-full w-5 mr-1 text-white drop-shadow shadow-black overflow-visible justify-center">{index + 1}</div>
+                                        <div className="overflow-scroll">{message.message}</div>
                                     </div>
-                                }
+                                })}
 
-                                )}
+                                <div className="flex justify-center items-center" onClick={() => dispatch(clearMessages())}>
+                                    <FontAwesomeIcon icon={faCircleXmark}/>
+                                </div>
+
+                                
                             </div>
                         }
 

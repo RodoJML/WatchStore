@@ -200,7 +200,7 @@ export const exist = createAsyncThunk(
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
-export const { setUser, setLoading, addMessage, setRedirectURL, logOut, setNotification } = sessionSlice.actions;
+export const { setUser, setLoading, addMessage, setRedirectURL, logOut, setNotification, clearMessages } = sessionSlice.actions;
 // Because we are using createSlice from redux toolkit,
 // we can export the reducer and use it in the store.
 // A lot is happening behind scenes that redux is doing for us.
