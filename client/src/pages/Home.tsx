@@ -18,8 +18,8 @@ export default function Home() {
     ] as Slide[];
 
     return (
-        <div>
-            <div className="aspect-video m-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96">
+        <div className="m-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96">
+            <div className="aspect-video">
                 <Carousel slides={slides} />
             </div>
 

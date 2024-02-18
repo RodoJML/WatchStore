@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../state/store/store';
+import { logOut } from '../state/store/slice/sessionSlice';
 
 interface SideMenuProps {
     isActive: boolean;
@@ -7,6 +10,9 @@ interface SideMenuProps {
 }
 
 export default function SideMenu({ isActive, onXclick }: SideMenuProps) {
+
+    const sessionState = useSelector((state: RootState) => state.session);
+    const dispatch = useDispatch();
 
     return <div className={`${isActive ? sideMenuActive : sideMenuInactive}`}>
 
@@ -20,7 +26,7 @@ export default function SideMenu({ isActive, onXclick }: SideMenuProps) {
                 <span className="font-bold">⌚️Tico</span><span className="font-light">Toc</span>
             </div>
 
-            <a href="/" onClick={Logout}>
+            <a href="/" onClick={() => dispatch(logOut())}>
                 <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket} />
             </a>
             

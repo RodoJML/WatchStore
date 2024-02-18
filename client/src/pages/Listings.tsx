@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownWideShort, faGripVertical, faHand, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDownWideShort, faCirclePlus, faClock, faGripVertical, faHand, faList, faPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
 import { ListingPreviewItem, getAll_previews, incrementPage, search } from "../state/store/slice/listingsSlice";
@@ -63,6 +63,12 @@ export default function Listing() {
 
     return (
         <div>
+            <div className="flex justify-center items-center bg-gradient-to-b from-lume-100 to-green-600 rounded font-light p-1 mt-3 shadow shadow-black">
+                <div className="text-stone-800">Anuncie su reloj</div>
+                <div className="ml-2 opacity-70"><FontAwesomeIcon icon={faPlus} /></div>
+            </div>
+
+
             <div className="flex justify-center m-3 text-xs">
                 <div className="grid grid-cols-3 gap-2 bg-black bg-opacity-20 text-white border border-black border-opacity-10 rounded p-1 px-2 mr-1 items-center font-bold text-center">
                     <div className={condition === 1 ? "opacity-100 cursor-default" : "cursor-pointer opacity-50"} onClick={() => watchCondition(1)}>Todos</div>
@@ -139,7 +145,7 @@ export default function Listing() {
 
 }
 
-const listingListStyle = "bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-2 shadow shadow-black mx-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96"
+const listingListStyle = "bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-2 shadow shadow-black"
 const listingListStyleNB = "mx-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96"
-const listingGridStyle = "grid grid-cols-2 m-2 gap-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-8 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10"
+const listingGridStyle = "grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-8 "
 

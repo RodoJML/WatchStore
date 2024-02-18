@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { RootState } from "../state/store/store"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { addMessage, setNotification } from "../state/store/slice/sessionSlice"
+import { addMessage, clearMessages, setNotification } from "../state/store/slice/sessionSlice"
 import bellsAudio from "../assets/audio/Bells.mp3";
 
 
@@ -22,7 +22,8 @@ export default function LoginArea({ sessionStatus }: { sessionStatus: RootState[
         if(sessionStatus.user.user_type === 3){
             dispatch(addMessage({ message: `Regístrate totalmente grátis y desbloquea la habilidad de crear tu propia tienda 🏪, 
             editar tus publicaciones 📝, tener tu lista de deseos 🎁, y mucho más.`, type: "info" })); 
-
+        } else {
+            dispatch(clearMessages());
         }
 
     }, [sessionStatus.signedIn]);
