@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import SideMenu from './SideMenu';
 import BarsIcon from "../assets/BarsIcon";
 import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { apiFetch, clearMessages, logOut, setNotification } from "../state/store/slice/sessionSlice";
+import { apiFetch, logOut, markAsRead, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
 import LoginArea from "./LoginArea";
-import MessagesCenter from "./messagesCenter";
+import MessagesCenter from "./MessagesCenter";
 
 export default function Navbar() {
 
@@ -27,6 +27,7 @@ export default function Navbar() {
     const [messagesTotal, setMessagesTotal] = useState(0);
     const [messagesCountStyle, setMessagesCountStyle] = useState("top-0");
     const [messagesPane, setMessagesPane] = useState(false);
+    const [messagesPaneAnimatin, setMessagesPaneAnimation] = useState(false);
     const [messagesUnread, setMessagesUnread] = useState(true);
 
     const dispatch = useDispatch<AppDispatch>();
@@ -103,21 +104,35 @@ export default function Navbar() {
         }
 
     }, [normalSearchParameters])
-    
-    useEffect(() => {
-        if(messagesPane === true) setMessagesUnread(false);
-    }, [messagesPane])
+
 
     useEffect(() => {
+        if (messagesPane === true)
+        dispatch(markAsRead());
+    }, [messagesPane])
+
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+
+        const interval = () => {
+            intervalId = setInterval(() => {
+                setMessagesPaneAnimation(!messagesPaneAnimatin);
+            }, 1000);
+        }; 
+        
         setMessagesCountStyle("transition-all ease-in-out duration-500 top-5");
         const timeout2 = setTimeout(() => { setMessagesCountStyle("-top-5"); setMessagesTotal(sessionState.messages.length) }, 550);
         const timeout3 = setTimeout(() => { setMessagesCountStyle("transition-all ease-in-out duration-500 top-0.25"); }, 600);
-        setMessagesUnread(sessionState.messages.length > 0);
 
-        return () => { clearTimeout(timeout2), clearTimeout(timeout3) };
-    }, [sessionState.messages])
+        if(sessionState.messages.length > 0 && sessionState.messagesRead === false){
+            interval();
+        }
 
-    
+        return () => { clearTimeout(timeout2), clearTimeout(timeout3), clearInterval(intervalId) };
+    }, [sessionState.messages, messagesPaneAnimatin])
+
+
 
     // Render
     return (
@@ -149,7 +164,7 @@ export default function Navbar() {
 
                         <div className="relative bg-black border border-stone-700 ml-2 w-7 flex items-center justify-center rounded-sm overflow-hidden cursor-pointer"
                             onClick={() => setMessagesPane(!messagesPane)}>
-                            <div className={`absolute text-sm font-extrabold text-amber-200 opacity-90 ${messagesCountStyle} ${messagesUnread ? "animate-pulse" : ""}`}>{messagesTotal}</div>
+                            <div className={`absolute text-sm font-extrabold text-amber-200 opacity-90 ${messagesCountStyle}`}>{messagesTotal}</div>
                         </div>
 
                         <MessagesCenter sessionStatus={sessionState} onClick={(arg0: boolean) => setMessagesPane(arg0)} isActive={messagesPane} />
