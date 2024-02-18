@@ -12,7 +12,6 @@ interface SessionState {
     user: UserItem,
     isLoading: boolean,
     messages: Message[],
-    messagesRead: boolean;
     notification: Message | undefined,
     brands: any[],
     styles: any[],
@@ -45,7 +44,6 @@ const initialState: SessionState = {
     },
     isLoading: false,
     messages: [],
-    messagesRead: true,
     notification: undefined,
     brands: [],
     styles: [],
@@ -78,11 +76,7 @@ const sessionSlice = createSlice(
                 state.isLoading = action.payload.value;
             },
             addMessage: (state, action: PayloadAction<Message>) => {
-                state.messagesRead = false;
                 state.messages.push(action.payload);
-            },
-            markAsRead: (state) => {
-                state.messagesRead = true;
             },
             clearMessages: (state) => {
                 state.messages = [];
@@ -206,7 +200,7 @@ export const exist = createAsyncThunk(
 
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
-export const { setUser, setLoading, addMessage, setRedirectURL, logOut, setNotification, clearMessages, markAsRead } = sessionSlice.actions;
+export const { setUser, setLoading, addMessage, setRedirectURL, logOut, setNotification, clearMessages } = sessionSlice.actions;
 // Because we are using createSlice from redux toolkit,
 // we can export the reducer and use it in the store.
 // A lot is happening behind scenes that redux is doing for us.

@@ -19,6 +19,10 @@ export default function SideMenu({ isActive, onXclick }: SideMenuProps) {
             <div className="text-white">
                 <span className="font-bold">⌚️Tico</span><span className="font-light">Toc</span>
             </div>
+
+            <a href="/" onClick={Logout}>
+                <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket} />
+            </a>
             
         </div>
 

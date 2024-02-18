@@ -7,7 +7,7 @@ import BarsIcon from "../assets/BarsIcon";
 import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
-import { apiFetch, logOut, markAsRead, setNotification } from "../state/store/slice/sessionSlice";
+import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
 import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
 import LoginArea from "./LoginArea";
@@ -107,25 +107,25 @@ export default function Navbar() {
 
 
     useEffect(() => {
-        if (messagesPane === true)
-        dispatch(markAsRead());
+        if (messagesPane === true) setMessagesUnread(false);
     }, [messagesPane])
 
 
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
+        setMessagesUnread(true);
 
         const interval = () => {
             intervalId = setInterval(() => {
                 setMessagesPaneAnimation(!messagesPaneAnimatin);
-            }, 1000);
+            }, 10000);
         }; 
         
         setMessagesCountStyle("transition-all ease-in-out duration-500 top-5");
         const timeout2 = setTimeout(() => { setMessagesCountStyle("-top-5"); setMessagesTotal(sessionState.messages.length) }, 550);
         const timeout3 = setTimeout(() => { setMessagesCountStyle("transition-all ease-in-out duration-500 top-0.25"); }, 600);
 
-        if(sessionState.messages.length > 0 && sessionState.messagesRead === false){
+        if(sessionState.messages.length > 0 && messagesUnread){
             interval();
         }
 
@@ -160,7 +160,7 @@ export default function Navbar() {
 
 
                     <div className="relative flex justify-end col-span-2">
-                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} Logout={() => dispatch(logOut())} /></div>
+                        <div onClick={toggleLoginForm}><LoginArea sessionStatus={sessionState} /></div>
 
                         <div className="relative bg-black border border-stone-700 ml-2 w-7 flex items-center justify-center rounded-sm overflow-hidden cursor-pointer"
                             onClick={() => setMessagesPane(!messagesPane)}>

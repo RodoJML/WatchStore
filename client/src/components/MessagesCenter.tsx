@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "../state/store/store";
-import { faCircleXmark, faEllipsis, faEnvelope, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faEllipsis, faEnvelope, faEnvelopeOpen, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { clearMessages } from "../state/store/slice/sessionSlice";
@@ -29,19 +29,22 @@ export default function MessagesCenter({ sessionStatus, onClick, isActive }: { s
 
             {sessionStatus.messages.length === 0
                 ?
-                <div className="text-white text-sm text-shadow shadow-black text-center">No hay mensajes nuevos</div>
+                <div className="grid grid-cols-1 gap-4">
+                    <div className="text-white text-sm text-shadow shadow-black text-center">No hay mensajes nuevos</div>
+                </div>
                 : (
                     <div className="grid grid-cols-1 gap-4">
 
                         <div className="grid grid-cols-2">
                             <div className="text-shadow shadow-black font-semibold">Mensajes</div>
-                            <div className="flex justify-end items-center" onClick={() => { dispatch(clearMessages()); onClick(false); }}>
-                                <FontAwesomeIcon className="opacity-50" icon={faCircleXmark} />
+                            <div className="flex justify-end items-center">
+                                <div className="text-2xs mr-1">Limpiar</div> 
+                                <FontAwesomeIcon className="opacity-50 cursor-pointer" icon={faCircleXmark} onClick={() => { dispatch(clearMessages()); onClick(false); }}/>
                             </div>
                         </div>
 
                         {sessionStatus.messages.map((message, index) => {
-                            return <div key={index} className="grid grid-cols-10 text-white text-sm text-shadow shadow-black bg-white bg-opacity-40 border border-white border-opacity-20 rounded-md p-3" onClick={() => { setMessagesWrap(!messagesWrap); setClickedIndex(index); }}>
+                            return <div key={index} className="grid grid-cols-10 text-white text-sm text-shadow shadow-black bg-white bg-opacity-40 border border-white border-opacity-20 rounded-md p-3 cursor-pointer" onClick={() => { setMessagesWrap(!messagesWrap); setClickedIndex(index); }}>
                                 {/* <div className="flex bg-red-600 rounded-full w-5 mr-1 drop-shadow shadow-black overflow-visible justify-center">{index + 1}</div> */}
                                 <div className={`overflow-scroll col-span-9 ${clickedIndex == index ? messagesWrap ? "text-wrap whitespace-normal" : "text-nowrap whitespace-nowrap" : ""}`}>{message.message}
                                 </div>

@@ -8,7 +8,7 @@ import { addMessage, setNotification } from "../state/store/slice/sessionSlice"
 import bellsAudio from "../assets/audio/Bells.mp3";
 
 
-export default function LoginArea({ sessionStatus, Logout }: { sessionStatus: RootState['session'], Logout: () => (void) }) {
+export default function LoginArea({ sessionStatus }: { sessionStatus: RootState['session']}) {
 
     const dispatch = useDispatch();
     const audio = new Audio(bellsAudio);
@@ -20,7 +20,9 @@ export default function LoginArea({ sessionStatus, Logout }: { sessionStatus: Ro
         }
 
         if(sessionStatus.user.user_type === 3){
-            dispatch(addMessage({ message: `Regístrarse es grátis, ir a iniciar sesion!`, type: "info" }));
+            dispatch(addMessage({ message: `Regístrate totalmente grátis y desbloquea la habilidad de crear tu propia tienda 🏪, 
+            editar tus publicaciones 📝, tener tu lista de deseos 🎁, y mucho más.`, type: "info" })); 
+
         }
 
     }, [sessionStatus.signedIn]);
@@ -35,15 +37,12 @@ export default function LoginArea({ sessionStatus, Logout }: { sessionStatus: Ro
         return <>
             <label className="text-sm mr-1 capitalize">{sessionStatus.user.user_name}</label>
             {
-                sessionStatus.user.user_type === 0 ? <FontAwesomeIcon icon={faUserAstronaut} className="mr-2" /> :
-                    sessionStatus.user.user_type === 1 ? <FontAwesomeIcon icon={faStore} className="mr-2" /> :
-                        sessionStatus.user.user_type === 2 ? <FontAwesomeIcon icon={faUserLarge} className="mr-2" /> :
-                            sessionStatus.user.user_type === 3 ? <FontAwesomeIcon icon={faUserXmark} className="mr-2" /> :
+                sessionStatus.user.user_type === 0 ? <FontAwesomeIcon icon={faUserAstronaut} /> :
+                    sessionStatus.user.user_type === 1 ? <FontAwesomeIcon icon={faStore} /> :
+                        sessionStatus.user.user_type === 2 ? <FontAwesomeIcon icon={faUserLarge}/> :
+                            sessionStatus.user.user_type === 3 ? <FontAwesomeIcon icon={faUserXmark} /> :
                                 <FontAwesomeIcon icon={faUserXmark} />
             }
-            <a href="/" onClick={Logout}>
-                <FontAwesomeIcon className="cursor-pointer" icon={faRightFromBracket} />
-            </a>
         </>
     }
 };
