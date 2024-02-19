@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
 import { SearchForm } from "../model/fetch";
-import { getAll_previews, search, searchModeOff, searchModeOn } from "../state/store/slice/listingsSlice";
+import { getAll_previews, search, searchModeOff, searchModeOn, searchInitiatedOFF } from "../state/store/slice/listingsSlice";
 import LoginArea from "./LoginArea";
 import MessagesCenter from "./MessagesCenter";
 
@@ -98,6 +98,7 @@ export default function Navbar() {
             dispatch(searchModeOn());
         } else {
             if (listingState.searchMode) {
+                dispatch(searchInitiatedOFF());
                 dispatch(searchModeOff());
                 dispatch(getAll_previews(listingState.page));
             }

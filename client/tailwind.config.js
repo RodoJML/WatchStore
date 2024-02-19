@@ -40,6 +40,25 @@ export default {
         lume: {
           100: "#a3ff91",
         },
+        amberspecial: {
+          100: "#F9C333",
+        
+        },
+        limegreen:{
+          100: "#0AD218",
+        
+        },
+        screaminGreen: {
+          100: "#8EFF73",
+        },
+        bone:{
+          100: "#D9D8C4",
+        
+        },
+        pearl: {
+          100: "#D6D7C2",
+        },
+        
       },
       transitionProperty: {
         'right': {'transition': 'ease-in-out;', 'transition-property': 'right', 'transition-duration': '500ms'},

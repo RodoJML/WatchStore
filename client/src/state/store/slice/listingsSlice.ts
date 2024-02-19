@@ -29,6 +29,7 @@ interface listingsState {
     listingsPreviews: ListingPreviewItem[],
     hasMore: boolean,
     searchMode: boolean,
+    searchInitiated: boolean,
     lastSearch: string | undefined,
     page: number,
     messages: Message[],
@@ -39,6 +40,7 @@ const initialState: listingsState = {
     isLoading: false,
     listingsPreviews: [],
     searchMode: false,
+    searchInitiated: false,
     lastSearch: undefined,
     page: 1,
     hasMore: true,
@@ -60,6 +62,9 @@ const listingSlice = createSlice({
             state.lastSearch = undefined;
             state.hasMore = true;
             console.log('searchModeOff');
+        },
+        searchInitiatedOFF: (state) => {
+            state.searchInitiated = false;
         },
         resetPage: (state) => {
             state.page = 1;
@@ -103,6 +108,7 @@ const listingSlice = createSlice({
         );
         builder.addCase(search.fulfilled, (state, action) => {
             state.messages.push({ message: 'Data received', type: 'success' });
+            state.searchInitiated = true;
             state.isLoading = false;
             state.hasMore = action.payload.total > 0;
             
@@ -141,7 +147,7 @@ export const search = createAsyncThunk(
     }
 )
 
-export const { searchModeOn, searchModeOff, incrementPage } = listingSlice.actions;
+export const { searchModeOn, searchModeOff, incrementPage, searchInitiatedOFF } = listingSlice.actions;
 
 export default listingSlice.reducer;
 

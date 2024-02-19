@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownWideShort, faCirclePlus, faClock, faGripVertical, faHand, faList, faPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDownWideShort, faCartPlus, faCirclePlus, faClock, faGripVertical, faHand, faList, faPlus, faSpinner, faTag } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
 import { ListingPreviewItem, getAll_previews, incrementPage, search } from "../state/store/slice/listingsSlice";
@@ -63,11 +63,10 @@ export default function Listing() {
 
     return (
         <div>
-            <div className="flex justify-center items-center bg-gradient-to-b from-lume-100 to-green-500 rounded font-light p-1 mt-3 shadow shadow-black">
-                <div className="text-stone-800">Anuncie su reloj</div>
-                <div className="ml-2 opacity-70"><FontAwesomeIcon icon={faPlus} className="fa-shake"/></div>
+            <div className="relative w-full grid grid-cols-2 bg-gradient-to-tr from-pearl-100 to-bone-100 rounded shadow shadow-black overflow-hidden">
+                <div className="flex justify-start ml-4 text-stone-800 items-center h-full">➕ Anuncie su reloj</div>
+                <div className="flex justify-end sm:h-12">  <img src="/src/assets/images/sell.png" alt="Sell Image" /></div>
             </div>
-
 
             <div className="flex justify-center m-3 text-xs">
                 <div className="grid grid-cols-3 gap-2 bg-black bg-opacity-20 text-white border border-black border-opacity-10 rounded p-1 px-2 mr-1 items-center font-bold text-center">

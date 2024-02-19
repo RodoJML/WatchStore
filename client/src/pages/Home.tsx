@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import Carousel from "../components/Carousel";
 import { Slide } from "../model/fetch";
 import Listings from "./Listings";
+import { RootState } from "../state/store/store";
 
 export default function Home() {
 
@@ -17,13 +19,18 @@ export default function Home() {
         }
     ] as Slide[];
 
+    const listingState = useSelector((state: RootState) => state.listings);
+
     return (
         <div className="m-2 sm:mx-20 md:mx-32 lg:mx-60 xl:mx-72 2xl:mx-96">
-            <div className="aspect-video">
-                <Carousel slides={slides} />
-            </div>
 
-            <Listings/>
+            {!listingState.searchInitiated &&
+                <div className="aspect-video">
+                    <Carousel slides={slides} />
+                </div>
+            }
+
+            <Listings />
 
         </div>
     )
