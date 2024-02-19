@@ -63,9 +63,9 @@ export default function Listing() {
 
     return (
         <div>
-            <div className="flex justify-center items-center bg-gradient-to-b from-lume-100 to-green-600 rounded font-light p-1 mt-3 shadow shadow-black">
+            <div className="flex justify-center items-center bg-gradient-to-b from-lume-100 to-green-500 rounded font-light p-1 mt-3 shadow shadow-black">
                 <div className="text-stone-800">Anuncie su reloj</div>
-                <div className="ml-2 opacity-70"><FontAwesomeIcon icon={faPlus} /></div>
+                <div className="ml-2 opacity-70"><FontAwesomeIcon icon={faPlus} className="fa-shake"/></div>
             </div>
 
 
