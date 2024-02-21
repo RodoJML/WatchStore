@@ -29,10 +29,11 @@ Technologies used:
 - Watches styles, types and movements, keep an updated list of these. 
 
 <h3>EER Diagram (v2.4)</h3>
-2.4 COUNTRY and BRAND tables updated.
-2.3 Normalization revised and table names updated for consistency. 
+- 2.4 COUNTRY and BRAND tables updated.
+- 2.3 Normalization revised and table names updated for consistency. 
 
-![EER2 4](https://github.com/RodoJML/WatchStore/assets/63088555/17a0c98e-a0b4-4608-91df-52c8fc1b267f)
+<img width="1284" alt="EER" src="https://github.com/RodoJML/WatchStore/assets/63088555/33733c95-3a03-4d8e-beea-14e3ec669ee1">
+
 
 <h2>📲 Software Design</h2>
 <h3>Requirements</h3>
