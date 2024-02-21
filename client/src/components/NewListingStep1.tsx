@@ -2,7 +2,8 @@ import { RootState } from "../state/store/store";
 import BrandsCarousel from "./BrandsCarousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import NewListingStep2 from "./NewListingStep2";
 export interface step1form {
     certification: number,
     brand: number,
@@ -11,6 +12,7 @@ export interface step1form {
 
 export default function NewListingStep1({complete, sessionStatus}: {complete: (form: step1form) => (void), sessionStatus: RootState["session"]}) {
 
+    const [hide, setHide] = useState(false);
     const [form , setForm] = useState({certification: 0, brand: 0, model: 0} as step1form);
     const [finished, setFinished] = useState(false);
     
@@ -19,9 +21,20 @@ export default function NewListingStep1({complete, sessionStatus}: {complete: (f
         setForm({ ...form, [name]: value });
     }
 
-    return (
-        <div className={`absolute w-screen p-3 transition-left ease-in-out duration-500 ${finished ? "-left-full" : "left-0"}`}>
+    useEffect(()=>{
+        let timeout: NodeJS.Timeout;
 
+        if(finished){
+            timeout = setTimeout(() => {setHide(true)}, 1000);
+        }
+
+        return () => {clearTimeout(timeout)}
+
+    }, [finished])
+
+    return (
+        <div className={`${hide ? "hidden" : "visible"} absolute w-screen p-3 transition-left ease-in-out duration-500 ${finished ? "-left-full" : "left-0"}`}>
+            
             <BrandsCarousel />
             
             <div className="bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 shadow shadow-black text-white sm:mx-36 mt-4">
