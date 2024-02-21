@@ -1,4 +1,4 @@
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
@@ -9,8 +9,8 @@ export default function NewListingNav() {
             <button className="flex justify-start items-center">
 
                 <Link to="/" className="flex text-white font-bold text-sm bg-white bg-opacity-10 rounded items-center justify-center p-1.5">
-                    <div><FontAwesomeIcon icon={faAngleLeft} className="text-xl text-lume-100 " /></div>
-                    <div className="ml-1">Volver</div>
+                    <div><FontAwesomeIcon icon={faHouse} className="text-xl text-lume-100 " /></div>
+                    <div className="ml-1">Home</div>
                 </Link>
             </button>
 
