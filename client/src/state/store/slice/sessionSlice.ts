@@ -13,7 +13,7 @@ interface SessionState {
     isLoading: boolean,
     messages: Message[],
     notification: Message | undefined,
-    brands: any[],
+    brands: Fetch.BrandItem[],
     styles: any[],
     types: any[],
     shapes: any[],

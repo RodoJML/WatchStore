@@ -68,7 +68,7 @@ export interface StoreItem {
 export interface BrandItem {
     brand_id: number,
     brand_name: string,
-    brand_logo: string,
+    brand_logo_path: string,
     brand_website: string,
 }
 
