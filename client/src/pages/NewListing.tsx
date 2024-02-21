@@ -21,6 +21,7 @@ export default function NewListing() {
         <div>
             <NewListingNav />
             <NewListingStep1 complete={handleStep1Complete} sessionStatus={sessionState}/>
+            {/* NewListingStep2 might need to go inside newListingStep1 to avoid the screen leak */}
             <NewListingStep2 begin={step1submitted} step1form={step1Form} sessionStatus={sessionState}/>
             
         </div>

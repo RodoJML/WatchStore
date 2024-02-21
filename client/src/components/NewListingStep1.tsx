@@ -61,7 +61,7 @@ export default function NewListingStep1({complete, sessionStatus}: {complete: (f
             </div>
 
             <div className="text-white text-2xs mt-5 font-bold text-shadow shadow-black text-center sm:mx-36">
-                * Plantilla permite la creación de una publicación con las caracteristicas del reloj autopopuladas en base al modelo. Disponible solo para relojes originales y usuarios con tienda registrada.
+                * Disponible solo para relojes originales y usuarios con tienda registrada. Permite la creación de una publicación con las caracteristicas del reloj autopopuladas en base al modelo. 
             </div>
 
         </div>
