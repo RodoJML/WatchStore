@@ -29,6 +29,7 @@ Technologies used:
 - Watches styles, types and movements, keep an updated list of these. 
 
 <h3>EER Diagram (v2.4)</h3>
+
 - 2.4 COUNTRY and BRAND tables updated.
 - 2.3 Normalization revised and table names updated for consistency. 
 
