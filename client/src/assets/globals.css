@@ -108,3 +108,16 @@ input[type="search"] {
         transform: rotate(360deg);
     }
 }
+
+.wrapper .track{
+    animation: scroll 200s 0.5s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

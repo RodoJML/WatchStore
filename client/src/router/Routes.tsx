@@ -1,6 +1,8 @@
 import App from '../App';
 import Home from '../pages/Home';
 import ViewListing from '../pages/ViewListing';
+import NewListing from '../pages/NewListing';
+
 import { createBrowserRouter} from 'react-router-dom';
 
 export const router = createBrowserRouter([
@@ -17,5 +19,9 @@ export const router = createBrowserRouter([
                 element: <ViewListing/>,
             },
         ]
+    },
+    {
+        path: '/listing/new',
+        element: <NewListing/>,
     }
 ]);

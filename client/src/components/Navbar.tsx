@@ -120,13 +120,13 @@ export default function Navbar() {
             intervalId = setInterval(() => {
                 setMessagesPaneAnimation(!messagesPaneAnimatin);
             }, 10000);
-        }; 
-        
+        };
+
         setMessagesCountStyle("transition-all ease-in-out duration-500 top-5");
         const timeout2 = setTimeout(() => { setMessagesCountStyle("-top-5"); setMessagesTotal(sessionState.messages.length) }, 550);
         const timeout3 = setTimeout(() => { setMessagesCountStyle("transition-all ease-in-out duration-500 top-0.25"); }, 600);
 
-        if(sessionState.messages.length > 0 && messagesUnread){
+        if (sessionState.messages.length > 0 && messagesUnread) {
             interval();
         }
 
@@ -183,9 +183,12 @@ export default function Navbar() {
                                 type="search"
                                 placeholder={advancedSearch ? 'Modelo' : 'Buscar'}
                                 onChange={handleInputChange}></input>
+
                             <button type="submit" className="bg-lume-100 text-center p-2 h-full rounded shadow-[inset_0px_0px_5px_-1px_rgba(0,0,0)]">
                                 <FontAwesomeIcon icon={faSearch} />
                             </button>
+
+
                         </div>
 
                         <div className="text-white text-2xs text-opacity-30 text-right mt-1 underline cursor-pointer"
