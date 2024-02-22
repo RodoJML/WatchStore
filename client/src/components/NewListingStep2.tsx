@@ -3,7 +3,7 @@ import { step1form } from "../components/NewListingStep1";
 import { BrandItem } from "../model/fetch";
 import { RootState } from "../state/store/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBatteryThreeQuarters, faCalendarCheck, faCertificate, faCheckDouble, faCircleNotch, faColonSign, faCubesStacked, faDollarSign, faDroplet, faFilePen, faGears, faGem, faHillRockslide, faLightbulb, faPalette, faPen, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faStroopwafel, faT, faUnlockKeyhole, faWater } from "@fortawesome/free-solid-svg-icons";
+import { faBatteryThreeQuarters, faCalendarCheck, faCertificate, faCheckDouble, faCircleNotch, faColonSign, faCube, faCubesStacked, faDollarSign, faDroplet, faEarthAmericas, faExpand, faFilePen, faGaugeSimpleHigh, faGears, faGem, faHillRockslide, faLightbulb, faPalette, faPen, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faStroopwafel, faT, faUnlockKeyhole, faWater, faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function NewListingStep2({ begin, step1form, sessionStatus }: { begin: boolean, step1form: step1form, sessionStatus: RootState["session"] }) {
@@ -71,46 +71,9 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">
-                            <FontAwesomeIcon icon={faPen} />
-                        </div>
-                        <textarea name="description" id="description" placeholder="Descripción" className="p-1 rounded w-full text-stone-800" rows={2}/>
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">
                             <FontAwesomeIcon icon={faStopwatch20} />
                         </div>
                         <input type="text" placeholder="Modelo" className="p-1 rounded w-full text-stone-800" />
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">
-                            <FontAwesomeIcon icon={faColonSign} />
-                        </div>
-                        <input type="number" placeholder="Precio" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*"/>
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">
-                            <FontAwesomeIcon icon={faDollarSign} />
-                        </div>
-                        <input type="number" placeholder="Precio" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*"/>
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">
-                            <FontAwesomeIcon icon={faCubesStacked} />
-                        </div>
-                        <input type="number" placeholder="Cantidad" className="p-1 rounded w-full text-stone-800" min={1} pattern="[0-9]*"/>
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCertificate} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="water_proof" id="water_proof" defaultValue={0}>
-                            <option key={0} value={0} disabled>Condición</option>
-                            <option key={1} value={1}>Nuevo</option>
-                            <option key={2} value={2}>Usado</option>
-                        </select>
                     </div>
 
                     <div className="flex items-center">
@@ -182,6 +145,46 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
                         <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
                             <option key={0} value={0} disabled>Correa - Color</option>
                             {sessionStatus.colors.map((color) => { return <option key={color} value={color}>{color}</option> })}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center">
+                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faGaugeSimpleHigh} /></div>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
+                            <option key={0} value={0} disabled>Dial - Color</option>
+                            {sessionStatus.colors.map((color) => { return <option key={color} value={color}>{color}</option> })}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center">
+                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faWeightHanging} /></div>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="weight" id="weight" >
+                            <option key={0} value={0}>Peso</option>
+                            <option key="liviano" value="liviano">Liviano</option> {/* 30 - 100g*/}
+                            <option key="normal" value="normal">Normal</option> {/* 100 - 150g*/}
+                            <option key="pesado" value="pesado">Pesado</option> {/* 150 - 200g*/}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center">
+                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCube} /></div>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="depth" id="depth" >
+                            <option key={0} value={0}>Grosor</option>
+                            <option key="ultra_slim" value="ultra_slim">Ultra-slim</option> {/* 2-6mm */}
+                            <option key="slim" value="slim">Slim</option> {/* 6-9mm */}
+                            <option key="standard" value="standard">Standard</option> {/* 10 - 12mm */}
+                            <option key="thick" value="thick">Thick</option> {/* 13 - 15mm */}
+                            <option key="bulky" value="bulky">Bulky</option> {/* >15mm */}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center">
+                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faExpand} /></div>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="width" id="width">
+                            <option key={0} value={0}>Tamaño</option>
+                            {sessionStatus.sizes.map((size) => {
+                                return <option key={size} value={size}>{size}mm</option>
+                            })}
                         </select>
                     </div>
 
@@ -262,26 +265,15 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
                         </select>
                     </div>
 
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCalendarCheck} /></div>
+                    { step1form.certification != 1 && 
+                        <div className="flex items-center">
+                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faEarthAmericas} /></div>
                         <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_material" id="bezel_material" defaultValue={0}>
-                            <option key={0} value={0} disabled>Garantía</option>
-                            <option key={1} value={1}>1 mes</option>
-                            <option key={2} value={2}>2 meses</option>
-                            <option key={3} value={3}>3 meses</option>
-                            <option key={4} value={4}>4 meses</option>
-                            <option key={5} value={5}>5 meses</option>
-                            <option key={6} value={6}>6 meses</option>
-                            <option key={7} value={7}>7 meses</option>
-                            <option key={8} value={8}>8 meses</option>
-                            <option key={9} value={9}>9 meses</option>
-                            <option key={10} value={10}>10 meses</option>
-                            <option key={11} value={11}>11 meses</option>
-                            <option key={12} value={12}>12 meses</option>
-
+                            <option key={0} value={0} disabled>Manufactura</option>
+                            {sessionStatus.clasps.map((clasp) => { return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option> })}
                         </select>
                     </div>
-
+                    }
 
                     <div className="">
                         <div className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
@@ -294,11 +286,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
                         </div>
                     </div>
 
-
-
                 </div>
-
-
 
             </div>
         </div>
