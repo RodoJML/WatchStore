@@ -301,10 +301,10 @@ export default function Navbar() {
                                         </select>
 
                                         <select className="bg-transparent focus:outline-none" name="gender" id="gender" onChange={handleSelectChange}>
-                                            <option key="all" value="all">Todos</option>
-                                            <option key="1" value="male">Hombre</option>
-                                            <option key="2" value="female">Mujer</option>
-                                            <option key="3" value="unisex">Unisex</option>
+                                            <option key="0" value="0">Todos</option>
+                                            <option key="1" value="1">Hombre</option>
+                                            <option key="2" value="2">Mujer</option>
+                                            <option key="3" value="3">Unisex</option>
                                         </select>
 
 
