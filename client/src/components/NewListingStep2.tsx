@@ -3,30 +3,60 @@ import { step1form } from "../components/NewListingStep1";
 import { BrandItem } from "../model/fetch";
 import { RootState } from "../state/store/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBatteryThreeQuarters, faCalendarCheck, faCertificate, faCheckDouble, faCircleNotch, faColonSign, faCube, faCubesStacked, faDollarSign, faDroplet, faEarthAmericas, faExpand, faFilePen, faGaugeSimpleHigh, faGears, faGem, faHillRockslide, faLightbulb, faPalette, faPen, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faStroopwafel, faT, faUnlockKeyhole, faWater, faWeightHanging } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faBatteryThreeQuarters, faCircleNotch, faCube, faDroplet, faEarthAmericas, faExpand, faGaugeSimpleHigh, faGears, faGem, faHillRockslide, faLightbulb, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faT, faUnlockKeyhole, faWater, faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 
+export interface step2form {
+    model: string,
+    type: number,
+    movement: number,
+    style: number,
+    shape: number,
+    glass_material: number,
+    case_material: number,
+    case_color: string,
+    strap_material: number,
+    strap_color: string,
+    dial_color: string,
+    weight: string,
+    depth: string,
+    width: number,
+    gender: number,
+    water_proof: number,
+    water_resistant: number,
+    bezel_type: number,
+    bezel_material: number,
+    power_reserve: number,
+    lume: number,
+    clasp_type: number,
+    country: number,
+}
 
-export default function NewListingStep2({ begin, step1form, sessionStatus }: { begin: boolean, step1form: step1form, sessionStatus: RootState["session"] }) {
+export default function NewListingStep2({ begin, step1form, sessionStatus, complete }: { begin: boolean, step1form: step1form, sessionStatus: RootState["session"], complete: (form: step2form) => (void)}) {
 
     const [brand, setBrand] = useState({} as BrandItem);
-    const [style, setStyle] = useState(false);
-    const [brandStyle, setBrandStyle] = useState(false);
+    const [transition1, setTransition1] = useState(false);
+    const [transition2, setTransition2] = useState(false);
+    const [transition3, setTransition3] = useState(false);
     const [active, setActive] = useState(false);
+    const [finished, setFinished] = useState(false);
+    const [form, setForm] = useState({} as step2form);
 
     useEffect(() => {
         let timeout1: NodeJS.Timeout;
         let timeout2: NodeJS.Timeout;
         let timeout3: NodeJS.Timeout;
+        let timeout4: NodeJS.Timeout;
 
         if (begin) {
             timeout1 = setTimeout(() => { setActive(begin); }, 50);
-            timeout3 = setTimeout(() => { setStyle(begin); }, 100);
-            timeout2 = setTimeout(() => { setBrandStyle(begin); }, 300);
+            timeout3 = setTimeout(() => { setTransition1(begin); }, 100);
+            timeout2 = setTimeout(() => { setTransition2(begin); }, 300);
+            timeout4 = setTimeout(() => { setTransition3(begin); }, 800);
         }
 
         setBrand((sessionStatus.brands.find(brand => brand.brand_id == step1form.brand)!));
 
-        return () => { clearTimeout(timeout1); clearTimeout(timeout2); clearTimeout(timeout3) }
+        return () => { clearTimeout(timeout1); clearTimeout(timeout2); clearTimeout(timeout3); clearTimeout(timeout4); }
 
     }, [step1form, begin])
 
@@ -35,22 +65,26 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
         backgroundSize: "cover",
     };
 
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setForm({...form, [name]: value});
+    }
 
     return (
-        <div className={`${active ? "visible" : "hidden"} absolute w-screen transition-all ease-in-out duration-700 p-3 ${style ? "right-0 " : "-right-full "}`}>
+        <div className={`${active ? "visible" : "hidden"} transition-all ease-in-out duration-700 absolute w-screen p-3 ${transition3 ? (finished ? " -left-full " : " left-0 ") : (transition1 ? " right-0 " : " -right-full ")} `}>
 
             <div className="bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 shadow shadow-black text-white sm:mx-36">
 
-                <div className={`absolute flex justify-center items-center w-full transition-right ease-in-out duration-1000 ${brandStyle ? "right-0" : "-right-full"}`}>
+                <div className={`absolute flex justify-center items-center w-full transition-right ease-in-out duration-1000 ${transition2 ? "right-0" : "-right-full"}`}>
                     <div style={woodDivBg} className="flex justify-center items-center p-1 rounded-2xl shadow shadow-black h-20 w-1/2">
                         {brand?.brand_logo_path
                             ? <img className="h-full object-contain " src={brand?.brand_logo_path} alt="" />
-                            : <i className="text-3xl text-stone-800 font-bold">{brand?.brand_name}</i>
+                            : <i className="text-3xl text-stone-800 font-bold text-center">{brand?.brand_name}</i>
                         }
                     </div>
                 </div>
-                <div className="h-20"></div>
 
+                <div className="h-20"></div>
 
                 <div className="grid grid-cols-1 gap-2 mt-4">
 
@@ -73,7 +107,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">
                             <FontAwesomeIcon icon={faStopwatch20} />
                         </div>
-                        <input type="text" placeholder="Modelo" className="p-1 rounded w-full text-stone-800" />
+                        <input type="text" placeholder="Modelo" className="p-1 rounded w-full text-stone-800" name="model" id="model" />
                     </div>
 
                     <div className="flex items-center">
@@ -112,13 +146,13 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faGem} /></div>
                         <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
                             <option key={0} value={0} disabled>Cristal</option>
-                            {sessionStatus.glass_materials.map((glass) => { return <option key={glass.glass_material_id} value={glass.glass_material_id}>{glass.glass_name}</option> })}
+                            {sessionStatus.glass_materials.map((glass) => { return <option key={glass.glass_id} value={glass.glass_id}>{glass.glass_name}</option> })}
                         </select>
                     </div>
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faHillRockslide} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="case_material" id="case_material" defaultValue={0}>
                             <option key={0} value={0} disabled>Carcasa - Material</option>
                             {sessionStatus.case_materials.map((material) => { return <option key={material.caseMaterial_id} value={material.caseMaterial_id}>{material.caseMaterial_name}</option> })}
                         </select>
@@ -126,7 +160,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faHillRockslide} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_material" id="bezel_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="case_color" id="case_color" defaultValue={0}>
                             <option key={0} value={0} disabled>Carcasa - Color</option>
                             {sessionStatus.colors.map((color) => { return <option key={color} value={color}>{color}</option> })}
                         </select>
@@ -134,7 +168,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCircleNotch} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="strap_material" id="strap_material" defaultValue={0}>
                             <option key={0} value={0} disabled>Correa - Material</option>
                             {sessionStatus.strap_materials.map((material) => { return <option key={material.strapMaterial_id} value={material.strapMaterial_id}>{material.strapMaterial_name}</option> })}
                         </select>
@@ -142,7 +176,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCircleNotch} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="strap_color" id="strap_color" defaultValue={0}>
                             <option key={0} value={0} disabled>Correa - Color</option>
                             {sessionStatus.colors.map((color) => { return <option key={color} value={color}>{color}</option> })}
                         </select>
@@ -150,7 +184,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faGaugeSimpleHigh} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="dial_color" id="dial_color" defaultValue={0}>
                             <option key={0} value={0} disabled>Dial - Color</option>
                             {sessionStatus.colors.map((color) => { return <option key={color} value={color}>{color}</option> })}
                         </select>
@@ -190,7 +224,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faPersonHalfDress} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="glass_material" id="glass_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="gender" id="gender" defaultValue={0}>
                             <option key={0} value={0} disabled>Genero</option>
                             <option key={1} value={1}>Hombre</option>
                             <option key={2} value={2}>Mujer</option>
@@ -218,7 +252,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faRing} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_material" id="bezel_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_type" id="bezel_type" defaultValue={0}>
                             <option key={0} value={0} disabled>Tipo Bisel</option>
                             {sessionStatus.bezels.map((bezel) => { return <option key={bezel.bezelType_id} value={bezel.bezelType_id}>{bezel.bezelType_name}</option> })}
                         </select>
@@ -234,7 +268,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faBatteryThreeQuarters} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_material" id="bezel_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="power_reserve" id="power_reserve" defaultValue={0}>
                             <option key={0} value={0} disabled>Reserva</option>
                             <option key={24} value={24}>24hr</option>
                             <option key={48} value={48}>48hr</option>
@@ -250,7 +284,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faLightbulb} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="water_resistant" id="water_resistant" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="lume" id="lume" defaultValue={0}>
                             <option key={0} value={0} disabled>Luminiscencia</option>
                             <option key={1} value={1}>Si</option>
                             <option key={2} value={2}>No</option>
@@ -259,28 +293,28 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faUnlockKeyhole} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_material" id="bezel_material" defaultValue={0}>
+                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="clasp_type" id="clasp_type" defaultValue={0}>
                             <option key={0} value={0} disabled>Cierre</option>
                             {sessionStatus.clasps.map((clasp) => { return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option> })}
                         </select>
                     </div>
 
-                    { step1form.certification != 1 && 
+                    {step1form.certification != 1 &&
                         <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faEarthAmericas} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_material" id="bezel_material" defaultValue={0}>
-                            <option key={0} value={0} disabled>Manufactura</option>
-                            {sessionStatus.clasps.map((clasp) => { return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option> })}
-                        </select>
-                    </div>
+                            <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faEarthAmericas} /></div>
+                            <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="country" id="country" autoComplete="country" defaultValue={0}>
+                                <option key={0} value={0} disabled>Manufactura</option>
+                                {sessionStatus.countries.map((country) => { return <option key={country.country_id} value={country.country_id}>{country.country_name}</option> })}
+                            </select>
+                        </div>
                     }
 
-                    <div className="">
+                    <div className="" onClick={() => {setFinished(true), complete(form), window.scrollTo(0,0)}}> 
                         <div className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
                             <div className="text-white">
                                 <div className="flex items-center justify-center">
-                                    <div className="mr-2 font-bold text-white text-shadow">PUBLICAR</div>
-                                    <div><FontAwesomeIcon icon={faCheckDouble} className="text-lume-100" /></div>
+                                    <div className="mr-2 font-bold text-white text-shadow">Siguiente</div>
+                                    <div><FontAwesomeIcon icon={faAngleRight} className="text-lume-100" /></div>
                                 </div>
                             </div>
                         </div>
@@ -292,3 +326,10 @@ export default function NewListingStep2({ begin, step1form, sessionStatus }: { b
         </div>
     )
 }
+
+// scrollto() lets you
+// scroll to the top of the page
+// as follows in the following snippet:
+//    const scrollTo = () => {
+//        window.scrollTo(0, 0);
+//    }

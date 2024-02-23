@@ -88,6 +88,7 @@ export default function Navbar() {
         dispatch(apiFetch({ url: 'provinces' }));
         dispatch(apiFetch({ url: 'colors' }));
         dispatch(apiFetch({ url: 'sizes' }));
+        dispatch(apiFetch({ url: 'country' }));
     }, []);
 
     useEffect(() => {

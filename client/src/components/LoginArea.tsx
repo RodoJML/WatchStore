@@ -11,10 +11,10 @@ import bellsAudio from "../assets/audio/Bells.mp3";
 export default function LoginArea({ sessionStatus }: { sessionStatus: RootState['session']}) {
 
     const dispatch = useDispatch();
-    const audio = new Audio(bellsAudio);
 
     useEffect(() => {
         if (sessionStatus.signedIn) {
+            const audio = new Audio(bellsAudio);
             audio.play();
             dispatch(setNotification({ message: `Bienvenido ${sessionStatus.user.user_name}`, type: "success" }));
         }

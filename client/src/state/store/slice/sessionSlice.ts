@@ -25,6 +25,7 @@ interface SessionState {
     glass_materials: any[],
     strap_materials: any[],
     provinces: any[],
+    countries: any[],
     colors: any[],
     sizes: any[],
     redirectURL: string | null,
@@ -35,7 +36,7 @@ const initialState: SessionState = {
     user: {
         user_id: null,
         user_type: 3,
-        user_name: "Guest",
+        user_name: "No registrado",
         user_email: "",
         user_password: null,
         user_views: 0,
@@ -57,6 +58,7 @@ const initialState: SessionState = {
     glass_materials: [],
     strap_materials: [],
     provinces: [],
+    countries: [],
     colors: [],
     sizes: [],
     redirectURL: null,
@@ -123,6 +125,7 @@ const sessionSlice = createSlice(
                 if (action.meta.arg.url === "provinces") state.provinces = action.payload.data;
                 if (action.meta.arg.url === "colors") state.colors = action.payload.data;
                 if (action.meta.arg.url === "sizes") state.sizes = action.payload.data;
+                if (action.meta.arg.url === "country") state.countries = action.payload.data;
 
                 console.log(action.payload.data);
                 state.isLoading = false;
