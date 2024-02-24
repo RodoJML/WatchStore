@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import { useSelector } from 'react-redux';
 import { RootState } from './state/store/store';
 import Notification from './components/Notification';
-import Footer from './components/footer';
+import Footer from './components/Footer';
 
 function App() {
 

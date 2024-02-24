@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelope, AuthenticationEnvelope, UserItem, SpecItem } from './../../../model/fetch';
+import type { DataEnvelope, AuthenticationEnvelope, UserItem } from './../../../model/fetch';
 
 export interface Message {
     message: string | null,

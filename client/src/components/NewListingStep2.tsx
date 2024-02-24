@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { step1form } from "../components/NewListingStep1";
+import { mainForm } from "../pages/NewListing";
 import { BrandItem } from "../model/fetch";
 import { RootState } from "../state/store/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,7 +31,7 @@ export interface step2form {
     country: number,
 }
 
-export default function NewListingStep2({ begin, step1form, sessionStatus, complete }: { begin: boolean, step1form: step1form, sessionStatus: RootState["session"], complete: (form: step2form) => (void)}) {
+export default function NewListingStep2({ begin, mainForm, sessionStatus, complete }: { begin: boolean, mainForm: mainForm, sessionStatus: RootState["session"], complete: (form: step2form) => (void)}) {
 
     const [brand, setBrand] = useState({} as BrandItem);
     const [transition1, setTransition1] = useState(false);
@@ -54,11 +54,20 @@ export default function NewListingStep2({ begin, step1form, sessionStatus, compl
             timeout4 = setTimeout(() => { setTransition3(begin); }, 800);
         }
 
-        setBrand((sessionStatus.brands.find(brand => brand.brand_id == step1form.brand)!));
+        setBrand((sessionStatus.brands.find(brand => brand.brand_id == mainForm.step1.brand)!));
 
         return () => { clearTimeout(timeout1); clearTimeout(timeout2); clearTimeout(timeout3); clearTimeout(timeout4); }
 
-    }, [step1form, begin])
+    }, [mainForm.step1, begin])
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout;
+
+        if(finished){
+            timeout = setTimeout(() => { setActive(false); }, 1000);
+        }
+
+    }, [finished])
 
     const woodDivBg = {
         backgroundImage: "url('/src/assets/images/woodbg.jpg')",
@@ -73,7 +82,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus, compl
     return (
         <div className={`${active ? "visible" : "hidden"} transition-all ease-in-out duration-700 absolute w-screen p-3 ${transition3 ? (finished ? " -left-full " : " left-0 ") : (transition1 ? " right-0 " : " -right-full ")} `}>
 
-            <div className="bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 shadow shadow-black text-white sm:mx-36">
+            <form className="bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 shadow shadow-black text-white sm:mx-36">
 
                 <div className={`absolute flex justify-center items-center w-full transition-right ease-in-out duration-1000 ${transition2 ? "right-0" : "-right-full"}`}>
                     <div style={woodDivBg} className="flex justify-center items-center p-1 rounded-2xl shadow shadow-black h-20 w-1/2">
@@ -90,10 +99,10 @@ export default function NewListingStep2({ begin, step1form, sessionStatus, compl
 
                     <div className="flex justify-center items-center bg-black bg-opacity-30 p-1 rounded text-shadow shadow-black">
                         <span className="">
-                            {step1form.certification == 1 ? "Original"
-                                : step1form.certification == 2 ? "AAA"
-                                    : step1form.certification == 3 ? "AA"
-                                        : step1form.certification == 4 ? "A"
+                            {mainForm.step1.certification == 1 ? "Original"
+                                : mainForm.step1.certification == 2 ? "AAA"
+                                    : mainForm.step1.certification == 3 ? "AA"
+                                        : mainForm.step1.certification == 4 ? "A"
                                             : "Error"
                             }
                         </span>
@@ -299,7 +308,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus, compl
                         </select>
                     </div>
 
-                    {step1form.certification != 1 &&
+                    {mainForm.step1.certification != 1 &&
                         <div className="flex items-center">
                             <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faEarthAmericas} /></div>
                             <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="country" id="country" autoComplete="country" defaultValue={0}>
@@ -322,7 +331,7 @@ export default function NewListingStep2({ begin, step1form, sessionStatus, compl
 
                 </div>
 
-            </div>
+            </form>
         </div>
     )
 }
