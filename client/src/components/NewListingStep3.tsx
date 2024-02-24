@@ -57,7 +57,7 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
             <div className="grid bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black">
 
 
-                <div className="grid gap-3">
+                <form className="grid gap-3">
 
                     <div className="grid grid-cols-3 gap-1 bg-black bg-opacity-40 px-2 py-1 rounded">
                         <div className="font-bold col-span-3">Datos de inventario</div>
@@ -81,17 +81,17 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
 
                     </div>
 
-                    <div onClick={() => {setFinished(true), complete(form) }} className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
+                    <button type="submit" onClick={() => {setFinished(true), complete(form) }} className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
                         <div className="text-white">
                             <div className="flex items-center justify-center">
                                 <div className="mr-2 font-bold text-white text-shadow">Siguiente</div>
                                 <div><FontAwesomeIcon icon={faAngleRight} className="text-lume-100" /></div>
                             </div>
                         </div>
-                    </div>
+                    </button>
 
 
-                </div>
+                </form>
 
             </div>
         </div>
