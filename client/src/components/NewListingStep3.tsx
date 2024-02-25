@@ -44,6 +44,23 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
 
     }, [finished])
 
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    }
+
+
+    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+        e.preventDefault();
+        setFinished(true);
+        complete(form);
+    }
+
     return (
         <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition2 ? (finished ? " -left-full " : " left-0 ") : (transition1 ? " right-0 " : " -right-full ")}`}>
             <div className="flex justify-center text-white text-shadow-lg shadow-black text-center font-bold text-sm px-5 mt-4">
@@ -69,19 +86,19 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
 
                     <div className="grid grid-cols-3 gap-3">
                         <div className="bg-black bg-opacity-40 p-1 rounded col-span-1">Condicion: </div>
-                        <select className="p-1 rounded w-full text-stone-800 col-span-2" name="condition" id="condition" defaultValue={0}>
-                            <option key={0} value={0} disabled>Seleccionar</option>
+                        <select className="p-1 rounded w-full text-stone-800 col-span-2" name="condition" id="condition" defaultValue="" onChange={handleSelectChange} required>
+                            <option key={0} value="" disabled>Seleccionar</option>
                             <option key={1} value={1}>Nuevo</option>
                             <option key={2} value={2}>Usado</option>
                         </select>
 
                         <div className="bg-black bg-opacity-40 p-1 rounded col-span-1">Cantidad: </div>
-                        <input type="number" placeholder="Cantidad" className="p-1 rounded w-full text-stone-800 col-span-2" min={1} pattern="[0-9]*" defaultValue={1} disabled={sessionStatus.user.user_type > 1} name="quantity" id="quantity"/>
+                        <input type="number" placeholder="Cantidad" className="p-1 rounded w-full text-stone-800 col-span-2" min={1} pattern="[0-9]*" defaultValue={1} disabled={sessionStatus.user.user_type > 1} name="quantity" id="quantity" onChange={handleInputChange} required/>
                         {sessionStatus.user.user_type > 1 && <div className="col-span-3 text-xs text-shadow shadow-black text-center">Solo usuarios registrados con tienda pueden tener inventario de multiples items</div>}
 
                     </div>
 
-                    <button type="submit" onClick={() => {setFinished(true), complete(form) }} className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
+                    <button type="submit" className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
                         <div className="text-white">
                             <div className="flex items-center justify-center">
                                 <div className="mr-2 font-bold text-white text-shadow">Siguiente</div>
