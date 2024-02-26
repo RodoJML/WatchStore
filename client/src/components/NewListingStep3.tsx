@@ -61,6 +61,8 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
         complete(form);
     }
 
+    
+
     return (
         <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition2 ? (finished ? " -left-full " : " left-0 ") : (transition1 ? " right-0 " : " -right-full ")}`}>
             <div className="flex justify-center text-white text-shadow-lg shadow-black text-center font-bold text-sm px-5 mt-4">

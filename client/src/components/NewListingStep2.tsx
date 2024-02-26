@@ -3,7 +3,7 @@ import { mainForm } from "../pages/NewListing";
 import { BrandItem } from "../model/fetch";
 import { RootState } from "../state/store/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight, faBatteryThreeQuarters, faCircleNotch, faCube, faDroplet, faEarthAmericas, faExpand, faGaugeSimpleHigh, faGears, faGem, faHillRockslide, faLightbulb, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faT, faUnlockKeyhole, faWater, faWeightHanging } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faBatteryThreeQuarters, faCircleNotch, faCube, faDroplet, faEarthAmericas, faExpand, faGaugeSimpleHigh, faGears, faGem, faHillRockslide, faLightbulb, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faT, faUnlockKeyhole, faVenusMars, faWater, faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 
 export interface step2form {
     model: string,
@@ -31,7 +31,7 @@ export interface step2form {
     country: number,
 }
 
-export default function NewListingStep2({ begin, mainForm, sessionStatus, complete }: { begin: boolean, mainForm: mainForm, sessionStatus: RootState["session"], complete: (form: step2form) => (void)}) {
+export default function NewListingStep2({ begin, mainForm, sessionStatus, complete }: { begin: boolean, mainForm: mainForm, sessionStatus: RootState["session"], complete: (form: step2form) => (void) }) {
 
     const [brand, setBrand] = useState({} as BrandItem);
     const [transition1, setTransition1] = useState(false);
@@ -63,7 +63,7 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
     useEffect(() => {
         let timeout: NodeJS.Timeout;
 
-        if(finished){
+        if (finished) {
             timeout = setTimeout(() => { setActive(false); }, 1000);
         }
 
@@ -76,14 +76,14 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setForm({...form, [name]: value});
+        setForm({ ...form, [name]: value });
     }
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
         setFinished(true);
         complete(form);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     return (
@@ -249,24 +249,6 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
                     </div>
 
                     <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faWater} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="water_proof" id="water_proof" defaultValue="" required>
-                            <option key={0} value="" disabled>Water Proof</option>
-                            <option key={1} value={1}>Si</option>
-                            <option key={2} value={2}>No</option>
-                        </select>
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faDroplet} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="water_resistant" id="water_resistant" defaultValue="" required>
-                            <option key={0} value="" disabled>Water Resistant</option>
-                            <option key={1} value={1}>Si</option>
-                            <option key={2} value={2}>No</option>
-                        </select>
-                    </div>
-
-                    <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faRing} /></div>
                         <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="bezel_type" id="bezel_type" defaultValue="" required>
                             <option key={0} value="" disabled>Tipo Bisel</option>
@@ -299,15 +281,6 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
                     </div>
 
                     <div className="flex items-center">
-                        <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faLightbulb} /></div>
-                        <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="lume" id="lume" defaultValue="" required>
-                            <option key={0} value="" disabled>Luminiscencia</option>
-                            <option key={1} value={1}>Si</option>
-                            <option key={2} value={2}>No</option>
-                        </select>
-                    </div>
-
-                    <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faUnlockKeyhole} /></div>
                         <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="clasp_type" id="clasp_type" defaultValue="" required>
                             <option key={0} value="" disabled>Cierre</option>
@@ -325,7 +298,21 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
                         </div>
                     }
 
-                    <button type="submit"> 
+                    <div className="grid grid-cols-4 gap-2 text-center">
+                        <div className="bg-black bg-opacity-30 rounded w-full col-span-2"><div className="text-left ml-3"><FontAwesomeIcon icon={faLightbulb} /> Luminiscencia: </div></div>
+                        <label><input type="radio" name="lume" value={1} required />Si</label>
+                        <label><input type="radio" name="lume" value={2} />No</label>
+
+                        <div className="bg-black bg-opacity-30 rounded w-full col-span-2"><div className="text-left ml-3"><FontAwesomeIcon icon={faWater} />Water Proof: </div></div>
+                        <label><input type="radio" name="water_proof" value={1} required />Si</label>
+                        <label><input type="radio" name="water_proof" value={2} />No</label>
+
+                        <div className="bg-black bg-opacity-30 rounded w-full col-span-2"><div className="text-left ml-2">Water Resistant: </div></div>
+                        <label><input type="radio" name="water_resistant" value={1} required />Si</label>
+                        <label><input type="radio" name="water_resistant" value={2} />No</label>
+                    </div>
+
+                    <button type="submit">
                         <div className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
                             <div className="text-white">
                                 <div className="flex items-center justify-center">

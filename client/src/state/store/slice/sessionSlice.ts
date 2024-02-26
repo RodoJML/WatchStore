@@ -7,6 +7,17 @@ export interface Message {
     type: 'success' | 'danger' | 'warning' | 'info' | null
 }
 
+const unregisteredUser = {
+    user_id: 404,
+    user_type: 3,
+    user_name: "No registrado",
+    user_email: "",
+    user_password: null,
+    user_views: 0,
+    user_photo_path: null,
+    user_registration_date: null,
+} as UserItem;
+
 interface SessionState {
     signedIn: boolean,
     user: UserItem,
@@ -33,16 +44,7 @@ interface SessionState {
 
 const initialState: SessionState = {
     signedIn: false,
-    user: {
-        user_id: null,
-        user_type: 3,
-        user_name: "No registrado",
-        user_email: "",
-        user_password: null,
-        user_views: 0,
-        user_photo_path: null,
-        user_registration_date: null,
-    },
+    user: unregisteredUser,
     isLoading: false,
     messages: [],
     notification: undefined,
@@ -91,16 +93,7 @@ const sessionSlice = createSlice(
             },
             logOut: (state) => {
                 state.signedIn = false;
-                state.user = {
-                    user_id: null,
-                    user_type: 3,
-                    user_name: "Guest",
-                    user_email: "",
-                    user_password: null,
-                    user_views: null,
-                    user_photo_path: null,
-                    user_registration_date: null,
-                };
+                state.user = unregisteredUser;
             }
         },
         extraReducers: (builder) => {
