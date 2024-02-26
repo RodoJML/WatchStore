@@ -74,7 +74,7 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
             <div className="grid bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black">
 
 
-                <form className="grid gap-3">
+                <form className="grid gap-3" onSubmit={handleSubmit}>
 
                     <div className="grid grid-cols-3 gap-1 bg-black bg-opacity-40 px-2 py-1 rounded">
                         <div className="font-bold col-span-3">Datos de inventario</div>

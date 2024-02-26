@@ -48,7 +48,7 @@ export default function Notification({ message }: NotificationProps) {
             {message?.type === 'info' &&
                 <span>ℹ️ {message.type}</span>}
         </div>
-        <div className=" bg-black bg-opacity-10 h-px w-11/12 place-self-center"></div>
+        <div className=" bg-black bg-opacity-10 h-px w-full place-self-center"></div>
 
         <div className="flex overflow-scroll -mt-2">
             <div className={`text-stone-800 text-sm ${showMore ? "whitespace-wrap text-wrap" : "whitespace-nowrap text-nowrap overflow-scroll"}`}>

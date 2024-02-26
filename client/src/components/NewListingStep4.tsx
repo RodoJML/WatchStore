@@ -9,6 +9,7 @@ import { setNotification } from "../state/store/slice/sessionSlice";
 export interface step4form {
     date: Date,
     description: string,
+    contact: number,
     cprice: number,
     dprice: number,
     warranty: number,
@@ -39,7 +40,12 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
     }, [begin])
 
-    const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+        setFinished(true);
+        complete(form);
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
         const maxPhotos = 5;
 
@@ -48,8 +54,15 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 dispatch(setNotification({ message: "El máximo son 5 fotos", type: "danger" }));
                 input.value = "";
             }
+        } else {
+            const { name, value } = e.target;
+            setForm({ ...form, [name]: value });
         }
+    }
 
+    const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
     }
 
     // const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -65,7 +78,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
             </div>
 
 
-            <form className="grid gap-3 bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black">
+            <form className="grid gap-3 bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black" onSubmit={handleSubmit}>
 
                 <div className="grid bg-black bg-opacity-40 rounded p-2 gap-1">
                     <div className="font-bold ">Datos de publicación</div>
@@ -76,33 +89,33 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                     </div>
                 </div>
 
-                <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} />
+                <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} />
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faPhone} /></div>
-                    <input type="tel" minLength={8} maxLength={8} placeholder="Contácto" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required/>
+                    <input name="contact" id="contact" type="tel" minLength={8} maxLength={8} placeholder="Contácto" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
                 </div>
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faCertificate} /></div>
-                    <input type="number" placeholder="Meses de garantía" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" min={1} max={48} required/>
+                    <input name="warranty" id="warranty" type="number" placeholder="Meses de garantía" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" min={1} max={48} required onChange={handleInputChange} />
                 </div>
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faColonSign} /></div>
-                    <input type="number" placeholder="Precio en colones" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required/>
+                    <input name="cprice" id="cprice" type="number" placeholder="Precio en colones" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
                 </div>
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faDollarSign} /></div>
-                    <input type="number" placeholder="Precio en dolares" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required />
+                    <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
                 </div>
 
                 <img className="opacity-70 p-2" src="/src/assets/images/angles.png" alt="" />
                 <div className="text-xs text-center text-shadow shadow-black">*Sugerencia de los angulos a incluir en sus fotos  </div>
 
                 <input type="file" name="photo" id="photo" accept="image/*" multiple
-                    className="flex justify-center w-full text-white px-5 py-2" onChange={handleImagesChange} />
+                    className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
 
                 <button type="submit" onClick={() => { setFinished(true), complete(form) }} className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
                     <div className="text-white">
