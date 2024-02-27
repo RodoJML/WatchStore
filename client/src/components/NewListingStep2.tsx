@@ -93,7 +93,7 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
     }
 
     useEffect(() => {
-        
+
     }, [form])
 
     return (
@@ -239,7 +239,7 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
 
                     </div>
 
-                    <div className="text-xs my-2 text-shadow shadow-black text-left"> ℹ️ <strong>Opcional: </strong> Los siguientes campos NO son obligatorios, sin embargo, incluír todas las caracteristicas ayuda a un mayor alcance a compradores potenciales</div>
+                    <div className="text-xs my-2 text-shadow shadow-black text-left">* Los siguientes campos NO son obligatorios, sin embargo, incluír todas las caracteristicas ayuda a un mayor alcance a compradores potenciales</div>
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCircleNotch} /></div>

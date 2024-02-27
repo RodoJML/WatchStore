@@ -82,16 +82,19 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
             <form className="grid gap-3 bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black" onSubmit={handleSubmit}>
 
-                <div className="grid bg-black bg-opacity-40 rounded p-2 gap-1">
-                    <div className="font-bold text-xl text-shadow shadow-black">Datos de publicación</div>
-                    <div className="text-shadow shadow-black text-sm">· {mainForm.step1.brand + mainForm.step2.model}</div>
+                <div className="grid grid-cols-2 bg-black bg-opacity-40 rounded p-2 gap-1 text-shadow shadow-black ">
+                    <div className="font-bold text-xl col-span-2">Datos de publicación</div>
+                    <div className="text-shadow shadow-black col-span-2">{mainForm.step1.brand + mainForm.step2.model}</div>
                     {sessionStatus.user.user_type <= 1 &&
                         <>
-                            <div className="text-shadow shadow-black">· Teléfono: {sessionStatus.user.user_id}</div>
-                            <div className="text-shadow shadow-black">· Correo: {sessionStatus.user.user_email}</div>
+                            <div>Teléfono:</div>
+                            <div>{sessionStatus.user.user_id}</div>
+                            <div>Correo:</div>
+                            <div>{sessionStatus.user.user_email}</div>
                         </>
                     }
-                    <div className="text-shadow shadow-black text-sm">· Publicado en: {date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
+                    <div className="text-shadow shadow-black">Publicado en:</div>
+                    <div>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
                 </div>
 
                 <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} />
@@ -114,7 +117,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 {
                     sessionStatus.user.user_type > 1 &&
                     <>
-                        <div className="text-xs text-shadow shadow-black">ℹ️ Esta es la información a la que los compradores tendran acceso para contactarle.</div>
+                        <div className="text-xs text-shadow shadow-black">📇 Los compradores tendran acceso a la siguiente información para contactarle.</div>
 
                         <div className="flex">
                             <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faUser} /></div>

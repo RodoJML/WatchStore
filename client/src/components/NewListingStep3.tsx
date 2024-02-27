@@ -78,8 +78,8 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
 
                 <form className="grid gap-3" onSubmit={handleSubmit}>
 
-                    <div className="grid grid-cols-3 gap-1 bg-black bg-opacity-40 px-2 py-1 rounded">
-                        <div className="font-bold col-span-3">Datos de inventario</div>
+                    <div className="grid grid-cols-3 gap-1 bg-black bg-opacity-40 px-2 py-1 rounded text-shadow shadow-black">
+                        <div className="font-bold col-span-3 text-xl">Datos de inventario</div>
                         <div className="col-span-1">Vendedor: </div>
                         <div className="col-span-2">{sessionStatus.user.user_name}</div>
                         <div className="col-span-1">Reloj: </div>
