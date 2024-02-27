@@ -96,7 +96,7 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
 
                         <div className="bg-black bg-opacity-40 p-1 rounded col-span-1">Cantidad: </div>
                         <input type="number" placeholder="Cantidad" className="p-1 rounded w-full text-stone-800 col-span-2" min={1} pattern="[0-9]*" defaultValue={1} disabled={sessionStatus.user.user_type > 1} name="quantity" id="quantity" onChange={handleInputChange} required/>
-                        {sessionStatus.user.user_type > 1 && <div className="col-span-3 text-xs text-shadow shadow-black text-center">Solo usuarios registrados con tienda pueden tener inventario de multiples items</div>}
+                        {sessionStatus.user.user_type > 1 && <div className="col-span-3 text-xs text-shadow shadow-black text-center">⚠️ Solo usuarios registrados con tienda pueden tener inventario de multiples items</div>}
 
                     </div>
 

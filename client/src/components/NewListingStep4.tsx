@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { RootState } from "../state/store/store";
 import { mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleRight, faCalendarCheck, faCertificate, faCheckDouble, faColonSign, faDollarSign, faFileArrowUp, faImage, faPen, faPhone, faPlus, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleRight, faCalendarCheck, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faFileArrowUp, faImage, faPen, faPhone, faPlus, faUpload, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
 
 export interface step4form {
     date: Date,
     description: string,
-    contact: number,
+    seller: string,
+    phone: number,
+    mail: string,
     cprice: number,
     dprice: number,
     warranty: number,
@@ -81,20 +83,18 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
             <form className="grid gap-3 bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black" onSubmit={handleSubmit}>
 
                 <div className="grid bg-black bg-opacity-40 rounded p-2 gap-1">
-                    <div className="font-bold ">Datos de publicación</div>
-                    <div>{mainForm.step1.brand + mainForm.step2.model}</div>
-                    <div className="flex ">
-                        <div className="mr-1">Fecha de publicación:</div>
-                        <div>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
-                    </div>
+                    <div className="font-bold text-xl text-shadow shadow-black">Datos de publicación</div>
+                    <div className="text-shadow shadow-black text-sm">· {mainForm.step1.brand + mainForm.step2.model}</div>
+                    {sessionStatus.user.user_type <= 1 &&
+                        <>
+                            <div className="text-shadow shadow-black">· Teléfono: {sessionStatus.user.user_id}</div>
+                            <div className="text-shadow shadow-black">· Correo: {sessionStatus.user.user_email}</div>
+                        </>
+                    }
+                    <div className="text-shadow shadow-black text-sm">· Publicado en: {date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
                 </div>
 
                 <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} />
-
-                <div className="flex">
-                    <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faPhone} /></div>
-                    <input name="contact" id="contact" type="tel" minLength={8} maxLength={8} placeholder="Contácto" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
-                </div>
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faCertificate} /></div>
@@ -110,6 +110,29 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faDollarSign} /></div>
                     <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
                 </div>
+
+                {
+                    sessionStatus.user.user_type > 1 &&
+                    <>
+                        <div className="text-xs text-shadow shadow-black">ℹ️ Esta es la información a la que los compradores tendran acceso para contactarle.</div>
+
+                        <div className="flex">
+                            <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faUser} /></div>
+                            <input name="seller" id="seller" type="text" placeholder="Nombre" className="p-1 rounded w-full text-stone-800" required onChange={handleInputChange} />
+                        </div>
+
+                        <div className="flex">
+                            <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faPhone} /></div>
+                            <input name="phone" id="phone" type="tel" minLength={8} maxLength={8} placeholder="Teléfono" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
+                        </div>
+
+                        <div className="flex">
+                            <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faEnvelope} /></div>
+                            <input name="mail" id="mail" type="mail" placeholder="Correo" className="p-1 rounded w-full text-stone-800" required onChange={handleInputChange} />
+                        </div>
+                    </>
+
+                }
 
                 <img className="opacity-70 p-2" src="/src/assets/images/angles.png" alt="" />
                 <div className="text-xs text-center text-shadow shadow-black">*Sugerencia de los angulos a incluir en sus fotos  </div>
