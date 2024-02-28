@@ -16,6 +16,7 @@ const fetchUtil = require('./controllers/fetchUtil.ts');
 const brands = require('./controllers/brands.ts');
 const user = require('./controllers/user.ts');
 const listing = require ('./controllers/listing.ts');
+const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
 
 // Middleware
 app
@@ -37,6 +38,7 @@ app
         }
         next();
     })
+    .use(parseAuthorizationHeader)
 
 app
     .get('/api/v1', (req: Request, res: Response) => { res.send('Hello World') })

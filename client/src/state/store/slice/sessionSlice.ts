@@ -194,6 +194,7 @@ export const exist = createAsyncThunk(
     },
 )
 
+
 // We easily access to the actions by exporting from the slice.
 // No extra code needed to export the actions.
 export const { setUser, setLoading, addMessage, setRedirectURL, logOut, setNotification, clearMessages } = sessionSlice.actions;

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { RootState } from "../state/store/store";
+import { useEffect, useRef, useState } from "react";
+import { AppDispatch, RootState } from "../state/store/store";
 import { mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleRight, faCalendarCheck, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faFileArrowUp, faImage, faPen, faPhone, faPlus, faUpload, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleRight, faCalendarCheck, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faFileArrowUp, faImage, faLocationDot, faPen, faPhone, faPlus, faUpload, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
+import { guestHasListing } from "../state/store/slice/listingsSlice";
 
 export interface step4form {
     date: Date,
@@ -19,13 +20,15 @@ export interface step4form {
 
 export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
 
+
     const [form, setForm] = useState({} as step4form);
     const [active, setActive] = useState(false);
+    const [listingAlreadyExist, setListingAlreadyExist] = useState(false);
     const [finished, setFinished] = useState(false);
     const [transition1, setTransition1] = useState(false);
     const [transition2, setTransition2] = useState(false);
     const [date, setDate] = useState(new Date());
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         let timeout1: NodeJS.Timeout;
@@ -40,11 +43,28 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
             timeout2 = setTimeout(() => { setTransition1(true) }, 100);
         }
 
+        return () => {
+            clearTimeout(timeout1);
+            clearTimeout(timeout2);
+            clearTimeout(timeout3);
+        };
+
     }, [begin])
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-        setFinished(true);
-        complete(form);
+
+        e.preventDefault();
+        dispatch(guestHasListing(form.phone)).then((result: any) => {
+            if (result.payload.total > 0) {
+                setListingAlreadyExist(true);
+                // Notification showing on every route change rerender needs debugging
+                dispatch(setNotification({ message: "Solo usuarios registrados con tienda pueden tener más de 1 publicación.", type: "danger" }));
+            } else {
+                setFinished(true);
+                complete(form);
+            }
+        });
+
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,10 +87,14 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
         setForm({ ...form, [name]: value });
     }
 
-    // const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     setForm({...form, [name]: value});
-    // }
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    }
+
+    useEffect(() => {
+        setListingAlreadyExist(false);
+    }, [form.phone])
 
     return (
         <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition1 ? " right-0 " : " -right-full "}`}>
@@ -97,7 +121,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                     <div>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
                 </div>
 
-                <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} />
+                <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} required />
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faCertificate} /></div>
@@ -120,9 +144,21 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                         <div className="text-xs text-shadow shadow-black">📇 Los compradores tendran acceso a la siguiente información para contactarle.</div>
 
                         <div className="flex">
-                            <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faUser} /></div>
-                            <input name="seller" id="seller" type="text" placeholder="Nombre" className="p-1 rounded w-full text-stone-800" required onChange={handleInputChange} />
+                            <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-20 mr-1"><FontAwesomeIcon icon={faUser} /></div>
+                            <input name="name" id="name" type="text" placeholder="Nombre" className="p-1 rounded text-stone-800 w-full mr-2" required onChange={handleInputChange} />
+                            <input name="lastName" id="lastName" type="text" placeholder="Apellido" className="p-1 rounded text-stone-800 w-full" required onChange={handleInputChange} />
                         </div>
+
+                        <div className="flex">
+                            <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faLocationDot} /></div>
+                            <select className="p-1 rounded text-stone-800 w-full" name="province" id="province" defaultValue="" onChange={handleSelectChange}>
+                                <option key={0} value="" disabled>Ubicación</option>
+                                {sessionStatus.provinces.map((province) => {
+                                    return <option key={province} value={province}>{province}</option>
+                                })}
+                            </select>
+                        </div>
+
 
                         <div className="flex">
                             <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faPhone} /></div>
@@ -134,7 +170,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                             <input name="mail" id="mail" type="mail" placeholder="Correo" className="p-1 rounded w-full text-stone-800" required onChange={handleInputChange} />
                         </div>
                     </>
-
                 }
 
                 <img className="opacity-70 p-2" src="/src/assets/images/angles.png" alt="" />
@@ -143,7 +178,14 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 <input type="file" name="photo" id="photo" accept="image/*" multiple
                     className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
 
-                <button type="submit" onClick={() => { setFinished(true), complete(form) }} className="flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black">
+                {
+                    listingAlreadyExist &&
+                    <div className="text-sm text-center text-shadow shadow-black bg-black bg-opacity-40 rounded p-3 border border-white border-opacity-30">
+                        🚨 Ya existe una publicación bajo este usuario, solo usuarios registrados con tienda pueden tener mas de 1 publicación.
+                    </div>
+                }
+
+                <button type="submit" disabled={listingAlreadyExist} className={`flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black ${listingAlreadyExist && " opacity-50"}`}>
                     <div className="text-white">
                         <div className="flex items-center justify-center">
                             <div className="mr-2 font-bold text-white text-shadow">PUBLICAR</div>

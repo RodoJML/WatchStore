@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelopeList } from './../../../model/fetch';
+import type { DataEnvelope, DataEnvelopeList } from './../../../model/fetch';
 import { type Message } from './sessionSlice';
 
 export interface ListingPreviewItem {
@@ -111,18 +111,18 @@ const listingSlice = createSlice({
             state.searchInitiated = true;
             state.isLoading = false;
             state.hasMore = action.payload.total > 0;
-            
-            if(action.meta.arg.query !== state.lastSearch){
+
+            if (action.meta.arg.query !== state.lastSearch) {
                 state.page = 1;
                 state.listingsPreviews = [];
-            } 
+            }
 
-            if(action.meta.arg.query === state.lastSearch && action.meta.arg.page === 1){
+            if (action.meta.arg.query === state.lastSearch && action.meta.arg.page === 1) {
                 state.listingsPreviews = [...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
             } else {
                 state.listingsPreviews = [...state.listingsPreviews, ...action.payload.data.reduce((acc, val) => acc.concat(val), [])];
             }
-            
+
             state.lastSearch = action.meta.arg.query;
             console.log(state.messages[state.messages.length - 1]);
         });
@@ -142,8 +142,15 @@ export const getAll_previews = createAsyncThunk(
 
 export const search = createAsyncThunk(
     'listings/search',
-    async ({query, page} : {query: string | undefined, page: number | undefined }): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
+    async ({ query, page }: { query: string | undefined, page: number | undefined }): Promise<DataEnvelopeList<ListingPreviewItem[]>> => {
         return await Fetch.api(`/listing/previews?key=${query}&page=${page}&pageSize=${10}`).catch((err) => { throw err; });
+    }
+)
+
+export const guestHasListing = createAsyncThunk(
+    'listings/guestHasListing',
+    async (stock_store_user_id: number): Promise<DataEnvelope<boolean>> => {
+        return await Fetch.api(`/listing/guestHasListing?key=${stock_store_user_id}`).catch((err) => { throw err; });
     }
 )
 

@@ -14,6 +14,7 @@ router
             }
         ).catch(next);
     })
+
     .get('/previews', (req: Request, res: Response, next: NextFunction) => {
         model.get_previews(req.query.page as number | undefined, req.query.pageSize as number | undefined,
             req.query.key as string | undefined)
@@ -26,11 +27,22 @@ router
             }
         ).catch(next);
     })
+
     .get('/:listing_stock_id/:listing_stock_user_id', (req: Request, res: Response, next: NextFunction) => {
         model.getOne(req.params.listing_stock_id, req.params.listing_stock_user_id)
         .then(
             (result: any) => {
                 const data = {data: result, isSuccess: true};
+                res.send(data);
+            }
+        ).catch(next);
+    })
+
+    .get('/guestHasListing', (req: Request, res: Response, next: NextFunction) => {
+        model.guestHasListing(req.query.key)
+        .then(
+            (result: any) => {
+                const data = { data: result.objects, isSuccess: true, total: result.total};
                 res.send(data);
             }
         ).catch(next);

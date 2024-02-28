@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
     "user_email": "rodojml@me.com",
-    "user_password": "rjml2290111111111"
+    "user_password": "rjml2290"
 }
 
 
@@ -39,3 +39,6 @@ GET http://localhost:3000/api/v1/fetch/sizes
 
 ###
 GET http://localhost:3000/api/v1/listing/previews?key=panerai%20luminor&page=1&pageSize=2
+
+###
+GET http://localhost:3000/api/v1/listing/guestHasListing?key=60002031

@@ -1,6 +1,6 @@
 import NewListingStep1 from "../components/NewListingStep1";
 import NewListingNav from "../components/NewListingNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewListingStep2 from "../components/NewListingStep2";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store/store";
@@ -49,6 +49,34 @@ export default function NewListing() {
         setMainForm({ ...mainForm, step4: form});
         setStep4submitted(true);
     }
+
+    useEffect(() => {
+
+        if(step1submitted && step2submitted && step3submitted && step4submitted){
+
+            if(sessionState.user.user_type <= 2){
+                
+            }
+
+            if(sessionState.user.user_type > 2){
+
+                // 1. add unregistered user to db
+
+                // 2. add store 
+
+                // 3. add model
+
+                // 4. add specs
+
+                // 5. add stock
+
+                // 6. add listing
+            }
+
+            console.log("Ready to submit");
+        }
+
+    }, [mainForm])
 
     return (
         <div>

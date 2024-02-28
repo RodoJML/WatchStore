@@ -142,6 +142,19 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
     return { objects, total };
 }
 
+async function guestHasListing(key: number){
+    const db = await connection();
+    
+    const orig_listings_count = await db('ORIG_LISTING').count('orig_listing_stock_store_user_id').where('orig_listing_stock_store_user_id', key);
+    const gen_listings_count = await db('GEN_LISTING').count('gen_listing_stock_store_user_id').where('gen_listing_stock_store_user_id', key);
+    
+    const objects = "No objects returned required for this endpoint."
+    const total = Number(orig_listings_count[0]['count(`orig_listing_stock_store_user_id`)']) + Number(gen_listings_count[0]['count(`gen_listing_stock_store_user_id`)']);
+
+    return { objects, total };
+}
+
+
 async function userSearch(key: string[]) {
     const db = await connection();
 
@@ -279,4 +292,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search };
+module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing };
