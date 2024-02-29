@@ -11,7 +11,7 @@ import { step4form } from "../components/NewListingStep4";
 import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
-import { signup } from "../state/store/slice/sessionSlice";
+import { addUnregisteredUser, signup } from "../state/store/slice/sessionSlice";
 
 
 export interface mainForm{
@@ -63,7 +63,14 @@ export default function NewListing() {
             if(sessionState.user.user_type > 2){
 
                 // 1. add unregistered user to db
-                dispatch(signup(mainForm.step4))
+                dispatch(addUnregisteredUser(mainForm.step4)).then((result: any) => {
+                    if(result.payload.isSuccess){
+                        console.log("Unregistered user added");
+                        console.log("Proceed to add store here");
+                    }else{
+                        console.log("Something wrong happened while posting the listing");
+                    }
+                })
 
                 // 2. add store 
 

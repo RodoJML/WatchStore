@@ -23,6 +23,15 @@ router
             }
         ).catch(next);
     })
+    .post('/add_unregistered_user', (req: Request, res: Response, next: NextFunction) => {
+        model.addUnregisteredUser(req.body)
+        .then(
+            (result: boolean) => {
+                const data = {data: null, isSuccess: result};
+                res.send(data);
+            }
+        ).catch(next);
+    })
     .get('/exist/:table_name/:key', (req: Request, res: Response, next: NextFunction) => {
         model.exist(req.params.table_name, req.params.key)
         .then(

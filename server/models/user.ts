@@ -85,8 +85,9 @@ async function addUnregisteredUser(form: any){
             user_registration_date: undefined,
         }
 
-        return await db('user').insert(unregisteredUser);
+        const result = await db('user').insert(unregisteredUser);
 
+        return result.length as number > 0;
 
     } catch (err) {
         throw new Error('Something bad happened in the backend when inserting the user: ' + err);
@@ -126,4 +127,4 @@ function verifyTokenAsync(token: any) {
 }
 
 
-module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync }; 
+module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addUnregisteredUser }; 
