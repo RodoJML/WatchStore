@@ -154,6 +154,13 @@ export const guestHasListing = createAsyncThunk(
     }
 )
 
+export const postListing_addStore = createAsyncThunk(
+    'listings/postListing_addStore',
+    async (store: Fetch.StoreItem): Promise<DataEnvelope<boolean>> => {
+        return await Fetch.api('/listing/addStore', store, 'POST').catch((err) => { throw err; });
+    }
+);
+
 export const { searchModeOn, searchModeOff, incrementPage, searchInitiatedOFF } = listingSlice.actions;
 
 export default listingSlice.reducer;
