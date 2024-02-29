@@ -5,6 +5,12 @@ const model = require('../models/fetchUtil.ts');
 
 router
     .get('/:table', (req: Request, res: Response, next: NextFunction) => {
+
+        if(req.params.table == 'user' || req.params.table == 'user_info'){
+            // To avoid security issues, we should not allow access to these tables.
+            next({code: 403, message: 'You are not allowed to access this resource'});
+        }
+
         model.getAll(req.params.table)
         .then(
             (result: any) => {
@@ -15,6 +21,7 @@ router
     })
 
     .get('/:table/:column_id/:id', (req: Request, res: Response, next: NextFunction) => {
+        
         model.getOne(req.params.table, req.params.column_id, req.params.id)
         .then(
             (result: any) => {

@@ -2,8 +2,8 @@ import NewListingStep1 from "../components/NewListingStep1";
 import NewListingNav from "../components/NewListingNav";
 import { useEffect, useState } from "react";
 import NewListingStep2 from "../components/NewListingStep2";
-import { useSelector } from "react-redux";
-import { RootState } from "../state/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../state/store/store";
 import { step1form } from "../components/NewListingStep1";
 import { step2form } from "../components/NewListingStep2";
 import { step3form } from "../components/NewListingStep3";
@@ -11,6 +11,7 @@ import { step4form } from "../components/NewListingStep4";
 import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
+import { signup } from "../state/store/slice/sessionSlice";
 
 
 export interface mainForm{
@@ -23,6 +24,7 @@ export interface mainForm{
 export default function NewListing() {
 
     const sessionState = useSelector((state: RootState) => state.session);
+    const dispatch = useDispatch<AppDispatch>();
     const [mainForm, setMainForm] = useState({} as mainForm);
 
     const [step1submitted, setStep1submitted] = useState(false);
@@ -61,6 +63,7 @@ export default function NewListing() {
             if(sessionState.user.user_type > 2){
 
                 // 1. add unregistered user to db
+                dispatch(signup(mainForm.step4))
 
                 // 2. add store 
 
@@ -71,6 +74,8 @@ export default function NewListing() {
                 // 5. add stock
 
                 // 6. add listing
+
+                console.log(mainForm);
             }
 
             console.log("Ready to submit");

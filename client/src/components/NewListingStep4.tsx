@@ -10,9 +10,10 @@ import { guestHasListing } from "../state/store/slice/listingsSlice";
 export interface step4form {
     date: Date,
     description: string,
-    seller: string,
-    phone: number,
-    mail: string,
+    name: string,
+    lastName: string,
+    user_id: number,
+    user_email: string,
     cprice: number,
     dprice: number,
     warranty: number,
@@ -54,7 +55,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
         e.preventDefault();
-        dispatch(guestHasListing(form.phone)).then((result: any) => {
+        dispatch(guestHasListing(form.user_id)).then((result: any) => {
             if (result.payload.total > 0) {
                 setListingAlreadyExist(true);
                 // Notification showing on every route change rerender needs debugging
@@ -94,7 +95,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
     useEffect(() => {
         setListingAlreadyExist(false);
-    }, [form.phone])
+    }, [form.user_id])
 
     return (
         <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition1 ? " right-0 " : " -right-full "}`}>
@@ -162,12 +163,12 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
                         <div className="flex">
                             <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faPhone} /></div>
-                            <input name="phone" id="phone" type="tel" minLength={8} maxLength={8} placeholder="Teléfono" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
+                            <input name="user_id" id="user_id" type="tel" minLength={8} maxLength={8} placeholder="Teléfono" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
                         </div>
 
                         <div className="flex">
                             <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faEnvelope} /></div>
-                            <input name="mail" id="mail" type="mail" placeholder="Correo" className="p-1 rounded w-full text-stone-800" required onChange={handleInputChange} />
+                            <input name="user_email" id="user_email" type="mail" placeholder="Correo" className="p-1 rounded w-full text-stone-800" required onChange={handleInputChange} />
                         </div>
                     </>
                 }

@@ -69,6 +69,31 @@ async function signup(signupForm: any) {
     }
 }
 
+async function addUnregisteredUser(form: any){
+
+    try{
+        const db = await connection();
+
+        const unregisteredUser: UserItem = {
+            user_id: +form.user_id,
+            user_type: 3,
+            user_name: form.name + form.lastName,
+            user_email: form.user_email,
+            user_password: "A$4bWp9vX2uQ5zKo",
+            user_views: undefined,
+            user_photo_path: "/src/assets/images/unregistered_user.png",
+            user_registration_date: undefined,
+        }
+
+        return await db('user').insert(unregisteredUser);
+
+
+    } catch (err) {
+        throw new Error('Something bad happened in the backend when inserting the user: ' + err);
+    }
+
+}
+
 async function exist(column: string, key: string) {
     const db = await connection();
     const user = await db('user').count('*').where(column, key);

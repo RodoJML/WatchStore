@@ -3,20 +3,30 @@ const data1 = require('../data/provinces.json');
 const data2 = require('../data/colors.json');
 const data3 = require('../data/sizes.json');
 
+// This functions needs to be revised as it might lead to vulnerabilities
+// Modularize the code... to improve the security of the application
+
 async function connection() {
     const db = await connect();
     return db;
 }
 
 async function getAll(table: string) {
-    if(table === 'provinces') return { objects: data1.provinces, total: data1.provinces.length };
-    if(table === 'colors') return { objects: data2.colors, total: data2.colors.length };
-    if(table === 'sizes') return { objects: data3.sizes, total: data3.sizes.length };
 
-    const db = await connection();
-    const objects = await db(table).select('*');
-    const total = objects.length;
-    return {objects, total};
+    if (table === 'user' || table === 'user_info') {
+        // While controller has a check for this, it is better to have a check here as well.
+        return { objects: [], total: 0 };
+    } else {
+        if (table === 'provinces') return { objects: data1.provinces, total: data1.provinces.length };
+        if (table === 'colors') return { objects: data2.colors, total: data2.colors.length };
+        if (table === 'sizes') return { objects: data3.sizes, total: data3.sizes.length };
+
+        const db = await connection();
+        const objects = await db(table).select('*');
+        const total = objects.length;
+        return { objects, total };
+    }
+
 }
 
 // offset((page - 1) * pageSize).limit(pageSize) FOR PAGINATION
@@ -24,10 +34,10 @@ async function getAllbyPage(table: string, page = 1, pageSize = 30) {
     const db = await connection();
     const objects = await db(table).select('*').offset((page - 1) * pageSize).limit(pageSize);
     const total = objects.length;
-    return {objects, total};
+    return { objects, total };
 }
 
-async function getOne(table:string, column_id: string, id: string) {
+async function getOne(table: string, column_id: string, id: string) {
     const db = await connection();
     const object = await db(table).select('*').where(column_id, id);
     return object;
@@ -58,4 +68,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, getAllbyPage, getOne, addOne, updateOne, deleteOne, search};
+module.exports = { getAll, getAllbyPage, getOne, addOne, updateOne, deleteOne, search };
