@@ -64,7 +64,7 @@ export default function Listing() {
 
     return (
         <div>
-            <Link to="/listing/new" className="relative w-full grid grid-cols-2 bg-gradient-to-tr from-pearl-100 to-bone-100 rounded shadow shadow-black overflow-hidden">
+            <Link to="/listing/new" className="relative w-full grid grid-cols-2 bg-gradient-to-tr from-pearl-100 to-bone-100 rounded shadow shadow-black overflow-hidden mt-3">
                 <div className="flex justify-start ml-4 text-stone-800 items-center h-full">➕ Anuncie su reloj</div>
                 <div className="flex justify-end sm:h-12">  <img src="/src/assets/images/sell.png" alt="Sell Image" /></div>
             </Link>
