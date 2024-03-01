@@ -11,6 +11,7 @@ router
         .then(
             (result: any) => {
                 const data = {data: result.inserted_id, isSuccess: true, total: result.total};
+                res.send(data);
             }
         ).catch(next);
     });

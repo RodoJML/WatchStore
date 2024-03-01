@@ -44,7 +44,7 @@ GET http://localhost:3000/api/v1/listing/previews?key=panerai%20luminor&page=1&p
 GET http://localhost:3000/api/v1/listing/guestHasListing?key=60002031
 
 ###
-POST http://localhost:3000/api/v1/orig_model/add_from_listing/
+POST http://localhost:3000/api/v1/orig_model/add_from_listing
 Content-Type: application/json
 
 {
