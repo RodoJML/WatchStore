@@ -12,5 +12,7 @@ router
             (result: any) => {
                 const data = {data: result.inserted_id, isSuccess: true, total: result.total};
             }
-        ).catch();
-    })
+        ).catch(next);
+    });
+
+module.exports = router;

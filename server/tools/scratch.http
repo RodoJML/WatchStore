@@ -44,17 +44,10 @@ GET http://localhost:3000/api/v1/listing/previews?key=panerai%20luminor&page=1&p
 GET http://localhost:3000/api/v1/listing/guestHasListing?key=60002031
 
 ###
-POST http://localhost:3000/api/v1/user/add_unregistered_user/
+POST http://localhost:3000/api/v1/orig_model/add_from_listing/
 Content-Type: application/json
 
 {
-    "date": "any",
-    "description": "any",
-    "name": "java",
-    "lastName": "hutt",
-    "user_id": 60002032,
-    "user_email": "javathehutt@lucas.com",
-    "cprice": 200000,
-    "dprice": 200000,
-    "warranty": 3
+    "orig_brand_id": 87,
+    "orig_model_name": "Another test from scratch tool"
 }

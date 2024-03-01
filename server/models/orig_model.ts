@@ -16,3 +16,5 @@ async function add_from_listing(orig_model_item: OrigModelItem) {
 
     return {inserted_id: inserted_id[0][0].inserted_id, total: 1};
 }
+
+export { add_from_listing };

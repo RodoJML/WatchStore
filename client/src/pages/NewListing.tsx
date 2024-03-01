@@ -13,7 +13,7 @@ import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addUnregisteredUser, signup } from "../state/store/slice/sessionSlice";
 import { postListing_addStore } from "../state/store/slice/listingsSlice";
-import { StoreItem, UserInfoItem, UserItem, gen_Model_Item, orig_Model_Item } from "../model/fetch";
+import { StoreItem, UserInfoItem, UserItem, GenModelItem, OrigModelItem } from "../model/fetch";
 
 
 export interface mainForm {
@@ -40,9 +40,10 @@ export default function NewListing() {
     };
 
     const handleStep2Complete = (form: step2form) => {
-        set
-        
-¡+++          
+        setMainForm({ ...mainForm, step2: form });
+        setStep2submitted(true);
+    }
+
     const handleStep3Complete = (form: step3form) => {
         setMainForm({ ...mainForm, step3: form });
         setStep3submitted(true);
@@ -70,7 +71,7 @@ export default function NewListing() {
                     orig_UPC: undefined,
                     orig_model_photo_path: undefined,
                     orig_model_isTemplate: 0
-                } as orig_Model_Item;
+                } as OrigModelItem;
 
             } else {
 
@@ -82,7 +83,7 @@ export default function NewListing() {
                     gen_UPC: undefined,
                     gen_model_photo_path: undefined,
                     gen_country_id: mainForm.step2.country,
-                } as gen_Model_Item;
+                } as GenModelItem;
 
             }
 
