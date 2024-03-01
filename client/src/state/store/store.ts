@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import sessionReducer from './slice/sessionSlice'; // Import the reducer from sessionSlice.ts
-import brandsReducer from './slice/brandsSlice'; // Import the reducer from brandsSlice.ts
 import listingsReducer from './slice/listingsSlice'; // Import the reducer from listingsSlice.ts
 // We can have multiple reducers in our store.
 export const store = configureStore({
     reducer: {
         // This connects the "slice" with the "store" to make it accesible to the entire app.
         session: sessionReducer,
-        brands: brandsReducer,
         listings: listingsReducer,
     }
 });

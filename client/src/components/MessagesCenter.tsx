@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "../state/store/store";
-import { faCircleXmark, faEllipsis, faEnvelope, faEnvelopeOpen, faInbox } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faEnvelope, faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { clearMessages } from "../state/store/slice/sessionSlice";

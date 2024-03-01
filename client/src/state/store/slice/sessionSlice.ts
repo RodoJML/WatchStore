@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelope, AuthenticationEnvelope, UserItem } from './../../../model/fetch';
+import * as Interfaces from './../../../model/interfaces';
+import type { DataEnvelope, AuthenticationEnvelope, UserItem } from './../../../model/interfaces';
 
 export interface Message {
     message: string | null,
@@ -24,7 +25,7 @@ interface SessionState {
     isLoading: boolean,
     messages: Message[],
     notification: Message | undefined,
-    brands: Fetch.BrandItem[],
+    brands: Interfaces.BrandItem[],
     styles: any[],
     types: any[],
     shapes: any[],

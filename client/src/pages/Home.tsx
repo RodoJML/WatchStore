@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import Carousel from "../components/Carousel";
-import { Slide } from "../model/fetch";
+import { Slide } from "../model/interfaces";
 import Listings from "./Listings";
 import { RootState } from "../state/store/store";
 

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 const expressController = require('express');
 const router = expressController.Router();
-const model = require('../models/fetchUtil.ts');
+const model = require('../../models/fetchUtil.ts');
 
 router
     .get('/:table', (req: Request, res: Response, next: NextFunction) => {

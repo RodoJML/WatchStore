@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { StoreItem } from '../data/interfaces';
+import { StoreItem } from '../../data/interfaces';
 
 const expressController = require('express');
 const router = expressController.Router();
-const model = require('../models/store.ts');
+const model = require('../../models/store.ts');
 
 router
     .post('/store', (req: Request, res: Response, next: NextFunction) => {

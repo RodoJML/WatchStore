@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 const expressController = require('express');
 const router = expressController.Router();
-const model = require('../models/user.ts');
-const { requireLogin } = require('../middleware/authorization.ts');
+const model = require('../../models/user.ts');
+const { requireLogin } = require('../../middleware/authorization.ts');
 
 router
     .post('/login', (req: Request, res: Response, next: NextFunction) => {

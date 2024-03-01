@@ -3,9 +3,6 @@ import BrandsCarousel from "./BrandsCarousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import NewListingStep2 from "./NewListingStep2";
-import { setNotification } from "../state/store/slice/sessionSlice";
-import { useDispatch } from "react-redux";
 
 export interface step1form {
     certification: number,
@@ -18,7 +15,6 @@ export default function NewListingStep1({ complete, sessionStatus }: { complete:
     const [hide, setHide] = useState(false);
     const [form, setForm] = useState({ certification: 0, brand: 0, model: 0 } as step1form);
     const [finished, setFinished] = useState(false);
-    const dispatch = useDispatch();
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();

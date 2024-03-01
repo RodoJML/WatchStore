@@ -24,7 +24,7 @@ export interface StoreItem {
     store_path: string,
 }
 
-export interface OrigModelItem {
+export interface Orig_ModelItem {
     orig_model_id: number | undefined,
     orig_brand_id: number,
     orig_model_name: string,

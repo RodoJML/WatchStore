@@ -8,7 +8,7 @@ import Login from "../pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { apiFetch, logOut, setNotification } from "../state/store/slice/sessionSlice";
-import { SearchForm } from "../model/fetch";
+import { SearchForm } from "../model/interfaces";
 import { getAll_previews, search, searchModeOff, searchModeOn, searchInitiatedOFF } from "../state/store/slice/listingsSlice";
 import LoginArea from "./LoginArea";
 import MessagesCenter from "./MessagesCenter";

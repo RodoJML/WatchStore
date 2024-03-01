@@ -1,28 +1,9 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelope, DataEnvelopeList } from './../../../model/fetch';
+import * as Interfaces from './../../../model/interfaces';
+import type { DataEnvelope, DataEnvelopeList } from './../../../model/interfaces';
 import { type Message } from './sessionSlice';
-
-export interface ListingPreviewItem {
-    stock_id: number,
-    store_user_id: number,
-    brand: string,
-    model: string,
-    cprice: number,
-    dprice: number | null,
-    movement: string,
-    width: number,
-    condition: number,
-    guarantee: number,
-    store_name: string,
-    quantity: number,
-    location: string | null,
-    user_name: string,
-    date: Date,
-    views: number,
-    listing_type: number,
-    rating: number,
-}
+import type { ListingPreviewItem } from './../../../model/interfaces';
 
 interface listingsState {
     isLoading: boolean,
@@ -156,14 +137,14 @@ export const guestHasListing = createAsyncThunk(
 
 export const postListing_addStore = createAsyncThunk(
     'listings/postListing_addStore',
-    async (store: Fetch.StoreItem): Promise<DataEnvelope<boolean>> => {
+    async (store: Interfaces.StoreItem): Promise<DataEnvelope<boolean>> => {
         return await Fetch.api('/listing/addStore', store, 'POST').catch((err) => { throw err; });
     }
 );
 
 export const postListing_addModel = createAsyncThunk(
-    'listings/postListing_addModel',
-    async (model: Fetch.OrigModelItem): Promise<DataEnvelope<number>> => {
+    'listings/postListing_add_o_Model',
+    async (model: Interfaces.OrigModelItem): Promise<DataEnvelope<number>> => {
         return await Fetch.api('/orig_model/add_from_listing', model, 'POST').catch((err) => { throw err; });
     }
 

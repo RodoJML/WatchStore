@@ -11,9 +11,8 @@ import { step4form } from "../components/NewListingStep4";
 import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
-import { addUnregisteredUser, signup } from "../state/store/slice/sessionSlice";
-import { postListing_addStore } from "../state/store/slice/listingsSlice";
-import { StoreItem, UserInfoItem, UserItem, GenModelItem, OrigModelItem } from "../model/fetch";
+import { addUnregisteredUser } from "../state/store/slice/sessionSlice";
+import { StoreItem, UserInfoItem, UserItem, GenModelItem, OrigModelItem } from "../model/interfaces";
 
 
 export interface mainForm {

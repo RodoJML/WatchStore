@@ -12,11 +12,10 @@ const hostname = process.env.HOSTNAME || 'localhost';
 const port = 3000;
 
 // Controllers
-const fetchUtil = require('./controllers/fetchUtil.ts');
-const brands = require('./controllers/brands.ts');
-const user = require('./controllers/user.ts');
-const listing = require ('./controllers/listing.ts');
-const orig_model = require('./controllers/orig_model.ts');
+const open_fetchUtil = require('./controllers/open/fetchUtil.ts');
+const open_user = require('./controllers/open/user.ts');
+const open_listing = require ('./controllers/open/listing.ts');
+const open_orig_model = require('./controllers/open/orig_model.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
 
 // Middleware
@@ -43,11 +42,10 @@ app
 
 app
     .get('/api/v1', (req: Request, res: Response) => { res.send('Hello World') })
-    .use('/api/v1/brands', brands)
-    .use('/api/v1/fetch', fetchUtil)
-    .use('/api/v1/user', user)
-    .use('/api/v1/listing', listing)
-    .use('/api/v1/orig_model', orig_model)
+    .use('/api/v1/fetch', open_fetchUtil)
+    .use('/api/v1/user', open_user)
+    .use('/api/v1/listing', open_listing)
+    .use('/api/v1/orig_model', open_orig_model)
 
 // Error handling middleware
 app
