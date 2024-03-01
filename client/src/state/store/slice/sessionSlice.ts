@@ -12,10 +12,10 @@ const unregisteredUser = {
     user_type: 3,
     user_name: "No registrado",
     user_email: "",
-    user_password: null,
+    user_password: undefined,
     user_views: 0,
-    user_photo_path: null,
-    user_registration_date: null,
+    user_photo_path: undefined,
+    user_registration_date: undefined,
 } as UserItem;
 
 interface SessionState {

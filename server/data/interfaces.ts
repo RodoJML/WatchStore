@@ -1,5 +1,11 @@
 // Purpose: Interfaces for data models.
 
+export type DataEnvelope<T> = {
+    data: T,
+    isSuccess: boolean,
+    error?: string,
+}
+
 export interface UserItem {
     user_id: number,
     user_type: number,
@@ -16,4 +22,14 @@ export interface StoreItem {
     store_name: string,
     store_about: string,
     store_path: string,
+}
+
+export interface OrigModelItem {
+    orig_model_id: number | undefined,
+    orig_brand_id: number,
+    orig_model_name: string,
+    orig_description: string | undefined,
+    orig_UPC: string | undefined,
+    orig_model_photo_path: string | undefined,
+    orig_model_isTemplate: number | undefined,
 }

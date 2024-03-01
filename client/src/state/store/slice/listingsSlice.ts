@@ -161,6 +161,14 @@ export const postListing_addStore = createAsyncThunk(
     }
 );
 
+export const postListing_addModel = createAsyncThunk(
+    'listings/postListing_addModel',
+    async (model: Fetch.OrigModelItem): Promise<DataEnvelope<number>> => {
+        return await Fetch.api('/orig_model/add_from_listing', model, 'POST').catch((err) => { throw err; });
+    }
+
+);
+
 export const { searchModeOn, searchModeOff, incrementPage, searchInitiatedOFF } = listingSlice.actions;
 
 export default listingSlice.reducer;

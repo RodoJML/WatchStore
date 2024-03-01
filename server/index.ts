@@ -16,6 +16,7 @@ const fetchUtil = require('./controllers/fetchUtil.ts');
 const brands = require('./controllers/brands.ts');
 const user = require('./controllers/user.ts');
 const listing = require ('./controllers/listing.ts');
+const orig_model = require('./controllers/orig_model.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
 
 // Middleware
@@ -46,6 +47,7 @@ app
     .use('/api/v1/fetch', fetchUtil)
     .use('/api/v1/user', user)
     .use('/api/v1/listing', listing)
+    .use('/api/v1/orig_model', orig_model)
 
 // Error handling middleware
 app

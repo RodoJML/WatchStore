@@ -85,7 +85,8 @@ async function addUnregisteredUser(form: any){
             user_registration_date: undefined,
         }
 
-        const result = await db('user').insert(unregisteredUser);
+        const result = await db('user').insert(unregisteredUser).returning('user_id');
+        console.log("Inserted ID: " + result[0]);
 
         return result.length as number > 0;
 

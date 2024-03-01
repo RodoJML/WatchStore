@@ -32,10 +32,10 @@ export interface UserItem {
     user_type: number,
     user_name: string,
     user_email: string,
-    user_password: string | null,
-    user_views: number | null,
-    user_photo_path: string | null,
-    user_registration_date: Date | null,
+    user_password: string | undefined,
+    user_views: number | undefined,
+    user_photo_path: string | undefined,
+    user_registration_date: Date | undefined,
 }
 
 export interface RegLogItem {
@@ -50,11 +50,10 @@ export interface UserInfoItem {
     info_user_id: number,
     info_user_first_name: string,
     info_user_last_name: string,
-    info_user_phone1: number,
-    info_user_phone2: number,
-    info_user_phone3: number,
-    info_user_address1: string,
-    info_user_address2: string,
+    info_user_phone2: number | undefined,
+    info_user_phone3: number | undefined,
+    info_user_address1: string | undefined,
+    info_user_address2: string | undefined,
     info_user_province: string,
 }
 
@@ -62,7 +61,7 @@ export interface StoreItem {
     store_user_id: number,
     store_name: string,
     store_about: string,
-    store_photo: string,
+    store_photo_path: string,
 }
 
 export interface BrandItem {
@@ -70,6 +69,7 @@ export interface BrandItem {
     brand_name: string,
     brand_logo_path: string,
     brand_website: string,
+    brand_country_id: number,
 }
 
 export interface CountryItem {
@@ -78,23 +78,23 @@ export interface CountryItem {
     country_emoji: string,
 }
 
-export interface OriginalModelItem {
-    watch_model_id: number,
-    watch_brand_id: number,
-    watch_model_name: string,
-    watch_description: string,
-    watch_UPC: string,
-    watch_model_photo: string,
-    watch_country_id: number,
+export interface OrigModelItem {
+    orig_model_id: number | undefined,
+    orig_brand_id: number,
+    orig_model_name: string,
+    orig_description: string | undefined,
+    orig_UPC: string | undefined,
+    orig_model_photo_path: string | undefined,
+    orig_model_isTemplate: number,
 }
 
-export interface GenericModelItem {
-    gen_model_id: number,
+export interface GenModelItem {
+    gen_model_id: number | undefined,
     gen_brand_id: number,
     gen_model_name: string,
-    gen_description: string,
-    gen_UPC: string,
-    gen_model_photo: string,
+    gen_description: string | undefined,
+    gen_UPC: string | undefined,
+    gen_model_photo_path: string | undefined,
     gen_country_id: number,
 }
 
