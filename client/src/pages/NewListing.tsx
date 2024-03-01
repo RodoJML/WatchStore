@@ -12,7 +12,7 @@ import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addUnregisteredUser } from "../state/store/slice/sessionSlice";
-import { StoreItem, UserInfoItem, UserItem, GenModelItem, OrigModelItem } from "../model/interfaces";
+import { StoreItem, UserInfoItem, UserItem, GenModelItem, Orig_modelItem } from "../model/interfaces";
 
 
 export interface mainForm {
@@ -70,7 +70,7 @@ export default function NewListing() {
                     orig_UPC: undefined,
                     orig_model_photo_path: undefined,
                     orig_model_isTemplate: 0
-                } as OrigModelItem;
+                } as Orig_modelItem;
 
             } else {
 

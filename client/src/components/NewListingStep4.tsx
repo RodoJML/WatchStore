@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppDispatch, RootState } from "../state/store/store";
 import { mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleRight, faCalendarCheck, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faFileArrowUp, faImage, faLocationDot, faPen, faPhone, faPlus, faUpload, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faLocationDot, faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
 import { guestHasListing } from "../state/store/slice/listingsSlice";

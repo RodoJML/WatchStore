@@ -1,12 +1,12 @@
 import { connect } from './knex';
-import { Orig_ModelItem } from '../data/interfaces';
+import { Orig_modelItem } from '../data/interfaces';
 
 async function connection() {
     const db = await connect();
     return db;
 }
 
-async function add_from_listing(orig_model_item: Orig_ModelItem) {
+async function add_from_listing(orig_model_item: Orig_modelItem) {
     const db = await connection();
 
     const procedureCall = await db.raw('CALL olisting_insert_model_return_id(?, ?, @inserted_id)',
