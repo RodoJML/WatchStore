@@ -57,14 +57,13 @@ POST http://localhost:3000/api/v1/user/addFromListing
 Content-Type: application/json
 
 {
-    "user_id": 60002034,
+    "user_id": 60002038,
     "user_type": 3,
-    "user_name": "Unregistered_User",
+    "user_name": "Unregistered",
     "user_email": "anymail",
     "user_password": "test",
     "user_photo_path": "/src/assets/images/unregistered_user.jpg"
 }
-
 
 ###
 POST http://localhost:3000/api/v1/store/addFromListing
@@ -75,4 +74,15 @@ Content-Type: application/json
     "store_name": "Unregistered Store",
     "store_about": "This store is a placeholder for unregistered users",
     "store_photo_path": "/src/assets/images/unregistered_store.png"
+}
+
+
+
+###
+POST http://localhost:3000/api/v1/gen_model/addFromListing
+Content-Type: application/json
+
+{
+    "gen_brand_id": 87,
+    "gen_model_name": "Another test from scratch tool"
 }

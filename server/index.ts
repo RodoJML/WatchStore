@@ -6,7 +6,7 @@ require('dotenv').config({ path: (__dirname + '/.env') });
 const express = require('express');
 const app = express();
 const path = require('path');
-const apiName = 'api/v1';
+const apiName = '/api/v1';
 
 // Socket
 const hostname = process.env.HOSTNAME || 'localhost';
@@ -17,6 +17,7 @@ const open_fetchUtil = require('./controllers/open/fetchUtil.ts');
 const open_user = require('./controllers/open/user.ts');
 const open_listing = require ('./controllers/open/listing.ts');
 const open_orig_model = require('./controllers/open/orig_model.ts');
+const open_gen_model = require('./controllers/open/gen_model.ts');
 const open_store = require('./controllers/open/store.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
 
@@ -48,6 +49,7 @@ app
     .use(apiName + '/user', open_user)
     .use(apiName + '/listing', open_listing)
     .use(apiName + '/orig_model', open_orig_model)
+    .use(apiName + '/gen_model', open_gen_model)
     .use(apiName + '/store', open_store)
 
 // Error handling middleware

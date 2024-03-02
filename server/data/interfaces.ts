@@ -33,3 +33,13 @@ export interface Orig_modelItem {
     orig_model_photo_path: string | undefined,
     orig_model_isTemplate: number | undefined,
 }
+
+export interface Gen_modelItem {
+    gen_model_id: number | undefined,
+    gen_brand_id: number,
+    gen_model_name: string,
+    gen_description: string | undefined,
+    gen_UPC: string | undefined,
+    gen_model_photo_path: string | undefined,
+    gen_country_id: number,
+}

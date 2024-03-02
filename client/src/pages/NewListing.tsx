@@ -12,9 +12,10 @@ import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addFromListing as genUser_addFromListing } from "../state/store/slice/userSlice";
-import { StoreItem, UserInfoItem, UserItem, GenModelItem, Orig_modelItem, DataEnvelope } from "../model/interfaces";
-import { PayloadAction, unwrapResult } from "@reduxjs/toolkit";
+import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope } from "../model/interfaces";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
+import { addFromListing as orig_model_addFromListing } from "../state/store/slice/orig_modelSlice";
 
 
 export interface mainForm {
@@ -84,7 +85,7 @@ export default function NewListing() {
                     gen_UPC: undefined,
                     gen_model_photo_path: undefined,
                     gen_country_id: mainForm.step2.country,
-                } as GenModelItem;
+                } as Gen_modelItem;
 
             }
 
@@ -101,7 +102,7 @@ export default function NewListing() {
                 const genericUser = {
                     user_id: mainForm.step4.user_id,
                     user_type: 3,
-                    user_name: "Unregistered_User",
+                    user_name: "unregistered" + mainForm.step4.user_id,
                     user_email: mainForm.step4.user_email,
                     user_password: undefined,
                     user_views: undefined,
@@ -127,31 +128,39 @@ export default function NewListing() {
                     store_photo_path: "/src/assets/images/unregistered_store.png",
                 } as StoreItem;
 
+     
+
+            // Error codes for this area
+            // Error code 00: Issue in the outermost dispatch 
+            // Error code 01: Issue adding generic user
 
                 // 1. add unregistered user to db
                 dispatch(genUser_addFromListing(genericUser)).then(unwrapResult)
                     .then((result: DataEnvelope<boolean>) => {
 
                         if (result.data === true) {
+
+                            // 2. add ageneric store 
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
 
                                     if (result.data === true) {
-                                        console.log("User and store added successfully");
+                                        dispatch(orig_model_addFromListing())   
+
                                     } else {
                                         console.log("Something wrong happened while adding the store");
                                     }
                                 })
 
                         } else {
-                            alert("Error Code: genUser. Please try again from the start.");
+                            alert("Error Código 01: Intentar de nuevo desde el inicio");
                         }
                     }).catch((err) => {
                         console.log(err);
-                        alert("Error while adding the listing to the database. Please try again later.");
+                        alert("Error Código 00: Intentar de nuevo desde el inicio");
                     });
 
-                // 2. add store 
+                
 
                 // 3. add model
 

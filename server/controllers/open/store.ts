@@ -15,3 +15,5 @@ router
             }
         ).catch();
     })
+
+    module.exports = router;

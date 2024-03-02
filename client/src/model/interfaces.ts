@@ -63,7 +63,7 @@ export interface Orig_modelItem {
     orig_model_isTemplate: number,
 }
 
-export interface GenModelItem {
+export interface Gen_modelItem {
     gen_model_id: number | undefined,
     gen_brand_id: number,
     gen_model_name: string,
