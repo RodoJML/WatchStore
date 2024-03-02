@@ -86,3 +86,24 @@ Content-Type: application/json
     "gen_brand_id": 87,
     "gen_model_name": "Another test from scratch tool"
 }
+
+
+###
+POST http://localhost:3000/api/v1/original_specs/addFromListing
+Content-Type: application/json
+
+{
+
+    "orig_specs_model_id": 2,
+    "orig_specs_brand_id": 87,
+    "orig_specs_type_id": 1,
+    "orig_specs_movement_id": 1,
+    "orig_specs_style_id": 1,
+    "orig_specs_glass_id": 1,
+    "orig_specs_case_color": "string",
+    "orig_specs_case_material_id": 1,
+    "orig_specs_width": 3,
+    "orig_specs_gender": 1,
+    "orig_specs_water_proof": 1,
+    "orig_specs_water_resistant": 1,
+}

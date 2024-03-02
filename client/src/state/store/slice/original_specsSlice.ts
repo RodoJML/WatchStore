@@ -1,19 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import {DataEnvelope, Gen_modelItem} from "../../../model/interfaces";
-import * as Fetch from '../../../model/fetch'
+import * as Fetch from './../../../model/fetch';
+import * as Interfaces from './../../../model/interfaces';
+import { DataEnvelope } from "./../../../model/interfaces";
 
-interface gen_modelState{
+interface original_specsState{
     isLoading: boolean,
     redirectURL: string | null,
 }
 
-const initialState: gen_modelState = {
+const initialState: original_specsState = {
     isLoading: false,
     redirectURL: null,
 }
 
-const gen_modelSlice = createSlice({
-    name: 'gen_model',
+const original_specsSlice = createSlice({
+    name: 'original_specs',
     initialState,
     reducers: {
         // None by now
@@ -32,11 +33,10 @@ const gen_modelSlice = createSlice({
 });
 
 export const addFromListing = createAsyncThunk(
-    'gen_model/addFromListing',
-    async(gen_model: Gen_modelItem): Promise<DataEnvelope<number>> => {
-        // Returns the autoincremented ID from the db.
-        return await Fetch.api('/gen_model/addFromListing', gen_model, 'POST').catch((err) => {throw err; });
+    'original_specs/addFromListing',
+    async(original_specs: Interfaces.Original_specsItem): Promise<DataEnvelope<number>> => {
+        return await Fetch.api('/original_specs/addFromListing', original_specs, 'POST').catch((err) => {throw err; });
     }
 )
 
-export default gen_modelSlice.reducer;
+export default original_specsSlice.reducer;

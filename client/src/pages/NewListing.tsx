@@ -102,6 +102,7 @@ export default function NewListing() {
                 // Error code 00: Issue in the outermost dispatch 
                 // Error code 01: Issue adding generic user
                 // Error code 02: Issue adding generic store
+                // Error code 03: Error retrieving the inserted ID from db
 
                 // STEPS WHEN AN UNREGISTERED USER ADDS A LISTING
                 // 1. add unregistered user to db
@@ -117,7 +118,7 @@ export default function NewListing() {
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
                                     if (result.data === true) {
-                                        
+
                                         if (mainForm.step1.certification === 1) {
 
                                             const orig_model = {
@@ -133,34 +134,44 @@ export default function NewListing() {
                                             dispatch(orig_model_addFromListing(orig_model)).then(unwrapResult)
                                                 .then((result: DataEnvelope<number>) => {
 
-                                                    const original_specs = {
-                                                        orig_specs_model_id: result.data,
-                                                        orig_specs_brand_id: mainForm.step1.brand,
-                                                        orig_specs_type_id: mainForm.step2.type,
-                                                        orig_specs_movement_id: mainForm.step2.movement,
-                                                        orig_specs_style_id: mainForm.step2.style,
-                                                        orig_specs_shape_id: mainForm.step2.shape,
-                                                        orig_specs_glass_id: mainForm.step2.glass_material,
-                                                        orig_specs_case_color: mainForm.step2.case_color,
-                                                        orig_specs_case_material_id: mainForm.step2.case_material,
-                                                        orig_specs_strap_color: mainForm.step2.strap_color,
-                                                        orig_specs_strap_material_id: mainForm.step2.strap_material,
-                                                        orig_specs_dial_color: mainForm.step2.dial_color,
-                                                        orig_specs_depth: mainForm.step2.depth,
-                                                        orig_specs_width: mainForm.step2.width,
-                                                        orig_specs_weight: mainForm.step2.weight,
-                                                        orig_specs_gender: mainForm.step2.gender,
-                                                        orig_specs_water_proof: mainForm.step2.water_proof,
-                                                        orig_specs_water_resistance: mainForm.step2.water_resistant,
-                                                        orig_specs_bezel_type_id: mainForm.step2.bezel_type,
-                                                        orig_specs_bezel_material: mainForm.step2.bezel_material,
-                                                        orig_specs_pw_reserve_hrs: mainForm.step2.power_reserve,
-                                                        orig_specs_lume: mainForm.step2.lume,
-                                                        orig_specs_clasp_type_id: mainForm.step2.clasp_type,
+                                                    if (result.data > 0) {
+                                                        const original_specs = {
+                                                            orig_specs_model_id: result.data,
+                                                            orig_specs_brand_id: mainForm.step1.brand,
+                                                            orig_specs_type_id: mainForm.step2.type,
+                                                            orig_specs_movement_id: mainForm.step2.movement,
+                                                            orig_specs_style_id: mainForm.step2.style,
+                                                            orig_specs_shape_id: mainForm.step2.shape,
+                                                            orig_specs_glass_id: mainForm.step2.glass_material,
+                                                            orig_specs_case_color: mainForm.step2.case_color,
+                                                            orig_specs_case_material_id: mainForm.step2.case_material,
+                                                            orig_specs_strap_color: mainForm.step2.strap_color,
+                                                            orig_specs_strap_material_id: mainForm.step2.strap_material,
+                                                            orig_specs_dial_color: mainForm.step2.dial_color,
+                                                            orig_specs_depth: mainForm.step2.depth,
+                                                            orig_specs_width: mainForm.step2.width,
+                                                            orig_specs_weight: mainForm.step2.weight,
+                                                            orig_specs_gender: mainForm.step2.gender,
+                                                            orig_specs_water_proof: mainForm.step2.water_proof,
+                                                            orig_specs_water_resistant: mainForm.step2.water_resistant,
+                                                            orig_specs_bezel_type_id: mainForm.step2.bezel_type,
+                                                            orig_specs_bezel_material_id: mainForm.step2.bezel_material,
+                                                            orig_specs_pw_reserve_hrs: mainForm.step2.power_reserve,
+                                                            orig_specs_lume: mainForm.step2.lume,
+                                                            orig_specs_clasp_type_id: mainForm.step2.clasp_type,
+                                                        } as Original_specsItem;
+
+                                                        
+
+                                                    } else {
+                                                        alert("Error Código 03: Por favor intentar de nuevo desde el inicio");
                                                     }
 
+
                                                 }
-                                                ).catch((err) => { })
+                                                ).catch((err) => {
+                                                    alert("Error Código 03: Por favor intentar de nuevo desde el inicio");
+                                                })
 
                                         } else {
 
@@ -178,7 +189,9 @@ export default function NewListing() {
                                     } else {
                                         alert("Error Código 02: Por favor intentar de nuevo desde el inicio");
                                     }
-                                }).catch((err) => { })
+                                }).catch((err) => {
+                                    alert("Error Código 02: Por favor intentar de nuevo desde el inicio");
+                                })
                         } else {
                             alert("Error Código 01: Por favor intentar de nuevo desde el inicio");
                         }
