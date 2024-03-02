@@ -94,7 +94,7 @@ export interface Original_specsItem {
     orig_specs_water_resistant: number,
     orig_specs_bezel_type_id: number,
     orig_specs_bezel_material_id: number,
-    orig_specs_pw_reserve_hr: number,
+    orig_specs_pw_reserve_hrs: number,
     orig_specs_lume: number,
     orig_specs_clasp_type_id: number,
 }
@@ -120,7 +120,7 @@ export interface Gen_specsItem {
     gen_specs_water_resistant: number,
     gen_specs_bezel_type_id: number,
     gen_specs_bezel_material_id: number,
-    gen_specs_pw_reserve_hr: number,
+    gen_specs_pw_reserve_hrs: number,
     gen_specs_lume: number,
     gen_specs_clasp_type_id: number,
 }

@@ -12,7 +12,7 @@ import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addFromListing as genUser_addFromListing } from "../state/store/slice/userSlice";
-import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope } from "../model/interfaces";
+import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem } from "../model/interfaces";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
 import { addFromListing as orig_model_addFromListing } from "../state/store/slice/orig_modelSlice";
@@ -117,6 +117,7 @@ export default function NewListing() {
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
                                     if (result.data === true) {
+                                        
                                         if (mainForm.step1.certification === 1) {
 
                                             const orig_model = {
@@ -139,6 +140,23 @@ export default function NewListing() {
                                                         orig_specs_movement_id: mainForm.step2.movement,
                                                         orig_specs_style_id: mainForm.step2.style,
                                                         orig_specs_shape_id: mainForm.step2.shape,
+                                                        orig_specs_glass_id: mainForm.step2.glass_material,
+                                                        orig_specs_case_color: mainForm.step2.case_color,
+                                                        orig_specs_case_material_id: mainForm.step2.case_material,
+                                                        orig_specs_strap_color: mainForm.step2.strap_color,
+                                                        orig_specs_strap_material_id: mainForm.step2.strap_material,
+                                                        orig_specs_dial_color: mainForm.step2.dial_color,
+                                                        orig_specs_depth: mainForm.step2.depth,
+                                                        orig_specs_width: mainForm.step2.width,
+                                                        orig_specs_weight: mainForm.step2.weight,
+                                                        orig_specs_gender: mainForm.step2.gender,
+                                                        orig_specs_water_proof: mainForm.step2.water_proof,
+                                                        orig_specs_water_resistance: mainForm.step2.water_resistant,
+                                                        orig_specs_bezel_type_id: mainForm.step2.bezel_type,
+                                                        orig_specs_bezel_material: mainForm.step2.bezel_material,
+                                                        orig_specs_pw_reserve_hrs: mainForm.step2.power_reserve,
+                                                        orig_specs_lume: mainForm.step2.lume,
+                                                        orig_specs_clasp_type_id: mainForm.step2.clasp_type,
                                                     }
 
                                                 }
