@@ -73,7 +73,7 @@ export interface Gen_modelItem {
     gen_country_id: number,
 }
 
-export interface OriginalSpecsItem {
+export interface Original_specsItem {
     orig_specs_model_id: number,
     orig_specs_brand_id: number,
     orig_specs_type_id: number,
@@ -99,7 +99,7 @@ export interface OriginalSpecsItem {
     orig_specs_clasp_type_id: number,
 }
 
-export interface GenSpecsItem {
+export interface Gen_specsItem {
     gen_specs_model_id: number,
     gen_specs_brand_id: number,
     gen_specs_type_id: number,

@@ -60,37 +60,6 @@ export default function NewListing() {
 
         if (step1submitted && step2submitted && step3submitted && step4submitted) {
 
-            let model = {};
-            let specs = {};
-
-            if (mainForm.step1.certification === 1) {
-
-                model = {
-                    orig_model_id: undefined,
-                    orig_brand_id: mainForm.step1.brand,
-                    orig_model_name: mainForm.step2.model,
-                    orig_description: "Added automatically from a Listing",
-                    orig_UPC: undefined,
-                    orig_model_photo_path: undefined,
-                    orig_model_isTemplate: 0
-                } as Orig_modelItem;
-
-            } else {
-
-                model = {
-                    gen_model_id: undefined,
-                    gen_brand_id: mainForm.step1.brand,
-                    gen_model_name: mainForm.step2.model,
-                    gen_description: "Added automatically from a Listing",
-                    gen_UPC: undefined,
-                    gen_model_photo_path: undefined,
-                    gen_country_id: mainForm.step2.country,
-                } as Gen_modelItem;
-
-            }
-
-
-
             if (sessionState.user.user_type <= 2) {
 
             }
@@ -128,47 +97,84 @@ export default function NewListing() {
                     store_photo_path: "/src/assets/images/unregistered_store.png",
                 } as StoreItem;
 
-     
 
-            // Error codes for this area
-            // Error code 00: Issue in the outermost dispatch 
-            // Error code 01: Issue adding generic user
+                // ERROR CODES
+                // Error code 00: Issue in the outermost dispatch 
+                // Error code 01: Issue adding generic user
+                // Error code 02: Issue adding generic store
 
+                // STEPS WHEN AN UNREGISTERED USER ADDS A LISTING
                 // 1. add unregistered user to db
+                // 2. add ageneric store 
+                // 3. add model
+                // 4. add specs
+                // 5. add stock 
+                // 6. add listing
+
                 dispatch(genUser_addFromListing(genericUser)).then(unwrapResult)
                     .then((result: DataEnvelope<boolean>) => {
-
                         if (result.data === true) {
-
-                            // 2. add ageneric store 
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
-
                                     if (result.data === true) {
-                                        dispatch(orig_model_addFromListing())   
+                                        if (mainForm.step1.certification === 1) {
 
+                                            const orig_model = {
+                                                orig_model_id: undefined,
+                                                orig_brand_id: mainForm.step1.brand,
+                                                orig_model_name: mainForm.step2.model,
+                                                orig_description: "Added automatically from a Listing",
+                                                orig_UPC: undefined,
+                                                orig_model_photo_path: undefined,
+                                                orig_model_isTemplate: 0
+                                            } as Orig_modelItem;
+
+                                            dispatch(orig_model_addFromListing(orig_model)).then(unwrapResult)
+                                                .then((result: DataEnvelope<number>) => {
+
+                                                    const original_specs = {
+                                                        orig_specs_model_id: result.data,
+                                                        orig_specs_brand_id: mainForm.step1.brand,
+                                                        orig_specs_type_id: mainForm.step2.type,
+                                                        orig_specs_movement_id: mainForm.step2.movement,
+                                                        orig_specs_style_id: mainForm.step2.style,
+                                                        orig_specs_shape_id: mainForm.step2.shape,
+                                                    }
+
+                                                }
+                                                ).catch((err) => { })
+
+                                        } else {
+
+                                            const model = {
+                                                gen_model_id: undefined,
+                                                gen_brand_id: mainForm.step1.brand,
+                                                gen_model_name: mainForm.step2.model,
+                                                gen_description: "Added automatically from a Listing",
+                                                gen_UPC: undefined,
+                                                gen_model_photo_path: undefined,
+                                                gen_country_id: mainForm.step2.country,
+                                            } as Gen_modelItem;
+
+                                        }
                                     } else {
-                                        console.log("Something wrong happened while adding the store");
+                                        alert("Error Código 02: Por favor intentar de nuevo desde el inicio");
                                     }
-                                })
-
+                                }).catch((err) => { })
                         } else {
-                            alert("Error Código 01: Intentar de nuevo desde el inicio");
+                            alert("Error Código 01: Por favor intentar de nuevo desde el inicio");
                         }
                     }).catch((err) => {
                         console.log(err);
-                        alert("Error Código 00: Intentar de nuevo desde el inicio");
+                        alert("Error Código 00: Por favor intentar de nuevo desde el inicio");
                     });
 
-                
 
-                // 3. add model
 
-                // 4. add specs
 
-                // 5. add stock
 
-                // 6. add listing
+
+
 
                 console.log(mainForm);
             }
