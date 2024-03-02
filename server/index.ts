@@ -6,6 +6,7 @@ require('dotenv').config({ path: (__dirname + '/.env') });
 const express = require('express');
 const app = express();
 const path = require('path');
+const apiName = 'api/v1';
 
 // Socket
 const hostname = process.env.HOSTNAME || 'localhost';
@@ -16,6 +17,7 @@ const open_fetchUtil = require('./controllers/open/fetchUtil.ts');
 const open_user = require('./controllers/open/user.ts');
 const open_listing = require ('./controllers/open/listing.ts');
 const open_orig_model = require('./controllers/open/orig_model.ts');
+const open_store = require('./controllers/open/store.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
 
 // Middleware
@@ -41,11 +43,12 @@ app
     .use(parseAuthorizationHeader)
 
 app
-    .get('/api/v1', (req: Request, res: Response) => { res.send('Hello World') })
-    .use('/api/v1/fetch', open_fetchUtil)
-    .use('/api/v1/user', open_user)
-    .use('/api/v1/listing', open_listing)
-    .use('/api/v1/orig_model', open_orig_model)
+    .get(apiName, (req: Request, res: Response) => { res.send('Hello World') })
+    .use(apiName + '/fetch', open_fetchUtil)
+    .use(apiName + '/user', open_user)
+    .use(apiName + '/listing', open_listing)
+    .use(apiName + '/orig_model', open_orig_model)
+    .use(apiName + '/store', open_store)
 
 // Error handling middleware
 app

@@ -6,10 +6,13 @@ async function connection() {
     return db;
 }
 
-async function addStore(store: StoreItem) {
+async function addFromListing(store: StoreItem) {
     const db = await connection();
     const result = await db('store').insert(store);
-    return result.length > 0;
+    const insertedProperly = result.length > 0;
+    const total = result.length;
+
+    return {insertedProperly, total};
 }
 
-export { addStore };
+export { addFromListing };

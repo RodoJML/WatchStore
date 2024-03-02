@@ -135,21 +135,6 @@ export const guestHasListing = createAsyncThunk(
     }
 )
 
-export const postListing_addStore = createAsyncThunk(
-    'listings/postListing_addStore',
-    async (store: Interfaces.StoreItem): Promise<DataEnvelope<boolean>> => {
-        return await Fetch.api('/listing/addStore', store, 'POST').catch((err) => { throw err; });
-    }
-);
-
-export const postListing_addModel = createAsyncThunk(
-    'listings/postListing_add_o_Model',
-    async (model: Interfaces.OrigModelItem): Promise<DataEnvelope<number>> => {
-        return await Fetch.api('/orig_model/add_from_listing', model, 'POST').catch((err) => { throw err; });
-    }
-
-);
-
 export const { searchModeOn, searchModeOff, incrementPage, searchInitiatedOFF } = listingSlice.actions;
 
 export default listingSlice.reducer;

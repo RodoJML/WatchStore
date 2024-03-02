@@ -23,11 +23,11 @@ router
             }
         ).catch(next);
     })
-    .post('/add_unregistered_user', (req: Request, res: Response, next: NextFunction) => {
-        model.addUnregisteredUser(req.body)
+    .post('/addFromListing', (req: Request, res: Response, next: NextFunction) => {
+        model.addFromListing(req.body)
         .then(
-            (result: boolean) => {
-                const data = {data: null, isSuccess: result};
+            (result: any) => {
+                const data = {data: result.insertedSuccesfully, isSuccess: result.insertedSuccesfully, total: result.total};
                 res.send(data);
             }
         ).catch(next);

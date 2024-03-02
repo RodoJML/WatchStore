@@ -161,16 +161,6 @@ const sessionSlice = createSlice(
                 state.isLoading = false;
                 state.signedIn = false;
             });
-            builder.addCase(addUnregisteredUser.pending, (state) => {
-                state.isLoading = true;
-            }
-            );
-            builder.addCase(addUnregisteredUser.fulfilled, (state, action) => {
-                state.isLoading = false;
-            });
-            builder.addCase(addUnregisteredUser.rejected, (state, action) => {
-                state.isLoading = false;
-            });
         }
     });
 
@@ -195,6 +185,7 @@ export const signup = createAsyncThunk(
     },
 )
 
+// Refactor this to user exist instead of generic exist.
 export const exist = createAsyncThunk(
     "session/exist",
     async ({ column_name, key }: { column_name: string, key: string }): Promise<DataEnvelope<boolean>> => {
@@ -202,13 +193,6 @@ export const exist = createAsyncThunk(
             key = "generic";
         }
         return await Fetch.api(`/user/exist/${column_name}/${key}`).catch((err) => { throw err; });
-    },
-)
-
-export const addUnregisteredUser = createAsyncThunk(
-    "session/addUnregisteredUser",
-    async (form: any): Promise<DataEnvelope<boolean>> => {
-        return await Fetch.api('/user/add_unregistered_user', form, 'POST').catch((err) => { throw err; });
     },
 )
 

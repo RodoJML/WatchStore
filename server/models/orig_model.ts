@@ -6,7 +6,7 @@ async function connection() {
     return db;
 }
 
-async function add_from_listing(orig_model_item: Orig_modelItem) {
+async function addFromListing(orig_model_item: Orig_modelItem) {
     const db = await connection();
 
     const procedureCall = await db.raw('CALL olisting_insert_model_return_id(?, ?, @inserted_id)',
@@ -17,4 +17,4 @@ async function add_from_listing(orig_model_item: Orig_modelItem) {
     return {inserted_id: inserted_id[0][0].inserted_id, total: 1};
 }
 
-export { add_from_listing };
+export { addFromListing };

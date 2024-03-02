@@ -200,3 +200,5 @@ export interface ListingPreviewItem {
     listing_type: number,
     rating: number,
 }
+
+

@@ -51,3 +51,28 @@ Content-Type: application/json
     "orig_brand_id": 87,
     "orig_model_name": "Another test from scratch tool"
 }
+
+###
+POST http://localhost:3000/api/v1/user/addFromListing
+Content-Type: application/json
+
+{
+    "user_id": 60002034,
+    "user_type": 3,
+    "user_name": "Unregistered_User",
+    "user_email": "anymail",
+    "user_password": "test",
+    "user_photo_path": "/src/assets/images/unregistered_user.jpg"
+}
+
+
+###
+POST http://localhost:3000/api/v1/store/addFromListing
+Content-Type: application/json
+
+{
+    "store_user_id": 60002034,
+    "store_name": "Unregistered Store",
+    "store_about": "This store is a placeholder for unregistered users",
+    "store_photo_path": "/src/assets/images/unregistered_store.png"
+}

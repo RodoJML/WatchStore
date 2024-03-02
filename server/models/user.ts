@@ -69,26 +69,17 @@ async function signup(signupForm: any) {
     }
 }
 
-async function addUnregisteredUser(form: any){
+async function addFromListing(user: UserItem){
 
     try{
         const db = await connection();
+        user.user_password = await bcrypt.hash(process.env.UNREGISTERED_USER_PW, 10);
 
-        const unregisteredUser: UserItem = {
-            user_id: +form.user_id,
-            user_type: 3,
-            user_name: form.name + form.lastName,
-            user_email: form.user_email,
-            user_password: "A$4bWp9vX2uQ5zKo",
-            user_views: undefined,
-            user_photo_path: "/src/assets/images/unregistered_user.png",
-            user_registration_date: undefined,
-        }
+        const result = await db('user').insert(user);
+        const insertedSuccesfully = result.length as number > 0;
+        const total = result.length as number;
 
-        const result = await db('user').insert(unregisteredUser).returning('user_id');
-        console.log("Inserted ID: " + result[0]);
-
-        return result.length as number > 0;
+        return {insertedSuccesfully, total}
 
     } catch (err) {
         throw new Error('Something bad happened in the backend when inserting the user: ' + err);
@@ -128,4 +119,4 @@ function verifyTokenAsync(token: any) {
 }
 
 
-module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addUnregisteredUser }; 
+module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addFromListing }; 

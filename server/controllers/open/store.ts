@@ -6,11 +6,11 @@ const router = expressController.Router();
 const model = require('../../models/store.ts');
 
 router
-    .post('/store', (req: Request, res: Response, next: NextFunction) => {
-        model.addStore(req.body as StoreItem)
+    .post('/addFromListing', (req: Request, res: Response, next: NextFunction) => {
+        model.addFromListing(req.body as StoreItem)
         .then(
-            (result: boolean) => {
-                const data = {data: null, isSuccess: result};
+            (result: any) => {
+                const data = {data: result.insertedProperly, isSuccess: result.insertedProperly , total: result.total};
                 res.send(data);
             }
         ).catch();

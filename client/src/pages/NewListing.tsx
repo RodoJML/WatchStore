@@ -11,8 +11,10 @@ import { step4form } from "../components/NewListingStep4";
 import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
-import { addUnregisteredUser } from "../state/store/slice/sessionSlice";
-import { StoreItem, UserInfoItem, UserItem, GenModelItem, Orig_modelItem } from "../model/interfaces";
+import { addFromListing as genUser_addFromListing } from "../state/store/slice/userSlice";
+import { StoreItem, UserInfoItem, UserItem, GenModelItem, Orig_modelItem, DataEnvelope } from "../model/interfaces";
+import { PayloadAction, unwrapResult } from "@reduxjs/toolkit";
+import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
 
 
 export interface mainForm {
@@ -126,20 +128,28 @@ export default function NewListing() {
                 } as StoreItem;
 
 
-
-
-
-
-
                 // 1. add unregistered user to db
-                dispatch(addUnregisteredUser(mainForm.step4)).then((result: any) => {
-                    if (result.payload.isSuccess) {
-                        console.log("Unregistered user added");
+                dispatch(genUser_addFromListing(genericUser)).then(unwrapResult)
+                    .then((result: DataEnvelope<boolean>) => {
 
-                    } else {
-                        console.log("Something wrong happened while posting the listing");
-                    }
-                })
+                        if (result.data === true) {
+                            dispatch(store_addFromListing(genericStore)).then(unwrapResult)
+                                .then((result: DataEnvelope<boolean>) => {
+
+                                    if (result.data === true) {
+                                        console.log("User and store added successfully");
+                                    } else {
+                                        console.log("Something wrong happened while adding the store");
+                                    }
+                                })
+
+                        } else {
+                            alert("Error Code: genUser. Please try again from the start.");
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        alert("Error while adding the listing to the database. Please try again later.");
+                    });
 
                 // 2. add store 
 
