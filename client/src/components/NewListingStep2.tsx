@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { mainForm } from "../pages/NewListing";
-import { BrandItem } from "../model/fetch";
+import { BrandItem } from "../model/interfaces";
 import { RootState } from "../state/store/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faBatteryThreeQuarters, faCircleNotch, faCube, faDroplet, faEarthAmericas, faExpand, faGaugeSimpleHigh, faGears, faGem, faHillRockslide, faLightbulb, faM, faPersonHalfDress, faRing, faS, faShapes, faStopwatch20, faT, faUnlockKeyhole, faVenusMars, faWater, faWeightHanging } from "@fortawesome/free-solid-svg-icons";
@@ -88,7 +88,6 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
         e.preventDefault();
         setFinished(true);
         complete(form);
-        console.log(form);
         window.scrollTo(0, 0);
     }
 

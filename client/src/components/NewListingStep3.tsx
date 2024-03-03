@@ -15,7 +15,7 @@ export interface step3form {
 
 export default function NewListingStep3({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: mainForm, complete: (form: step3form) => (void), sessionStatus: RootState["session"] }) {
 
-    const [form, setForm] = useState({} as step3form);
+    const [form, setForm] = useState({ quantity: 1 } as step3form);
     const [active, setActive] = useState(false);
     const [finished, setFinished] = useState(false);
     const [transition1, setTransition1] = useState(false);

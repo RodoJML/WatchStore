@@ -13,7 +13,7 @@ export interface step1form {
 export default function NewListingStep1({ complete, sessionStatus }: { complete: (form: step1form) => (void), sessionStatus: RootState["session"] }) {
 
     const [hide, setHide] = useState(false);
-    const [form, setForm] = useState({ certification: 0, brand: 0, model: 0 } as step1form);
+    const [form, setForm] = useState({} as step1form);
     const [finished, setFinished] = useState(false);
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
@@ -24,7 +24,7 @@ export default function NewListingStep1({ complete, sessionStatus }: { complete:
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+        setForm({ ...form, [name]: value});
     }
 
     useEffect(() => {

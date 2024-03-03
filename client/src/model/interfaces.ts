@@ -37,6 +37,7 @@ export interface StoreItem {
     store_name: string,
     store_about: string,
     store_photo_path: string,
+    store_active: number,
 }
 
 export interface BrandItem {
@@ -125,18 +126,30 @@ export interface Gen_specsItem {
     gen_specs_clasp_type_id: number,
 }
 
-export interface ListingItem {
-    listing_stock_id: number,
-    listing_stock_user_id: number,
-    listing_date: Date,
-    listing_description: string,
-    listing_status: number,
-    listing_thumbnail: string,
-    listing_guarantee: number,
-    listing_views: number,
-    listing_featured: number,
-    listing_unit_cprince: number,
-    listing_unit_drice: number,
+export interface orig_listingItem{
+    orig_listing_stock_id: number,
+    orig_listing_stock_store_user_id: number,
+    orig_listing_date: Date,
+    orig_listing_description: string,
+    orig_listing_status: number,
+    orig_listing_guarantee: number,
+    orig_listing_views: number,
+    orig_listing_featured: number,
+    orig_listing_unit_cprince: number,
+    orig_listing_unit_drice: number,
+}
+
+export interface gen_listingItem{
+    gen_listing_stock_id: number,
+    gen_listing_stock_store_user_id: number,
+    gen_listing_date: Date,
+    gen_listing_description: string,
+    gen_listing_status: number,
+    gen_listing_guarantee: number,
+    gen_listing_views: number,
+    gen_listing_featured: number,
+    gen_listing_unit_cprince: number,
+    gen_listing_unit_drice: number,
 }
 
 export interface AuthenticationEnvelope {
@@ -206,7 +219,7 @@ export interface Orig_stockItem {
     orig_stock_store_user_id: number,
     orig_stock_watch_model_id: number,
     orig_stock_watch_brand_id: number,
-    orig_stock_condition_id: number,
+    orig_stock_condition: number,
     orig_stock_DOP: Date | undefined,
     orig_stock_notes: string | undefined,
     orig_stock_quantity: number,
@@ -218,9 +231,19 @@ export interface Gen_stockItem {
     gen_stock_store_user_id: number,
     gen_stock_watch_model_id: number,
     gen_stock_watch_brand_id: number,
-    gen_stock_condition_id: number,
+    gen_stock_condition: number,
     gen_stock_DOP: Date | undefined,
     gen_stock_notes: string | undefined,
     gen_stock_quantity: number,
     gen_stock_sold_out: number | undefined,
 }
+
+
+export interface BrandItem {
+    brand_id: number,
+    brand_name: string,
+    brand_logo_path: string,
+    brand_website: string,
+    brand_country_id: number,
+}
+
