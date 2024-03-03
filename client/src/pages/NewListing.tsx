@@ -16,6 +16,7 @@ import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataE
 import { unwrapResult } from "@reduxjs/toolkit";
 import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
 import { addFromListing as orig_model_addFromListing } from "../state/store/slice/orig_modelSlice";
+import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/orig_specsSlice";
 
 
 export interface mainForm {
@@ -103,6 +104,7 @@ export default function NewListing() {
                 // Error code 01: Issue adding generic user
                 // Error code 02: Issue adding generic store
                 // Error code 03: Error retrieving the inserted ID from db
+                // Error code 04: Error adding original specs
 
                 // STEPS WHEN AN UNREGISTERED USER ADDS A LISTING
                 // 1. add unregistered user to db
@@ -117,7 +119,7 @@ export default function NewListing() {
                         if (result.data === true) {
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
-                                    if (result.data === true) {
+                                    if (result.isSuccess) {
 
                                         if (mainForm.step1.certification === 1) {
 
@@ -161,7 +163,18 @@ export default function NewListing() {
                                                             orig_specs_clasp_type_id: mainForm.step2.clasp_type,
                                                         } as Original_specsItem;
 
-                                                        
+                                                        dispatch(orig_specs_addFromListing(original_specs)).then(unwrapResult)
+                                                            .then((result: DataEnvelope<boolean>) => {
+                                                                if (result.isSuccess) {
+                                                                    alert("Success");
+                                                                } else {
+                                                                    alert("Error Código 04: Por favor intentar de nuevo desde el inicio");
+                                                                }
+                                                            }
+                                                            ).catch((err) => {
+                                                                alert("Error Código 04: Por favor intentar de nuevo desde el inicio");
+                                                                console.log(err);
+                                                            })
 
                                                     } else {
                                                         alert("Error Código 03: Por favor intentar de nuevo desde el inicio");
@@ -171,6 +184,7 @@ export default function NewListing() {
                                                 }
                                                 ).catch((err) => {
                                                     alert("Error Código 03: Por favor intentar de nuevo desde el inicio");
+                                                    console.log(err);
                                                 })
 
                                         } else {
@@ -191,13 +205,14 @@ export default function NewListing() {
                                     }
                                 }).catch((err) => {
                                     alert("Error Código 02: Por favor intentar de nuevo desde el inicio");
+                                    console.log(err);
                                 })
                         } else {
                             alert("Error Código 01: Por favor intentar de nuevo desde el inicio");
                         }
                     }).catch((err) => {
-                        console.log(err);
                         alert("Error Código 00: Por favor intentar de nuevo desde el inicio");
+                        console.log(err);
                     });
 
 

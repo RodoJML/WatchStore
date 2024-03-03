@@ -201,4 +201,28 @@ export interface ListingPreviewItem {
     rating: number,
 }
 
+export interface Orig_stockItem {
+    orig_stock_id: number,
+    orig_stock_store_user_id: number,
+    orig_stock_watch_model_id: number,
+    orig_stock_watch_brand_id: number,
+    orig_stock_condition_id: number,
+    orig_stock_DOP: Date,
+    orig_stock_notes: number,
+    orig_stock_quantity: number,
+    orig_stock_sold_out: number,
+}
+
+export interface Gen_stockItem {
+    gen_stock_id: number,
+    gen_stock_store_user_id: number,
+    gen_stock_watch_model_id: number,
+    gen_stock_watch_brand_id: number,
+    gen_stock_condition_id: number,
+    gen_stock_DOP: Date,
+    gen_stock_notes: number,
+    gen_stock_quantity: number,
+    gen_stock_sold_out: number,
+}
+
 
