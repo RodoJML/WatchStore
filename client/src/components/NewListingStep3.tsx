@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export interface step3form {
     water_proof: number,
     description: string,
+    condition: number,
     price: number,
     quantity: number,
     warranty: number,

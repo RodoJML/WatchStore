@@ -34,7 +34,7 @@ const original_specsSlice = createSlice({
 
 export const addFromListing = createAsyncThunk(
     'original_specs/addFromListing',
-    async(original_specs: Interfaces.Original_specsItem): Promise<DataEnvelope<number>> => {
+    async(original_specs: Interfaces.Original_specsItem): Promise<DataEnvelope<boolean>> => {
         return await Fetch.api('/original_specs/addFromListing', original_specs, 'POST').catch((err) => {throw err; });
     }
 )

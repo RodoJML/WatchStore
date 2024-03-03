@@ -17,7 +17,8 @@ const open_fetchUtil = require('./controllers/open/fetchUtil.ts');
 const open_user = require('./controllers/open/user.ts');
 const open_listing = require ('./controllers/open/listing.ts');
 const open_orig_model = require('./controllers/open/orig_model.ts');
-const open_original_specs = require('./controllers/open/original_specs.ts'); 
+const open_original_specs = require('./controllers/open/original_specs.ts');
+const open_orig_stock = require('./controllers/open/orig_stock.ts');
 const open_gen_model = require('./controllers/open/gen_model.ts');
 // const open_gen_specs = require('./controllers/open/gen_specs.ts');
 const open_store = require('./controllers/open/store.ts');
@@ -54,6 +55,7 @@ app
     .use(apiName + '/gen_model', open_gen_model)
     .use(apiName + '/store', open_store)
     .use(apiName + '/original_specs', open_original_specs)
+    .use(apiName + '/orig_stock', open_orig_stock)
     // .use(apiName + '/gen_specs', open_gen_specs)
 
 // Error handling middleware

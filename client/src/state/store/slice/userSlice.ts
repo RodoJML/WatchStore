@@ -35,7 +35,7 @@ export const addFromListing = createAsyncThunk(
     'user/addFromListing',
     // This is only used for unregistered users when they add a new listing.
     async(user: UserItem): Promise<DataEnvelope<boolean>> => {
-        return await Fetch.api('/user/add_unregistered_user', user, 'POST').catch((err) => { throw err; });
+        return await Fetch.api('/user/addFromListing', user, 'POST').catch((err) => { throw err; });
     }
 )   
 

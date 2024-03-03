@@ -12,11 +12,12 @@ import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addFromListing as genUser_addFromListing } from "../state/store/slice/userSlice";
-import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem } from "../model/interfaces";
+import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem, Orig_stockItem } from "../model/interfaces";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
 import { addFromListing as orig_model_addFromListing } from "../state/store/slice/orig_modelSlice";
-import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/orig_specsSlice";
+import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/original_specsSlice";
+import { addFromListing as orig_stock_addFromListing } from "../state/store/slice/orig_stockSlice";
 
 
 export interface mainForm {
@@ -93,7 +94,7 @@ export default function NewListing() {
 
                 const genericStore = {
                     store_user_id: mainForm.step4.user_id,
-                    store_name: "Unregistered Store",
+                    store_name: "unregistered" + mainForm.step4.user_id,
                     store_about: "This store is a placeholder for unregistered users",
                     store_photo_path: "/src/assets/images/unregistered_store.png",
                 } as StoreItem;
@@ -105,10 +106,12 @@ export default function NewListing() {
                 // Error code 02: Issue adding generic store
                 // Error code 03: Error retrieving the inserted ID from db
                 // Error code 04: Error adding original specs
+                // Error code 05: Original model ID is undefined, probably not returned from db
+                // Error code 06: Error adding original stock
 
                 // STEPS WHEN AN UNREGISTERED USER ADDS A LISTING
                 // 1. add unregistered user to db
-                // 2. add ageneric store 
+                // 2. add generic store 
                 // 3. add model
                 // 4. add specs
                 // 5. add stock 
@@ -123,6 +126,8 @@ export default function NewListing() {
 
                                         if (mainForm.step1.certification === 1) {
 
+                                            let orig_model_id = undefined as number | undefined;
+
                                             const orig_model = {
                                                 orig_model_id: undefined,
                                                 orig_brand_id: mainForm.step1.brand,
@@ -136,9 +141,11 @@ export default function NewListing() {
                                             dispatch(orig_model_addFromListing(orig_model)).then(unwrapResult)
                                                 .then((result: DataEnvelope<number>) => {
 
+                                                    orig_model_id = result.data;
+
                                                     if (result.data > 0) {
                                                         const original_specs = {
-                                                            orig_specs_model_id: result.data,
+                                                            orig_specs_model_id: orig_model_id,
                                                             orig_specs_brand_id: mainForm.step1.brand,
                                                             orig_specs_type_id: mainForm.step2.type,
                                                             orig_specs_movement_id: mainForm.step2.movement,
@@ -166,12 +173,40 @@ export default function NewListing() {
                                                         dispatch(orig_specs_addFromListing(original_specs)).then(unwrapResult)
                                                             .then((result: DataEnvelope<boolean>) => {
                                                                 if (result.isSuccess) {
-                                                                    alert("Success");
+
+                                                                    if (orig_model_id !== undefined) {
+
+                                                                        const orig_stock = {} as Orig_stockItem;
+                                                                        orig_stock.orig_stock_store_user_id = mainForm.step4.user_id;
+                                                                        orig_stock.orig_stock_watch_model_id = orig_model_id;
+                                                                        orig_stock.orig_stock_watch_brand_id = mainForm.step1.brand;
+                                                                        orig_stock.orig_stock_condition_id = mainForm.step3.condition;
+                                                                        orig_stock.orig_stock_quantity = mainForm.step3.quantity;
+
+                                                                        dispatch(orig_stock_addFromListing(orig_stock)).then(unwrapResult)
+                                                                            .then((result: DataEnvelope<boolean>) => {
+                                                                                if (result.isSuccess) {
+                                                                                    alert("Listing added successfully");
+                                                                                } else {
+                                                                                    alert("Error Código 06: Por favor intentar de nuevo desde el inicio");
+                                                                                }
+
+                                                                            }).catch((err: any) => {
+                                                                                alert("Error Código 06: Por favor intentar de nuevo desde el inicio");
+                                                                                console.log(err);
+                                                                            })
+
+
+
+                                                                    } else {
+                                                                        alert("Error Código 05: Por favor intentar de nuevo desde el inicio");
+                                                                    }
+
                                                                 } else {
                                                                     alert("Error Código 04: Por favor intentar de nuevo desde el inicio");
                                                                 }
                                                             }
-                                                            ).catch((err) => {
+                                                            ).catch((err: any) => {
                                                                 alert("Error Código 04: Por favor intentar de nuevo desde el inicio");
                                                                 console.log(err);
                                                             })
