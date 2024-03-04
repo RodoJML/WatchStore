@@ -129,6 +129,6 @@ export interface Orig_listingItem{
     orig_listing_guarantee: number,
     orig_listing_views: number,
     orig_listing_featured: number,
-    orig_listing_unit_cprince: number,
-    orig_listing_unit_drice: number,
+    orig_listing_unit_cprice: number,
+    orig_listing_unit_dprice: number,
 }

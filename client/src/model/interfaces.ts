@@ -126,7 +126,7 @@ export interface Gen_specsItem {
     gen_specs_clasp_type_id: number,
 }
 
-export interface orig_listingItem{
+export interface Orig_listingItem{
     orig_listing_stock_id: number,
     orig_listing_stock_store_user_id: number,
     orig_listing_date: Date,
@@ -135,11 +135,11 @@ export interface orig_listingItem{
     orig_listing_guarantee: number,
     orig_listing_views: number,
     orig_listing_featured: number,
-    orig_listing_unit_cprince: number,
-    orig_listing_unit_drice: number,
+    orig_listing_unit_cprice: number,
+    orig_listing_unit_dprice: number,
 }
 
-export interface gen_listingItem{
+export interface Gen_listingItem{
     gen_listing_stock_id: number,
     gen_listing_stock_store_user_id: number,
     gen_listing_date: Date,
@@ -148,8 +148,8 @@ export interface gen_listingItem{
     gen_listing_guarantee: number,
     gen_listing_views: number,
     gen_listing_featured: number,
-    gen_listing_unit_cprince: number,
-    gen_listing_unit_drice: number,
+    gen_listing_unit_cprice: number,
+    gen_listing_unit_dprice: number,
 }
 
 export interface AuthenticationEnvelope {

@@ -1,20 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import * as Fetch from './../../../model/fetch';
-import * as Interfaces from './../../../model/interfaces';
-import { DataEnvelope } from "./../../../model/interfaces";
+import * as Fetch from '../../../model/fetch';
+import * as Interfaces from '../../../model/interfaces';
+import { DataEnvelope } from "../../../model/interfaces";
 
-interface original_specsState{
+interface orig_listingState{
     isLoading: boolean,
     redirectURL: string | null,
 }
 
-const initialState: original_specsState = {
+const initialState: orig_listingState = {
     isLoading: false,
     redirectURL: null,
 }
 
-const original_specsSlice = createSlice({
-    name: 'original_specs',
+const orig_listingSlice = createSlice({
+    name: 'orig_listing',
     initialState,
     reducers: {
         // None by now
@@ -33,10 +33,10 @@ const original_specsSlice = createSlice({
 });
 
 export const addFromListing = createAsyncThunk(
-    'original_specs/addFromListing',
-    async(original_specs: Interfaces.Original_specsItem): Promise<DataEnvelope<boolean>> => {
-        return await Fetch.api('/original_specs/addFromListing', original_specs, 'POST').catch((err) => {throw err; });
+    'orig_listing/addFromListing',
+    async(orig_listing: Interfaces.Orig_listingItem): Promise<DataEnvelope<boolean>> => {
+        return await Fetch.api('/orig_listing/addFromListing', orig_listing, 'POST').catch((err) => {throw err; });
     }
 )
 
-export default original_specsSlice.reducer;
+export default orig_listingSlice.reducer;

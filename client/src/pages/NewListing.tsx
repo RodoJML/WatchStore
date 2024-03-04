@@ -12,12 +12,13 @@ import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addFromListing as genUser_addFromListing } from "../state/store/slice/userSlice";
-import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem, Orig_stockItem, orig_listingItem } from "../model/interfaces";
+import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem, Orig_stockItem, Orig_listingItem } from "../model/interfaces";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
 import { addFromListing as orig_model_addFromListing } from "../state/store/slice/orig_modelSlice";
-import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/original_specsSlice";
+import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/orig_specsSlice";
 import { addFromListing as orig_stock_addFromListing } from "../state/store/slice/orig_stockSlice";
+import { addFromListing as orig_listing_addFromListing } from "../state/store/slice/orig_listingSlice";
 
 
 export interface mainForm {
@@ -109,6 +110,7 @@ export default function NewListing() {
                 // Error code 04: Error adding original specs
                 // Error code 05: Original model ID is undefined, probably not returned from db
                 // Error code 06: Error adding original stock
+                // Error code 07: Error adding original listing
 
                 // STEPS WHEN AN UNREGISTERED USER ADDS A LISTING
                 // 1. add unregistered user to db
@@ -185,12 +187,30 @@ export default function NewListing() {
                                                                         orig_stock.orig_stock_quantity = mainForm.step3.quantity;
 
                                                                         dispatch(orig_stock_addFromListing(orig_stock)).then(unwrapResult)
-                                                                            .then((result: DataEnvelope<boolean>) => {
-                                                                                if (result.isSuccess) {
-                                                                                    
-                                                                                    const orig_listing = {} as orig_listingItem;
-                                                                                    orig_listing.
+                                                                            .then((result: DataEnvelope<number>) => {
+                                                                                if (result.data > 0) {
 
+                                                                                    const orig_listing = {} as Orig_listingItem;
+                                                                                    orig_listing.orig_listing_stock_id = result.data;
+                                                                                    orig_listing.orig_listing_stock_store_user_id = mainForm.step4.user_id;
+                                                                                    orig_listing.orig_listing_description = mainForm.step4.description;
+                                                                                    orig_listing.orig_listing_status = 1;
+                                                                                    orig_listing.orig_listing_guarantee = mainForm.step4.warranty;
+                                                                                    orig_listing.orig_listing_unit_cprice = mainForm.step4.cprice;
+                                                                                    orig_listing.orig_listing_unit_dprice = mainForm.step4.dprice;
+
+                                                                                    dispatch(orig_listing_addFromListing(orig_listing)).then(unwrapResult)
+                                                                                        .then((result: DataEnvelope<boolean>) => {
+                                                                                            if (result.isSuccess == true) {
+                                                                                                alert("Listing added successfully");
+                                                                                            } else {
+                                                                                                alert("Error Código 07: Por favor intentar de nuevo desde el inicio");
+                                                                                            }
+
+                                                                                        }).catch((err: any) => {
+                                                                                            alert("Error Código 07: Por favor intentar de nuevo desde el inicio");
+                                                                                            console.log(err);
+                                                                                        })
                                                                                 } else {
                                                                                     alert("Error Código 06: Por favor intentar de nuevo desde el inicio");
                                                                                 }
@@ -199,9 +219,6 @@ export default function NewListing() {
                                                                                 alert("Error Código 06: Por favor intentar de nuevo desde el inicio");
                                                                                 console.log(err);
                                                                             })
-
-
-
                                                                     } else {
                                                                         alert("Error Código 05: Por favor intentar de nuevo desde el inicio");
                                                                     }
@@ -218,8 +235,6 @@ export default function NewListing() {
                                                     } else {
                                                         alert("Error Código 03: Por favor intentar de nuevo desde el inicio");
                                                     }
-
-
                                                 }
                                                 ).catch((err) => {
                                                     alert("Error Código 03: Por favor intentar de nuevo desde el inicio");
