@@ -10,7 +10,7 @@ router
         model.addFromListing(req.body as Orig_modelItem)
         .then(
             (result: any) => {
-                const data = {data: result.inserted_id, isSuccess: true, total: result.total} as DataEnvelope<number>;
+                const data = {data: result.inserted_id, isSuccess: result.inserted_id > 0, total: result.total} as DataEnvelope<number>;
                 res.send(data);
             }
         ).catch(next);
