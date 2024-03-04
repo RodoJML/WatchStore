@@ -109,6 +109,7 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
                     </div>
                 </div>
 
+                {/* Dont delete this is needed, previous div is absolute but needs to have a space in the form */}
                 <div className="h-20"></div>
 
                 {
@@ -117,21 +118,6 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
                 }
 
                 <div className="grid grid-cols-1 gap-2 mt-4">
-
-                    <div className="flex justify-center items-center bg-black bg-opacity-30 p-1 rounded text-shadow shadow-black">
-                        <span className="">
-                            {mainForm.step1.certification == 1 ? "Original"
-                                : mainForm.step1.certification == 2 ? "AAA"
-                                    : mainForm.step1.certification == 3 ? "AA"
-                                        : mainForm.step1.certification == 4 ? "A"
-                                            : "Error"
-                            }
-                        </span>
-
-                        <span className="mx-3">|</span>
-
-                        <span className="overflow-scroll">Test</span>
-                    </div>
 
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full">

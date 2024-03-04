@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppDispatch, RootState } from "../state/store/store";
 import { mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faLocationDot, faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBox, faBoxesStacked, faCalendar, faCertificate, faCheckDouble, faClock, faColonSign, faDollarSign, faDolly, faEnvelope, faLocationDot, faPhone, faTruckRampBox, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
 import { guestHasListing } from "../state/store/slice/listingsSlice";
@@ -101,7 +101,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     return (
         <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition1 ? " right-0 " : " -right-full "}`}>
 
-            <div className="flex justify-center h-52 opacity-70 animate-pulse">
+            <div className="flex justify-center h-42 opacity-70 animate-pulse">
                 <img src="/src/assets/images/listingInfo.png" alt="" />
             </div>
 
@@ -110,7 +110,21 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
                 <div className="grid grid-cols-2 bg-black bg-opacity-40 rounded p-2 gap-1 text-shadow shadow-black ">
                     <div className="font-bold text-xl col-span-2">Datos de publicación</div>
-                    <div className="text-shadow shadow-black col-span-2">{mainForm.step1.brand + mainForm.step2.model}</div>
+
+                    <div className="flex col-span-2">
+                        <div className="mr-1"><FontAwesomeIcon icon={faDolly} /></div>
+                        <div className="mr-1">
+                            {mainForm.step1.certification == 1 ? "Original"
+                                : mainForm.step1.certification == 2 ? "AAA"
+                                    : mainForm.step1.certification == 3 ? "AA"
+                                        : mainForm.step1.certification == 4 ? "A"
+                                            : "Error"}
+                        </div>
+                        <div className="mr-1">{sessionStatus.brands.find((brand) => brand.brand_id == mainForm.step1.brand)?.brand_name}</div>
+                        <div>{mainForm.step2.model}</div>
+                    </div>
+
+
                     {sessionStatus.user.user_type <= 1 &&
                         <>
                             <div>Teléfono:</div>
@@ -119,7 +133,10 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                             <div>{sessionStatus.user.user_email}</div>
                         </>
                     }
-                    <div className="text-shadow shadow-black">Publicado en:</div>
+                    <div className="flex">
+                        <div className="flex justify-center items-center mx-1"><FontAwesomeIcon icon={faCalendar} /></div>
+                        <div className="text-shadow shadow-black">Publicado en:</div>
+                    </div>
                     <div>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
                 </div>
 
