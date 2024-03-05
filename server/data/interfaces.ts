@@ -42,6 +42,7 @@ export interface Gen_modelItem {
     gen_UPC: string | undefined,
     gen_model_photo_path: string | undefined,
     gen_country_id: number,
+    gen_certification: number
 }
 
 export interface Original_specsItem {

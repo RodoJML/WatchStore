@@ -9,8 +9,8 @@ async function connection() {
 async function addFromListing(orig_model_item: Orig_modelItem) {
     const db = await connection();
 
-    const procedureCall = await db.raw('CALL olisting_insert_model_return_id(?, ?, @inserted_id)',
-    [orig_model_item.orig_brand_id, orig_model_item.orig_model_name]);
+    const procedureCall = await db.raw('CALL olisting_insert_model_return_id(?, ?, ?, @inserted_id)',
+    [orig_model_item.orig_brand_id, orig_model_item.orig_model_name, orig_model_item.orig_description]);
 
     const inserted_id = await db.raw('SELECT @inserted_id as inserted_id');
 

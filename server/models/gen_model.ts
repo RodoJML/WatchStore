@@ -9,8 +9,8 @@ async function connection() {
 async function addFromListing(gen_model_item: Gen_modelItem) {
     const db = await connection();
 
-    const procedureCall = await db.raw('CALL glisting_insert_model_return_id(?, ?, @inserted_id)',
-    [gen_model_item.gen_brand_id, gen_model_item.gen_model_name]);
+    const procedureCall = await db.raw('CALL glisting_insert_model_return_id(?, ?, ?, ?, ?, @inserted_id)',
+    [gen_model_item.gen_brand_id, gen_model_item.gen_model_name, gen_model_item.gen_description, gen_model_item.gen_country_id, gen_model_item.gen_certification]);
 
     const inserted_id = await db.raw('SELECT @inserted_id as inserted_id');
 
