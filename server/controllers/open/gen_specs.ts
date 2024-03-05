@@ -3,7 +3,7 @@ import { DataEnvelope, Gen_specsItem } from '../../data/interfaces';
 
 const expressController = require('express');
 const router = expressController.Router();
-const model = require('../../models/original_specs.ts');
+const model = require('../../models/gen_specs.ts');
 
 router
 .post('/addFromListing', (req: Request, res: Response, next: NextFunction) => {
