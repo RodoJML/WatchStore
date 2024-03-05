@@ -12,13 +12,17 @@ import NewListingStep3 from "../components/NewListingStep3";
 import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 import { addFromListing as genUser_addFromListing } from "../state/store/slice/userSlice";
-import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem, Orig_stockItem, Orig_listingItem } from "../model/interfaces";
+import { StoreItem, UserInfoItem, UserItem, Gen_modelItem, Orig_modelItem, DataEnvelope, Original_specsItem, Orig_stockItem, Orig_listingItem, Gen_specsItem, Gen_stockItem, Gen_listingItem } from "../model/interfaces";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { addFromListing as store_addFromListing } from "../state/store/slice/storeSlice";
 import { addFromListing as orig_model_addFromListing } from "../state/store/slice/orig_modelSlice";
 import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/orig_specsSlice";
 import { addFromListing as orig_stock_addFromListing } from "../state/store/slice/orig_stockSlice";
 import { addFromListing as orig_listing_addFromListing } from "../state/store/slice/orig_listingSlice";
+import { addFromListing as gen_model_addFromListing } from "../state/store/slice/gen_modelSlice";
+import { addFromListing as gen_specs_addFromListing } from "../state/store/slice/gen_specsSlice";
+import { addFromListing as gen_stock_addFromListing } from "../state/store/slice/gen_stockSlice";
+import { addFromListing as gen_listing_addFromListing } from "../state/store/slice/gen_listingSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -247,15 +251,118 @@ export default function NewListing() {
 
                                         } else {
 
-                                            const model = {
-                                                gen_model_id: undefined,
-                                                gen_brand_id: mainForm.step1.brand,
-                                                gen_model_name: mainForm.step2.model,
-                                                gen_description: "Added automatically from a Listing",
-                                                gen_UPC: undefined,
-                                                gen_model_photo_path: undefined,
-                                                gen_country_id: mainForm.step2.country,
-                                            } as Gen_modelItem;
+                                            let gen_model_id = undefined as number | undefined;
+
+                                            const gen_model = {} as Gen_modelItem;
+                                            gen_model.gen_model_id = undefined;
+                                            gen_model.gen_brand_id = mainForm.step1.brand;
+                                            gen_model.gen_model_name = mainForm.step2.model;
+                                            gen_model.gen_description = "Added automatically from a Listing";
+                                            gen_model.gen_UPC = undefined;
+                                            gen_model.gen_model_photo_path = undefined;
+
+                                            dispatch(gen_model_addFromListing(gen_model)).then(unwrapResult)
+                                                .then((result: DataEnvelope<number>) => {
+
+                                                    gen_model_id = result.data;
+
+                                                    if (result.data > 0) {
+                                                        const gen_specs = {} as Gen_specsItem;
+                                                        gen_specs.gen_specs_model_id = gen_model_id;
+                                                        gen_specs.gen_specs_brand_id = mainForm.step1.brand;
+                                                        gen_specs.gen_specs_type_id = mainForm.step2.type;
+                                                        gen_specs.gen_specs_movement_id = mainForm.step2.movement;
+                                                        gen_specs.gen_specs_style_id = mainForm.step2.style;
+                                                        gen_specs.gen_specs_shape_id = mainForm.step2.shape;
+                                                        gen_specs.gen_specs_glass_id = mainForm.step2.glass_material;
+                                                        gen_specs.gen_specs_case_color = mainForm.step2.case_color;
+                                                        gen_specs.gen_specs_case_material_id = mainForm.step2.case_material;
+                                                        gen_specs.gen_specs_strap_color = mainForm.step2.strap_color;
+                                                        gen_specs.gen_specs_strap_material_id = mainForm.step2.strap_material;
+                                                        gen_specs.gen_specs_dial_color = mainForm.step2.dial_color;
+                                                        gen_specs.gen_specs_depth = mainForm.step2.depth;
+                                                        gen_specs.gen_specs_width = mainForm.step2.width;
+                                                        gen_specs.gen_specs_weight = mainForm.step2.weight;
+                                                        gen_specs.gen_specs_gender = mainForm.step2.gender;
+                                                        gen_specs.gen_specs_water_proof = mainForm.step2.water_proof;
+                                                        gen_specs.gen_specs_water_resistant = mainForm.step2.water_resistant;
+                                                        gen_specs.gen_specs_bezel_type_id = mainForm.step2.bezel_type;
+                                                        gen_specs.gen_specs_bezel_material_id = mainForm.step2.bezel_material;
+                                                        gen_specs.gen_specs_pw_reserve_hrs = mainForm.step2.power_reserve;
+                                                        gen_specs.gen_specs_lume = mainForm.step2.lume;
+                                                        gen_specs.gen_specs_clasp_type_id = mainForm.step2.clasp_type;
+
+                                                        dispatch(gen_specs_addFromListing(gen_specs)).then(unwrapResult)
+                                                            .then((result: DataEnvelope<boolean>) => {
+                                                                if (result.isSuccess == true) {
+
+                                                                    if (gen_model_id !== undefined) {
+
+                                                                        const gen_stock = {} as Gen_stockItem;
+                                                                        gen_stock.gen_stock_store_user_id = mainForm.step4.user_id;
+                                                                        gen_stock.gen_stock_watch_model_id = gen_model_id;
+                                                                        gen_stock.gen_stock_watch_brand_id = mainForm.step1.brand;
+                                                                        gen_stock.gen_stock_condition = mainForm.step3.condition;
+                                                                        gen_stock.gen_stock_quantity = mainForm.step3.quantity;
+
+                                                                        dispatch(gen_stock_addFromListing(gen_stock)).then(unwrapResult)
+                                                                            .then((result: DataEnvelope<number>) => {
+                                                                                if (result.data > 0) {
+
+                                                                                    const gen_listing = {} as Gen_listingItem;
+                                                                                    gen_listing.gen_listing_stock_id = result.data;
+                                                                                    gen_listing.gen_listing_stock_store_user_id = mainForm.step4.user_id;
+                                                                                    gen_listing.gen_listing_description = mainForm.step4.description;
+                                                                                    gen_listing.gen_listing_status = 1;
+                                                                                    gen_listing.gen_listing_guarantee = mainForm.step4.warranty;
+                                                                                    gen_listing.gen_listing_unit_cprice = mainForm.step4.cprice;
+                                                                                    gen_listing.gen_listing_unit_dprice = mainForm.step4.dprice;
+
+                                                                                    dispatch(gen_listing_addFromListing(gen_listing)).then(unwrapResult)
+                                                                                        .then((result: DataEnvelope<boolean>) => {
+                                                                                            if (result.isSuccess == true) {
+                                                                                                alert("Listing added successfully");
+                                                                                                navigate("/");
+
+                                                                                            } else {
+                                                                                                alert("Error Código G07: Por favor intentar de nuevo desde el inicio");
+                                                                                            }
+
+                                                                                        }).catch((err: any) => {
+                                                                                            alert("Error Código G07: Por favor intentar de nuevo desde el inicio");
+                                                                                            console.log(err);
+                                                                                        })
+                                                                                } else {
+                                                                                    alert("Error Código G06: Por favor intentar de nuevo desde el inicio");
+                                                                                }
+
+                                                                            }).catch((err: any) => {
+                                                                                alert("Error Código G06: Por favor intentar de nuevo desde el inicio");
+                                                                                console.log(err);
+                                                                            })
+                                                                    } else {
+                                                                        alert("Error Código G05: Por favor intentar de nuevo desde el inicio");
+                                                                    }
+
+                                                                } else {
+                                                                    alert("Error Código G04: Por favor intentar de nuevo desde el inicio");
+                                                                }
+                                                            }
+                                                            ).catch((err: any) => {
+                                                                alert("Error Código G04: Por favor intentar de nuevo desde el inicio");
+                                                                console.log(err);
+                                                            })
+
+
+                                                    } else {
+                                                        alert("Error Código G03: Por favor intentar de nuevo desde el inicio");
+                                                    }
+
+                                                })
+                                                .catch((err) => {
+                                                    alert("Error Código G03: Por favor intentar de nuevo desde el inicio");
+                                                    console.log(err);
+                                                });
 
                                         }
                                     } else {

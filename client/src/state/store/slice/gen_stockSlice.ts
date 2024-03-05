@@ -3,18 +3,18 @@ import * as Fetch from './../../../model/fetch';
 import * as Interfaces from './../../../model/interfaces';
 import { DataEnvelope } from "./../../../model/interfaces";
 
-interface gen_specsState{
+interface gen_stockState{
     isLoading: boolean,
     redirectURL: string | null,
-}
+} 
 
-const initialState: gen_specsState = {
+const initialState: gen_stockState = {
     isLoading: false,
     redirectURL: null,
 }
 
-const gen_specsSlice = createSlice({
-    name: 'gen_specs',
+const orig_stockSlice = createSlice({
+    name: 'gen_stock',
     initialState,
     reducers: {
         // None by now
@@ -33,10 +33,10 @@ const gen_specsSlice = createSlice({
 });
 
 export const addFromListing = createAsyncThunk(
-    'gen_specs/addFromListing',
-    async(gen_specs: Interfaces.Gen_specsItem): Promise<DataEnvelope<boolean>> => {
-        return await Fetch.api('/gen_specs/addFromListing', gen_specs, 'POST').catch((err) => {throw err; });
+    'gen_stock/addFromListing',
+    async(gen_stock: Interfaces.Gen_stockItem): Promise<DataEnvelope<number>> => {
+        return await Fetch.api('/gen_stock/addFromListing', gen_stock, 'POST').catch((err) => {throw err; });
     }
 )
 
-export default gen_specsSlice.reducer;
+export default orig_stockSlice.reducer;

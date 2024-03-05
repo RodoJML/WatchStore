@@ -1,20 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import * as Fetch from './../../../model/fetch';
-import * as Interfaces from './../../../model/interfaces';
-import { DataEnvelope } from "./../../../model/interfaces";
+import * as Fetch from '../../../model/fetch';
+import * as Interfaces from '../../../model/interfaces';
+import { DataEnvelope } from "../../../model/interfaces";
 
-interface gen_specsState{
+interface gen_listingState{
     isLoading: boolean,
     redirectURL: string | null,
 }
 
-const initialState: gen_specsState = {
+const initialState: gen_listingState = {
     isLoading: false,
     redirectURL: null,
 }
 
-const gen_specsSlice = createSlice({
-    name: 'gen_specs',
+const gen_listingSlice = createSlice({
+    name: 'gen_listing',
     initialState,
     reducers: {
         // None by now
@@ -33,10 +33,10 @@ const gen_specsSlice = createSlice({
 });
 
 export const addFromListing = createAsyncThunk(
-    'gen_specs/addFromListing',
-    async(gen_specs: Interfaces.Gen_specsItem): Promise<DataEnvelope<boolean>> => {
-        return await Fetch.api('/gen_specs/addFromListing', gen_specs, 'POST').catch((err) => {throw err; });
+    'gen_listing/addFromListing',
+    async(gen_listing: Interfaces.Gen_listingItem): Promise<DataEnvelope<boolean>> => {
+        return await Fetch.api('/gen_listing/addFromListing', gen_listing, 'POST').catch((err) => {throw err; });
     }
 )
 
-export default gen_specsSlice.reducer;
+export default gen_listingSlice.reducer;
