@@ -226,6 +226,16 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
 
                     <div className="text-xs my-2 text-shadow shadow-black text-left">* Los siguientes campos NO son obligatorios, sin embargo, incluír todas las caracteristicas ayuda a un mayor alcance a compradores potenciales</div>
 
+                    {mainForm.step1.certification != 1 &&
+                        <div className="flex items-center">
+                            <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faEarthAmericas} /></div>
+                            <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="country" id="country" autoComplete="country" defaultValue="" onChange={handleSelectChange}>
+                                <option key={0} value="" disabled>Manufactura</option>
+                                {sessionStatus.countries.map((country) => { return <option key={country.country_id} value={country.country_id}>{country.country_name}</option> })}
+                            </select>
+                        </div>
+                    }
+                    
                     <div className="flex items-center">
                         <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faCircleNotch} /></div>
                         <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="strap_material" id="strap_material" defaultValue="" onChange={handleSelectChange}>
@@ -319,16 +329,6 @@ export default function NewListingStep2({ begin, mainForm, sessionStatus, comple
                             {sessionStatus.clasps.map((clasp) => { return <option key={clasp.claspType_id} value={clasp.claspType_id}>{clasp.claspType_name}</option> })}
                         </select>
                     </div>
-
-                    {mainForm.step1.certification != 1 &&
-                        <div className="flex items-center">
-                            <div className="flex bg-black bg-opacity-30 rounded justify-center items-center mr-2 w-10 h-full"><FontAwesomeIcon icon={faEarthAmericas} /></div>
-                            <select className="bg-black bg-opacity-30 p-1 rounded w-full" name="country" id="country" autoComplete="country" defaultValue="" onChange={handleSelectChange}>
-                                <option key={0} value="" disabled>Manufactura</option>
-                                {sessionStatus.countries.map((country) => { return <option key={country.country_id} value={country.country_id}>{country.country_name}</option> })}
-                            </select>
-                        </div>
-                    }
 
                     <div className="grid grid-cols-5 gap-2 text-center">
 

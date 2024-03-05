@@ -22,6 +22,7 @@ const open_original_specs = require('./controllers/open/original_specs.ts');
 const open_orig_stock = require('./controllers/open/orig_stock.ts');
 const open_gen_model = require('./controllers/open/gen_model.ts');
 const open_gen_specs = require('./controllers/open/gen_specs.ts');
+const open_gen_stock = require('./controllers/open/gen_stock.ts');
 const open_gen_listing = require('./controllers/open/gen_listing.ts');
 const open_store = require('./controllers/open/store.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
@@ -61,6 +62,7 @@ app
     .use(apiName + '/orig_stock', open_orig_stock)
     .use(apiName + '/orig_listing', open_orig_listing)
     .use(apiName + '/gen_listing', open_gen_listing)
+    .use(apiName + '/gen_stock', open_gen_stock)
 
 // Error handling middleware
 app

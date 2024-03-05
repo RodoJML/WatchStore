@@ -260,7 +260,10 @@ export default function NewListing() {
                                             gen_model.gen_description = "Added automatically from a Listing";
                                             gen_model.gen_UPC = undefined;
                                             gen_model.gen_model_photo_path = undefined;
+                                            gen_model.gen_country_id = mainForm.step2.country;
 
+                                            console.log(gen_model);
+                                            
                                             dispatch(gen_model_addFromListing(gen_model)).then(unwrapResult)
                                                 .then((result: DataEnvelope<number>) => {
 
