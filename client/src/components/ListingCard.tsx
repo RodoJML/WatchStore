@@ -1,6 +1,6 @@
 import { faCalendarDays, faExpand, faEye, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ListingPreviewItem } from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem } from "../model/interfaces";
 import { useState } from "react";
 
 interface ListingCardProps {
@@ -58,7 +58,7 @@ export default function ListingCard({ isLoading, listingPreview }: ListingCardPr
 
                         <div className="flex text-white overflow-scroll justify-center items-center">
                             <span className="text-3vw sm:text-xs">₡</span><span className="text-4vw sm:text-lg font-extrabold text-lume-100">{listingPreview.cprice.toLocaleString()}</span>
-                            <span className="text-3vw sm:text-xs ml-1 text-white text-opacity-50">(${listingPreview.dprice ? listingPreview.dprice : (listingPreview.cprice / 500).toLocaleString()})</span>
+                            <span className="text-3vw sm:text-xs ml-1 text-white text-opacity-50">(${listingPreview.dprice?.toLocaleString()})</span>
                         </div>
                     </div>
 

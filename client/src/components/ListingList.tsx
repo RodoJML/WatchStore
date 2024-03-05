@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays, faEye, faStar } from "@fortawesome/free-solid-svg-icons";
-import { ListingPreviewItem } from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem } from "../model/interfaces";
 import { useState } from "react";
 
 interface ListingListProps {
@@ -48,7 +48,7 @@ export default function ListingList({ listingPreview }: ListingListProps) {
                             <div className="align-middle">
                                 <span className="text-xs">₡</span>
                                 <span className="text-lg text-stone-700 font-extrabold">{listingPreview.cprice.toLocaleString()}</span>
-                                <span className="text-xs ml-1 text-stone-700">(${listingPreview.dprice ? listingPreview.dprice : (listingPreview.cprice / 500).toLocaleString()})</span>
+                                <span className="text-xs ml-1 text-stone-700">(${listingPreview.dprice?.toLocaleString()})</span>
                             </div>
 
                             <div className="grid grid-cols-2 text-2xs text-stone-700">
@@ -115,13 +115,13 @@ export default function ListingList({ listingPreview }: ListingListProps) {
 
                             </span>
                             <div>Tienda:</div>
-                            <div>{listingPreview.store_name}</div>
+                            <div className="w-20 overflow-hidden">{listingPreview.store_name}</div>
                             <div>Cantidad:</div>
                             <div>{listingPreview.quantity}</div>
                             <div>Ubicación:</div>
                             <div>{listingPreview.location}</div>
                             <div>Vendedor: </div>
-                            <div>{listingPreview.user_name}</div>
+                            <div className="w-20 overflow-hidden">{listingPreview.user_name}</div>
                         </div>
 
                     </div>

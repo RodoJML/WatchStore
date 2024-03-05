@@ -85,7 +85,7 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
                         <div className="col-span-2">{sessionStatus.user.user_name}</div>
                         <div className="col-span-1">Reloj: </div>
 
-                        <div className="flex col-span-2 overflow-scroll">
+                        <div className="flex col-span-2 overflow-scroll whitespace-nowrap text-nowrap">
                             <div className="mr-1">
                                 {mainForm.step1.certification == 1 ? "Original"
                                     : mainForm.step1.certification == 2 ? "AAA"

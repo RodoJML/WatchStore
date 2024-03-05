@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppDispatch, RootState } from "../state/store/store";
 import { mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBox, faBoxesStacked, faCalendar, faCertificate, faCheckDouble, faClock, faColonSign, faDollarSign, faDolly, faEnvelope, faLocationDot, faPhone, faTruckRampBox, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBox, faBoxArchive, faBoxesStacked, faCalendar, faCertificate, faCheckDouble, faClock, faColonSign, faDollarSign, faDolly, faEnvelope, faLocationDot, faPhone, faTruckRampBox, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
 import { guestHasListing } from "../state/store/slice/listingsSlice";
@@ -25,6 +25,8 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
     const [form, setForm] = useState({} as step4form);
     const [active, setActive] = useState(false);
+    const [currencyExchange, setCurrencyExchange] = useState(true);
+    const [ceValue, setCeValue] = useState(500);
     const [listingAlreadyExist, setListingAlreadyExist] = useState(false);
     const [finished, setFinished] = useState(false);
     const [transition1, setTransition1] = useState(false);
@@ -53,16 +55,28 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
     }, [begin])
 
+    useEffect(() => {
+        
+        if (listingAlreadyExist == true) {
+            dispatch(setNotification({ message: "Solo usuarios registrados con tienda pueden tener más de 1 publicación.", type: "danger" }));
+        }
+
+        return () => {dispatch(setNotification(undefined))};
+
+    }, [listingAlreadyExist])
+
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
         e.preventDefault();
+
         dispatch(guestHasListing(form.user_id)).then((result: any) => {
             if (result.payload.total > 0) {
                 setListingAlreadyExist(true);
-                // Notification showing on every route change rerender needs debugging
-                dispatch(setNotification({ message: "Solo usuarios registrados con tienda pueden tener más de 1 publicación.", type: "danger" }));
             } else {
                 setFinished(true);
+                if (currencyExchange) {
+                    setForm({ ...form, dprice: form.cprice / ceValue });
+                }
                 complete(form);
             }
         });
@@ -71,7 +85,11 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
-        const maxPhotos = 5;
+        const maxPhotos = 5
+
+        if (input.name == "currencyExchange") {
+            setCurrencyExchange(input.checked ? true : false);
+        }
 
         if (input.files) {
             if (input.files.length > maxPhotos) {
@@ -111,17 +129,17 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 <div className="grid grid-cols-2 bg-black bg-opacity-40 rounded p-2 gap-1 text-shadow shadow-black ">
                     <div className="font-bold text-xl col-span-2">Datos de publicación</div>
 
-                    <div className="flex col-span-2">
-                        <div className="mr-1"><FontAwesomeIcon icon={faDolly} /></div>
-                        <div className="mr-1">
-                            {mainForm.step1.certification == 1 ? "Original"
-                                : mainForm.step1.certification == 2 ? "AAA"
-                                    : mainForm.step1.certification == 3 ? "AA"
-                                        : mainForm.step1.certification == 4 ? "A"
-                                            : "Error"}
-                        </div>
-                        <div className="mr-1">{sessionStatus.brands.find((brand) => brand.brand_id == mainForm.step1.brand)?.brand_name}</div>
-                        <div>{mainForm.step2.model}</div>
+                    <div>Reloj {mainForm.step1.certification == 1 ? "Original"
+                        : mainForm.step1.certification == 2 ? "AAA"
+                            : mainForm.step1.certification == 3 ? "AA"
+                                : mainForm.step1.certification == 4 ? "A"
+                                    : "Error"}: </div>
+                    <div className="flex overflow-visible">
+                        <div className="mr-1 overflow-scroll text-nowrap whitespace-nowrap">
+                            {sessionStatus.brands.find((brand) => brand.brand_id == mainForm.step1.brand)?.brand_name} {mainForm.step2.model}</div>
+                        <div className="mr-1">|</div>
+                        <div className="flex justify-center items-center mr-1 text-xs"><FontAwesomeIcon icon={faBoxArchive} /></div>
+                        <div> x{mainForm.step3.quantity}</div>
                     </div>
 
 
@@ -133,34 +151,44 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                             <div>{sessionStatus.user.user_email}</div>
                         </>
                     }
+
                     <div className="flex">
-                        <div className="flex justify-center items-center mx-1"><FontAwesomeIcon icon={faCalendar} /></div>
                         <div className="text-shadow shadow-black">Publicado en:</div>
                     </div>
                     <div>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
                 </div>
 
-                <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} required />
+                <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} />
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faCertificate} /></div>
-                    <input name="warranty" id="warranty" type="number" placeholder="Meses de garantía" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" min={1} max={48} required onChange={handleInputChange} />
+                    <input name="warranty" id="warranty" type="number" placeholder="Meses de garantía" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" min={0} max={48} required onChange={handleInputChange} />
                 </div>
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faColonSign} /></div>
-                    <input name="cprice" id="cprice" type="number" placeholder="Precio en colones" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
+                    <input name="cprice" id="cprice" type="number" placeholder="Precio en colones" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" min={5} required onChange={handleInputChange} />
                 </div>
 
                 <div className="flex">
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faDollarSign} /></div>
-                    <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className="p-1 rounded w-full text-stone-800" pattern="[0-9]*" required onChange={handleInputChange} />
+
+                    <div className="flex w-full">
+                        <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className={`p-1 rounded w-full ${currencyExchange ? "text-white" : "text-stone-800"} mr-1`} pattern="[0-9]*" min={1} required onChange={handleInputChange} disabled={currencyExchange} {...(currencyExchange ? { value: form.cprice / ceValue } : {})} />
+
+                        <div className="flex items-center justify-center bg-black bg-opacity-40 rounded py-1 px-2">
+                            <input name="currencyExchange" id="currencyExchange" className="mr-1" type="checkbox" defaultChecked onChange={handleInputChange} />
+                            <div className="text-xs whitespace-nowrap text-nowrap">Tipo Cambio</div>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 {
                     sessionStatus.user.user_type > 1 &&
                     <>
-                        <div className="text-xs text-shadow shadow-black">📇 Los compradores tendran acceso a la siguiente información para contactarle.</div>
+                        <div className="text-xs text-shadow shadow-black ">📇 Los compradores tendran acceso a la siguiente información para contactarle.</div>
 
                         <div className="flex">
                             <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-20 mr-1"><FontAwesomeIcon icon={faUser} /></div>

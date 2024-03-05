@@ -19,6 +19,7 @@ import { addFromListing as orig_model_addFromListing } from "../state/store/slic
 import { addFromListing as orig_specs_addFromListing } from "../state/store/slice/orig_specsSlice";
 import { addFromListing as orig_stock_addFromListing } from "../state/store/slice/orig_stockSlice";
 import { addFromListing as orig_listing_addFromListing } from "../state/store/slice/orig_listingSlice";
+import { useNavigate } from "react-router-dom";
 
 
 export interface mainForm {
@@ -33,6 +34,7 @@ export default function NewListing() {
     const sessionState = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
     const [mainForm, setMainForm] = useState({} as mainForm);
+    const navigate = useNavigate();
 
     const [step1submitted, setStep1submitted] = useState(false);
     const [step2submitted, setStep2submitted] = useState(false);
@@ -203,6 +205,8 @@ export default function NewListing() {
                                                                                         .then((result: DataEnvelope<boolean>) => {
                                                                                             if (result.isSuccess == true) {
                                                                                                 alert("Listing added successfully");
+                                                                                                navigate("/");
+
                                                                                             } else {
                                                                                                 alert("Error Código 07: Por favor intentar de nuevo desde el inicio");
                                                                                             }

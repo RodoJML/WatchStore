@@ -86,7 +86,7 @@ const sessionSlice = createSlice(
             clearMessages: (state) => {
                 state.messages = [];
             },
-            setNotification: (state, action: PayloadAction<Message>) => {
+            setNotification: (state, action: PayloadAction<Message | undefined>) => {
                 state.notification = action.payload;
             },
             setRedirectURL: (state, action) => {

@@ -19,8 +19,10 @@ export default function Notification({ message }: NotificationProps) {
 
 
     useEffect(() => {
-        if (message) {
+        if (message != undefined) {
             setActive(true);
+        } else {
+            setActive(false);
         }
 
         const timeout = setTimeout(() => {

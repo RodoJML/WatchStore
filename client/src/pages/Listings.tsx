@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownWideShort, faGripVertical, faHand, faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ListingCard from "../components/ListingCard";
 import ListingList from "../components/ListingList";
-import { ListingPreviewItem, getAll_previews, incrementPage, search } from "../state/store/slice/listingsSlice";
+import { ListingPreviewItem } from "../model/interfaces";
+import { getAll_previews, incrementPage, search } from "../state/store/slice/listingsSlice";
 import { Link } from "react-router-dom";
 
 export default function Listing() {
