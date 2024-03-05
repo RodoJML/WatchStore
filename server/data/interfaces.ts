@@ -132,3 +132,16 @@ export interface Orig_listingItem{
     orig_listing_unit_cprice: number,
     orig_listing_unit_dprice: number,
 }
+
+export interface Gen_listingItem{
+    gen_listing_stock_id: number,
+    gen_listing_stock_store_user_id: number,
+    gen_listing_date: Date,
+    gen_listing_description: string,
+    gen_listing_status: number,
+    gen_listing_guarantee: number,
+    gen_listing_views: number,
+    gen_listing_featured: number,
+    gen_listing_unit_cprice: number,
+    gen_listing_unit_dprice: number,
+}
