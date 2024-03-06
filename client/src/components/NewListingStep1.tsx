@@ -13,7 +13,7 @@ export interface step1form {
 export default function NewListingStep1({ complete, sessionStatus }: { complete: (form: step1form) => (void), sessionStatus: RootState["session"] }) {
 
     const [hide, setHide] = useState(false);
-    const [form, setForm] = useState({} as step1form);
+    const [form, setForm] = useState({certification: 0} as step1form);
     const [finished, setFinished] = useState(false);
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
@@ -62,8 +62,8 @@ export default function NewListingStep1({ complete, sessionStatus }: { complete:
                         })}
                     </select>
 
-                    <select className={`rounded bg-black bg-opacity-20 p-2 appearance-none font-bold ${(sessionStatus.user.user_type > 1 || (form.certification > 1 || form.certification < 1)) && "text-gray-300"}`} name="template" id="template" defaultValue={0} disabled={sessionStatus.user.user_type > 1 || (form.certification > 1 || form.certification < 1)} onChange={handleSelectChange}>
-                        <option key="0" value="0" disabled>Plantilla</option>
+                    <select className={`rounded bg-black bg-opacity-20 p-2 appearance-none font-bold ${(sessionStatus.user.user_type > 1 || (form.certification > 1 || form.certification < 1)) && "text-gray-300"}`} name="template" id="template" defaultValue={0} disabled={sessionStatus.user.user_type > 1 || (form.certification != 1)} onChange={handleSelectChange}>
+                        <option key={0} value={0} disabled>Plantilla</option>
                         {/* TO BE CODED */}
                     </select>
 

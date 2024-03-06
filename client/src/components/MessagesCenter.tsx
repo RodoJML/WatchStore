@@ -39,7 +39,7 @@ export default function MessagesCenter({ sessionStatus, onClick, isActive }: { s
                             <div className="text-shadow shadow-black font-semibold">Mensajes</div>
                             <div className="flex justify-end items-center">
                                 <div className="text-2xs mr-1">Limpiar</div> 
-                                <FontAwesomeIcon className="opacity-50 cursor-pointer" icon={faCircleXmark} onClick={() => { dispatch(clearMessages()); onClick(false); }}/>
+                                <FontAwesomeIcon className="opacity-50 cursor-pointer text-2xl" icon={faCircleXmark} onClick={() => { dispatch(clearMessages()); onClick(false); }}/>
                             </div>
                         </div>
 

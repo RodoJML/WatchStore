@@ -56,14 +56,21 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     }, [begin])
 
     useEffect(() => {
-        
+
         if (listingAlreadyExist == true) {
             dispatch(setNotification({ message: "Solo usuarios registrados con tienda pueden tener más de 1 publicación.", type: "danger" }));
         }
 
-        return () => {dispatch(setNotification(undefined))};
+        return () => { dispatch(setNotification(undefined)) };
 
     }, [listingAlreadyExist])
+
+
+    useEffect(() => {
+        if (currencyExchange) {
+            setForm({ ...form, dprice: (form.cprice / ceValue) });
+        }
+    }, [form.cprice, currencyExchange])
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
@@ -74,9 +81,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 setListingAlreadyExist(true);
             } else {
                 setFinished(true);
-                if (currencyExchange) {
-                    setForm({ ...form, dprice: form.cprice / ceValue });
-                }
                 complete(form);
             }
         });
@@ -174,7 +178,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faDollarSign} /></div>
 
                     <div className="flex w-full">
-                        <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className={`p-1 rounded w-full ${currencyExchange ? "text-white" : "text-stone-800"} mr-1`} pattern="[0-9]*" min={1} required onChange={handleInputChange} disabled={currencyExchange} {...(currencyExchange ? { value: form.cprice / ceValue } : {})} />
+                        <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className={`p-1 rounded w-full ${currencyExchange ? "text-white" : "text-stone-800"} mr-1`} pattern="[0-9]*" min={1} required onChange={handleInputChange} disabled={currencyExchange} {...(currencyExchange ? { value: form.cprice / ceValue } : {value: form.dprice})} />
 
                         <div className="flex items-center justify-center bg-black bg-opacity-40 rounded py-1 px-2">
                             <input name="currencyExchange" id="currencyExchange" className="mr-1" type="checkbox" defaultChecked onChange={handleInputChange} />
