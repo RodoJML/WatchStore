@@ -247,4 +247,3 @@ export interface BrandItem {
     brand_website: string,
     brand_country_id: number,
 }
-

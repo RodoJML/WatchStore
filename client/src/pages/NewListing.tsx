@@ -129,6 +129,10 @@ export default function NewListing() {
                 dispatch(genUser_addFromListing(genericUser)).then(unwrapResult)
                     .then((result: DataEnvelope<boolean>) => {
                         if (result.data === true) {
+
+                            // Add user info from here 
+                            
+
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
                                     if (result.isSuccess == true) {

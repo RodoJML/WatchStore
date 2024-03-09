@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit"
-import { DataEnvelope, UserItem } from "../../../model/interfaces";
+import { DataEnvelope, UserInfoItem, UserItem } from "../../../model/interfaces";
 import * as Fetch from '../../../model/fetch'
 
 interface userState{
@@ -37,6 +37,13 @@ export const addFromListing = createAsyncThunk(
     async(user: UserItem): Promise<DataEnvelope<boolean>> => {
         return await Fetch.api('/user/addFromListing', user, 'POST').catch((err) => { throw err; });
     }
-)   
+)
+
+export const addUserInfo = createAsyncThunk(
+    'user/addUserInfo',
+    async(userInfo: UserInfoItem): Promise<DataEnvelope<boolean>> => {
+        return await Fetch.api('user/addUserInfo', userInfo, 'POST').catch((err) => { throw err; });
+    }
+)
 
 export default userSlice.reducer;

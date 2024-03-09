@@ -146,3 +146,14 @@ export interface Gen_listingItem{
     gen_listing_unit_cprice: number,
     gen_listing_unit_dprice: number,
 }
+
+export interface UserInfoItem{
+    info_user_id: number,
+    info_user_first_name: string,
+    info_user_last_name: string,
+    info_user_phone2: number,
+    info_user_phone3: number,
+    info_user_address1: string,
+    info_user_address2: string,
+    info_user_province: string,
+}

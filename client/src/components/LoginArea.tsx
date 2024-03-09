@@ -23,8 +23,10 @@ export default function LoginArea({ sessionStatus }: { sessionStatus: RootState[
             dispatch(addMessage({ message: `Regístrate totalmente grátis y desbloquea la habilidad de crear tu propia tienda 🏪, 
             editar tus publicaciones 📝, tener tu lista de deseos 🎁, y mucho más.`, type: "info" })); 
         } else {
-            dispatch(clearMessages());
+            dispatch(clearMessages())
         }
+
+        return () => { dispatch(setNotification(undefined)) };
 
     }, [sessionStatus.signedIn]);
 

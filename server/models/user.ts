@@ -1,3 +1,4 @@
+import { UserInfoItem } from '../data/interfaces';
 import { connect } from './knex';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -87,6 +88,19 @@ async function addFromListing(user: UserItem){
 
 }
 
+async function addUserInfo(userInfo: UserInfoItem){
+    try{
+        const db = await connection();
+        const result = await db('user_info').insert(userInfo);
+        const insertedSuccesfully = result.length as number > 0;
+        const total = result.length as number;
+        return {insertedSuccesfully, total}
+
+    }catch (err) {
+        throw new Error('Something bad happened in the backend when inserting the user info: ' + err);
+    }
+}
+
 async function exist(column: string, key: string) {
     const db = await connection();
     const user = await db('user').count('*').where(column, key);
@@ -119,4 +133,4 @@ function verifyTokenAsync(token: any) {
 }
 
 
-module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addFromListing }; 
+module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addFromListing, addUserInfo }; 
