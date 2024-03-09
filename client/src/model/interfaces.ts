@@ -239,7 +239,6 @@ export interface Gen_stockItem {
     gen_stock_sold_out: number | undefined,
 }
 
-
 export interface BrandItem {
     brand_id: number,
     brand_name: string,
@@ -247,3 +246,4 @@ export interface BrandItem {
     brand_website: string,
     brand_country_id: number,
 }
+

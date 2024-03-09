@@ -157,3 +157,68 @@ export interface UserInfoItem{
     info_user_address2: string,
     info_user_province: string,
 }
+
+// ------- Form for Listings ----------------------------------------------------
+// This is the shape of the form when information is collected from the front end
+interface step1form {
+    certification: number,
+    brand: number,
+    model: number,
+}
+
+export interface step2form {
+    model: string,
+    type: number,
+    movement: number,
+    style: number,
+    shape: number,
+    glass_material: number,
+    case_material: number,
+    case_color: string,
+    strap_material: number,
+    strap_color: string,
+    dial_color: string,
+    weight: string,
+    depth: string,
+    width: number,
+    gender: number,
+    water_proof: number,
+    water_resistant: number,
+    bezel_type: number,
+    bezel_material: number,
+    power_reserve: number,
+    lume: number,
+    clasp_type: number,
+    country: number,
+}
+
+export interface step3form {
+    water_proof: number,
+    description: string,
+    condition: number,
+    price: number,
+    quantity: number,
+    warranty: number,
+}
+
+export interface step4form {
+    date: Date,
+    description: string,
+    name: string,
+    lastName: string,
+    user_id: number,
+    user_email: string,
+    cprice: number,
+    dprice: number,
+    warranty: number,
+    province: string,
+}
+
+export interface listing_mainForm {
+    step1: step1form,
+    step2: step2form,
+    step3: step3form,
+    step4: step4form,
+}
+
+// ------- Form end --------------------------------------------------------------

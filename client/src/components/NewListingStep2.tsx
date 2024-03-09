@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { mainForm } from "../pages/NewListing";
+import { listing_mainForm } from "../pages/NewListing";
 import { BrandItem } from "../model/interfaces";
 import { RootState } from "../state/store/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,7 +31,7 @@ export interface step2form {
     country: number,
 }
 
-export default function NewListingStep2({ begin, mainForm, sessionStatus, complete }: { begin: boolean, mainForm: mainForm, sessionStatus: RootState["session"], complete: (form: step2form) => (void) }) {
+export default function NewListingStep2({ begin, mainForm, sessionStatus, complete }: { begin: boolean, mainForm: listing_mainForm, sessionStatus: RootState["session"], complete: (form: step2form) => (void) }) {
 
     const [brand, setBrand] = useState({} as BrandItem);
     const [transition1, setTransition1] = useState(false);

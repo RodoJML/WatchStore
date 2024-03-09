@@ -1,3 +1,4 @@
+import { UserItem, listing_mainForm } from '../data/interfaces';
 import { connect } from './knex';
 
 async function connection() {
@@ -5,6 +6,8 @@ async function connection() {
     return db;
 }
 
+// This function fetch both listings of original and generic watches, it also detects if the API call is a search.
+// This function implements pagination to not include all the data information, improving performance. 
 async function get_previews(page = 1, pageSize = 30, search: string, advancedSearch: string) {
     const db = await connection();
 
@@ -25,6 +28,7 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
         'USER.user_name as user_name',
         'ORIG_LISTING.orig_listing_date as date',
         'ORIG_LISTING.orig_listing_views as views',
+
         // This next line indicates the listing type, 1 for new and 2 for used
         // We are not storing this in the database because tables are normalized
         db.raw("1 as listing_type"),)
@@ -140,6 +144,13 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
     const objects = [...originals, ...gens];
 
     return { objects, total };
+}
+
+// ------------------------------------------------------------------------------------------------
+
+async function unregistered_addListing(form: listing_mainForm){
+
+    const genericUser = {} as UserItem
 }
 
 async function guestHasListing(key: number){

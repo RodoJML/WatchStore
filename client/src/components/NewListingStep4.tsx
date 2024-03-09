@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AppDispatch, RootState } from "../state/store/store";
-import { mainForm } from "../pages/NewListing";
+import { listing_mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox, faBoxArchive, faBoxesStacked, faCalendar, faCertificate, faCheckDouble, faClock, faColonSign, faDollarSign, faDolly, faEnvelope, faLocationDot, faPhone, faTruckRampBox, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ export interface step4form {
     province: string,
 }
 
-export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
+export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
 
 
     const [form, setForm] = useState({} as step4form);
@@ -130,7 +130,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
             <form className="grid gap-3 bg-green-900 bg-opacity-40 border border-white border-opacity-40 rounded p-5 text-white shadow shadow-black" onSubmit={handleSubmit}>
 
-                <div className="grid grid-cols-2 bg-black bg-opacity-40 rounded p-2 gap-1 text-shadow shadow-black ">
+                <div className="grid grid-cols-2 bg-black bg-opacity-40 rounded p-2 px-3 gap-1 text-shadow shadow-black ">
                     <div className="font-bold text-xl col-span-2">Datos de publicación</div>
 
                     <div>Reloj {mainForm.step1.certification == 1 ? "Original"

@@ -26,7 +26,7 @@ import { addFromListing as gen_listing_addFromListing } from "../state/store/sli
 import { useNavigate } from "react-router-dom";
 
 
-export interface mainForm {
+export interface listing_mainForm {
     step1: step1form,
     step2: step2form,
     step3: step3form,
@@ -37,7 +37,7 @@ export default function NewListing() {
 
     const sessionState = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
-    const [mainForm, setMainForm] = useState({} as mainForm);
+    const [mainForm, setMainForm] = useState({} as listing_mainForm);
     const navigate = useNavigate();
 
     const [step1submitted, setStep1submitted] = useState(false);
@@ -131,8 +131,6 @@ export default function NewListing() {
                         if (result.data === true) {
 
                             // Add user info from here 
-                            
-
                             dispatch(store_addFromListing(genericStore)).then(unwrapResult)
                                 .then((result: DataEnvelope<boolean>) => {
                                     if (result.isSuccess == true) {
