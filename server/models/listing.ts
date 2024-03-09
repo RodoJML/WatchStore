@@ -1,4 +1,4 @@
-import { UserItem, listing_mainForm } from '../data/interfaces';
+import { UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
 import { connect } from './knex';
 
 async function connection() {
@@ -150,8 +150,20 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
 
 async function unregistered_addListing(form: listing_mainForm){
 
-    const genericUser = {} as UserItem
+    const genericUser = {} as UserItem;
+    genericUser.user_id = form.step4.user_id;
+    genericUser.user_type = 3;
+    genericUser.user_name = "unregistered" + form.step4.user_id;
+    genericUser.user_email = form.step4.user_email;
+    genericUser.user_photo_path = "/src/assets/images/unregistered_user.jpg";
+
+    const genericUserInfo = {} as UserInfoItem; 
+    genericUserInfo.info_user_id = form.step4.user_id;
+    genericUserInfo
 }
+
+
+
 
 async function guestHasListing(key: number){
     const db = await connection();
