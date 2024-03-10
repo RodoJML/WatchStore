@@ -1,5 +1,6 @@
-import { UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
+import { Orig_modelItem, Original_specsItem, StoreItem, UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
 import { connect } from './knex';
+const bcrypt = require('bcrypt');
 
 async function connection() {
     const db = await connect();
@@ -147,20 +148,103 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
 }
 
 // ------------------------------------------------------------------------------------------------
-
 async function unregistered_addListing(form: listing_mainForm){
 
     const genericUser = {} as UserItem;
     genericUser.user_id = form.step4.user_id;
     genericUser.user_type = 3;
+    genericUser.user_password = await bcrypt.hash(process.env.UNREGISTERED_USER_PW, 10);
     genericUser.user_name = "unregistered" + form.step4.user_id;
     genericUser.user_email = form.step4.user_email;
     genericUser.user_photo_path = "/src/assets/images/unregistered_user.jpg";
 
     const genericUserInfo = {} as UserInfoItem; 
     genericUserInfo.info_user_id = form.step4.user_id;
-    genericUserInfo
+    genericUserInfo.info_user_first_name = form.step4.name;
+    genericUserInfo.info_user_last_name = form.step4.lastName;
+    genericUserInfo.info_user_province = form.step4.province;
+
+    const genericStore = {} as StoreItem;
+    genericStore.store_user_id = form.step4.user_id;
+    genericStore.store_name = "unregistered" + form.step4.user_id;
+    genericStore.store_about = "unregistered";
+    genericStore.store_photo_path = "/src/assets/images/unregistered_store.png";
+    genericStore.store_active = 0;
+
+    try{
+        const db = await connection();
+        const insertedUser = await db('user').insert(genericUser);
+
+        if(insertedUser.length > 0){
+            const insertedStore = await db('store').insert(genericStore);
+            
+            if(insertedStore.length > 0){
+
+                if(form.step1.certification == 1){
+
+                    await db.raw('CALL olisting_insert_model_return_id(?, ?, ?, @inserted_id)', [form.step1.brand, form.step2.model, "Added automatically from listing"]);
+                    const model_inserted_id = await db.raw('SELECT @inserted_id as inserted_id');
+
+                    if(model_inserted_id > 0){
+                        
+                        const original_specs = {} as Original_specsItem;
+                        original_specs.orig_specs_model_id = model_inserted_id;
+                        original_specs.orig_specs_brand_id = form.step1.brand;
+                        original_specs.orig_specs_type_id = form.step2.type;
+                        original_specs.orig_specs_movement_id = form.step2.movement;
+                        original_specs.orig_specs_style_id = form.step2.style;
+                        original_specs.orig_specs_shape_id = form.step2.shape;
+                        original_specs.orig_specs_glass_id = form.step2.glass_material;
+                        original_specs.orig_specs_case_color = form.step2.case_color;
+                        original_specs.orig_specs_case_material_id = form.step2.case_material;
+                        original_specs.orig_specs_strap_color = form.step2.strap_color;
+                        original_specs.orig_specs_strap_material_id = form.step2.strap_material;
+                        original_specs.orig_specs_dial_color = form.step2.dial_color;
+                        original_specs.orig_specs_depth = form.step2.depth;
+                        original_specs.orig_specs_width = form.step2.width;
+                        original_specs.orig_specs_weight = form.step2.weight;
+                        original_specs.orig_specs_gender = form.step2.gender;
+                        original_specs.orig_specs_water_proof = form.step2.water_proof;
+                        original_specs.orig_specs_water_resistant = form.step2.water_resistant;
+                        original_specs.orig_specs_bezel_type_id = form.step2.bezel_type;
+                        original_specs.orig_specs_bezel_material_id = form.step2.bezel_material;
+                        original_specs.orig_specs_pw_reserve_hrs = form.step2.power_reserve;
+                        original_specs.orig_specs_lume = form.step2.lume;
+                        original_specs.orig_specs_clasp_type_id = form.step2.clasp_type;
+
+                        const inserted_orig_specs = await db('original_specs').insert(original_specs);
+
+                        if(inserted_orig_specs.length > 0){
+
+                        }else{
+                            throw new Error("An error ocurred inserting the specs of original watch")
+                        }
+
+                    } else {
+                        throw new Error("An error ocurred returning the inserted id in orig_model")
+                    }
+
+                } else {
+
+                    // Generic watches here 
+                }
+
+            }else{
+                throw new Error("Something bad happened when inserting the gen store")
+            }
+
+        } else {
+            throw new Error("Something bad happened when inserting the gen user")
+        }
+
+    } catch {
+
+    }
+
 }
+
+
+// --- We should have another function here to add listing, but accessed from a secure route.
 
 
 

@@ -21,7 +21,8 @@ export interface StoreItem {
     store_user_id: number,
     store_name: string,
     store_about: string,
-    store_path: string,
+    store_photo_path: string,
+    store_active: number,
 }
 
 export interface Orig_modelItem {
