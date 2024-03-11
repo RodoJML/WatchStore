@@ -18,7 +18,7 @@ Technologies used:
 
 - Styles done using Tailwind CSS https://tailwindcss.com/
 - All icons included from https://fontawesome.com/
-- ℹ️ All UI components are beign built from scratch, not copy pasted from anywhere else, meaning that this website design is unique.
+- ℹ️ All UI components are beign built from scratch, no copy pasted from anywhere else, meaning that this website design is unique.
 - Design follows the "mobile first" method (So does Tailwind)
 
 <img width="1284" alt="preview" src="https://github.com/RodoJML/WatchStore/assets/63088555/3a31ddd2-a1b3-4c5b-86fb-90378cefb469">
