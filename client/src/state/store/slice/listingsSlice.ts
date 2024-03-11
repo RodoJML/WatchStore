@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import * as Interfaces from './../../../model/interfaces';
 import type { DataEnvelope, DataEnvelopeList } from './../../../model/interfaces';
+import type { Listing_mainForm } from './../../../pages/NewListing';
 import { type Message } from './sessionSlice';
 import type { ListingPreviewItem } from './../../../model/interfaces';
 
@@ -132,6 +132,14 @@ export const guestHasListing = createAsyncThunk(
     'listings/guestHasListing',
     async (stock_store_user_id: number): Promise<DataEnvelope<boolean>> => {
         return await Fetch.api(`/listing/guestHasListing?key=${stock_store_user_id}`).catch((err) => { throw err; });
+    }
+)
+
+export const unregistered_addListing = createAsyncThunk(
+    'listings/unregistered_addListing',
+    async (listing_mainForm: Listing_mainForm ): Promise<DataEnvelope<string>> => {
+        return await Fetch.api(`/listing/unregistered_addListing`, listing_mainForm, 'POST').catch((err) => { throw err; });
+
     }
 )
 

@@ -270,22 +270,23 @@ async function unregistered_addListing(form: listing_mainForm) {
 
                     await db.raw('CALL olisting_insert_model_return_id(?, ?, ?, @inserted_id)', [form.step1.brand, form.step2.model, "Added automatically from listing"]);
                     const orig_model_inserted_id = await db.raw('SELECT @inserted_id as orig_model_inserted_id');
+                    console.log(orig_model_inserted_id);
 
-                    if (orig_model_inserted_id > 0 && orig_model_inserted_id != undefined) {
+                    if (orig_model_inserted_id[0][0].orig_model_inserted_id > 0 && orig_model_inserted_id[0][0].orig_model_inserted_id != undefined) {
 
-                        specs.orig_specs_model_id = orig_model_inserted_id;
+                        specs.orig_specs_model_id = orig_model_inserted_id[0][0].orig_model_inserted_id;
                         const inserted_orig_specs = await db('original_specs').insert(specs);
 
                         if (inserted_orig_specs.length > 0) {
 
                             await db.raw('CALL olisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                                [form.step4.user_id, orig_model_inserted_id, form.step1.brand, form.step3.condition, form.step3.quantity]);
+                            [form.step4.user_id, orig_model_inserted_id[0][0].orig_model_inserted_id, form.step1.brand, form.step3.condition, form.step3.quantity]);
 
                             const orig_stock_inserted_id = await db.raw('SELECT @inserted_id as orig_stock_inserted_id');
 
-                            if (orig_stock_inserted_id > 0) {
+                            if (orig_stock_inserted_id[0][0].orig_stock_inserted_id > 0 && orig_stock_inserted_id[0][0].orig_stock_inserted_id != undefined) {
 
-                                listing.orig_listing_stock_id = orig_stock_inserted_id;
+                                listing.orig_listing_stock_id = orig_stock_inserted_id[0][0].orig_stock_inserted_id;
                                 const inserted_listing = await db('orig_listing').insert(listing);
 
                                 const insertedSuccessfully = inserted_listing.length > 0;
@@ -378,15 +379,6 @@ async function userSearch(key: string[]) {
     const db = await connection();
 
 }
-
-
-
-
-
-
-
-
-
 
 async function getAll() {
     const db = await connection();
@@ -511,4 +503,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing };
+module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing, unregistered_addListing };

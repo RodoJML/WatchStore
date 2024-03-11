@@ -58,6 +58,14 @@ router
         ).catch(next);
     })
 
+    .post('/unregistered_addListing', (req: Request, res: Response, next: NextFunction) => {
+        model.unregistered_addListing(req.body).then(
+            (result: any) => {
+                const data = {data: result.data, isSuccess: result.insertedSuccessfully, total: result.total};
+            }
+        ).catch(next);
+    })
+
     .patch('/:listing_stock_id/:listing_stock_user_id', (req: Request, res: Response, next: NextFunction) => {
         model.updateOne(req.params.listing_stock_id, req.params.listing_stock_user_id, req.body)
         .then(

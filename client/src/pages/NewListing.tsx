@@ -13,8 +13,9 @@ import NewListingStep4 from "../components/NewListingStep4";
 import Notification from '../components/Notification';
 
 import { useNavigate } from "react-router-dom";
+import { unregistered_addListing } from "../state/store/slice/listingsSlice";
 
-export interface listing_mainForm {
+export interface Listing_mainForm {
     step1: step1form,
     step2: step2form,
     step3: step3form,
@@ -25,7 +26,7 @@ export default function NewListing() {
 
     const sessionState = useSelector((state: RootState) => state.session);
     const dispatch = useDispatch<AppDispatch>();
-    const [mainForm, setMainForm] = useState({} as listing_mainForm);
+    const [mainForm, setMainForm] = useState({} as Listing_mainForm);
     const navigate = useNavigate();
 
     const [step1submitted, setStep1submitted] = useState(false);
@@ -61,7 +62,10 @@ export default function NewListing() {
             if (sessionState.user.user_type <= 2) {
 
             } else {
-
+                dispatch(unregistered_addListing(mainForm)).then((result: any ) => {
+                    console.log(result.data);
+                    
+                }).catch((err) => { alert(err)});
             }
         }
              
