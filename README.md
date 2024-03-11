@@ -15,6 +15,10 @@ Technologies used:
 - ![Screen Shot 2024-01-28 at 11 50 03 PM](https://github.com/RodoJML/WatchStore/assets/63088555/698a5528-21a7-4e3b-8e30-742ddfe73fce) https://jwt.io/
 
 <h2>🌐 Preview of the website (Beta)</h2>
+
+- Styles done using Tailwind
+- All components builds from scratch not copy pasted from anywhere else, meaning this website design is unique.
+
 <img width="1284" alt="preview" src="https://github.com/RodoJML/WatchStore/assets/63088555/3a31ddd2-a1b3-4c5b-86fb-90378cefb469">
 
 <h2>📚 Database Design</h2>
