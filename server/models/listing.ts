@@ -1,4 +1,4 @@
-import { Gen_listingItem, Gen_specsItem, Gen_stockItem, Orig_listingItem, Orig_modelItem, Orig_stockItem, Original_specsItem, StoreItem, UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
+import { Gen_listingItem, Gen_modelItem, Gen_specsItem, Gen_stockItem, Orig_listingItem, Orig_modelItem, Orig_stockItem, Original_specsItem, StoreItem, UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
 import { connect } from './knex';
 const bcrypt = require('bcrypt');
 
@@ -256,6 +256,15 @@ async function unregistered_addListing(form: listing_mainForm) {
         listing.gen_listing_unit_dprice = form.step4.dprice;
     }
 
+    // UNREGISTERED USER ADDS A LISTING
+    // This is the correct order follow when adding a listing based on Tables and Foreign Key.
+    // 1. add unregistered user to db
+    // 2. add generic store 
+    // 3. add model (Returns ID)
+    // 4. add specs
+    // 5. add stock (Returns ID)
+    // 6. add listing
+
     try {
         const db = await connection();
         const insertedUser = await db('user').insert(genericUser);
@@ -268,24 +277,25 @@ async function unregistered_addListing(form: listing_mainForm) {
                 if (form.step1.certification == 1) {
 
                     await db.raw('CALL olisting_insert_model_return_id(?, ?, ?, @inserted_id)', [form.step1.brand, form.step2.model, "Added automatically from listing"]);
-                    const orig_model_inserted_id = await db.raw('SELECT @inserted_id as orig_model_inserted_id');
-                    console.log(orig_model_inserted_id);
+                    const orig_model_inserted_id_select = await db.raw('SELECT @inserted_id as orig_model_inserted_id');
+                    const orig_model_inserted_id_value = orig_model_inserted_id_select[0][0].orig_model_inserted_id;
 
-                    if (orig_model_inserted_id[0][0].orig_model_inserted_id > 0 && orig_model_inserted_id[0][0].orig_model_inserted_id != undefined) {
+                    if (orig_model_inserted_id_value > 0 && orig_model_inserted_id_value != undefined) {
 
-                        specs.orig_specs_model_id = orig_model_inserted_id[0][0].orig_model_inserted_id;
+                        specs.orig_specs_model_id = orig_model_inserted_id_value;
                         const inserted_orig_specs = await db('original_specs').insert(specs);
 
                         if (inserted_orig_specs.length > 0) {
 
                             await db.raw('CALL olisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                            [form.step4.user_id, orig_model_inserted_id[0][0].orig_model_inserted_id, form.step1.brand, form.step3.condition, form.step3.quantity]);
+                                [form.step4.user_id, orig_model_inserted_id_value, form.step1.brand, form.step3.condition, form.step3.quantity]);
 
-                            const orig_stock_inserted_id = await db.raw('SELECT @inserted_id as orig_stock_inserted_id');
+                            const orig_stock_inserted_id_select = await db.raw('SELECT @inserted_id as orig_stock_inserted_id');
+                            const orig_stock_inserted_id_value = orig_stock_inserted_id_select[0][0].orig_stock_inserted_id
 
-                            if (orig_stock_inserted_id[0][0].orig_stock_inserted_id > 0 && orig_stock_inserted_id[0][0].orig_stock_inserted_id != undefined) {
+                            if (orig_stock_inserted_id_value > 0 && orig_stock_inserted_id_value != undefined) {
 
-                                listing.orig_listing_stock_id = orig_stock_inserted_id[0][0].orig_stock_inserted_id;
+                                listing.orig_listing_stock_id = orig_stock_inserted_id_value;
                                 const inserted_listing = await db('orig_listing').insert(listing);
 
                                 const insertedSuccessfully = inserted_listing.length > 0;
@@ -307,26 +317,36 @@ async function unregistered_addListing(form: listing_mainForm) {
 
                 } else {
 
+                    let country = 0;
+
+                    if (form.step2.country > 0 && form.step2.country != undefined) {
+                        country = form.step2.country;
+                    } else {
+                        country = 7;
+                    }
+
                     await db.raw('CALL glisting_insert_model_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                    [form.step1.brand, form.step2.model, "Added from listing", form.step2.country > 0 ? form.step2.country : 7, form.step1.certification]);
+                        [form.step1.brand, form.step2.model, "Added from listing", country, form.step1.certification]);
 
-                    const gen_model_inserted_id = await db.raw('SELECT @inserted_id as gen_model_inserted_id');
+                    const gen_model_inserted_id_select = await db.raw('SELECT @inserted_id as gen_model_inserted_id');
+                    const gen_model_inserted_id_value = gen_model_inserted_id_select[0][0].gen_model_inserted_id;
 
-                    if (gen_model_inserted_id > 0 && gen_model_inserted_id != undefined) {
+                    if (gen_model_inserted_id_value > 0 && gen_model_inserted_id_value != undefined) {
 
-                        specs.gen_specs_model_id = gen_model_inserted_id;
+                        specs.gen_specs_model_id = gen_model_inserted_id_value;
                         const inserted_gen_specs = await db('gen_specs').insert(specs);
 
                         if (inserted_gen_specs.length > 0) {
 
                             await db.raw('CALL glisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                                [form.step4.user_id, gen_model_inserted_id, form.step1.brand, form.step3.condition, form.step3.quantity]);
+                                [form.step4.user_id, gen_model_inserted_id_value, form.step1.brand, form.step3.condition, form.step3.quantity]);
 
-                            const gen_stock_inserted_id = await db.raw('SELECT @inserted_id as gen_stock_inserted_id');
+                            const gen_stock_inserted_id_select = await db.raw('SELECT @inserted_id as gen_stock_inserted_id');
+                            const gen_stock_inserted_id_value = gen_stock_inserted_id_select[0][0].gen_stock_inserted_id;
 
-                            if (gen_stock_inserted_id > 0) {
+                            if (gen_stock_inserted_id_value > 0) {
 
-                                listing.gen_listing_stock_id = gen_stock_inserted_id;
+                                listing.gen_listing_stock_id = gen_stock_inserted_id_value;
                                 const inserted_listing = await db('gen_listing').insert(listing);
 
                                 const insertedSuccessfully = inserted_listing.length > 0;

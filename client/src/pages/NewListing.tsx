@@ -14,6 +14,8 @@ import Notification from '../components/Notification';
 
 import { useNavigate } from "react-router-dom";
 import { unregistered_addListing } from "../state/store/slice/listingsSlice";
+import { DataEnvelope } from "../model/interfaces";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 export interface Listing_mainForm {
     step1: step1form,
@@ -62,10 +64,11 @@ export default function NewListing() {
             if (sessionState.user.user_type <= 2) {
 
             } else {
-                dispatch(unregistered_addListing(mainForm)).then((result: any ) => {
-                    alert(result.data);
-                    
-                }).catch((err) => { alert(err)});
+                dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
+                    if(result.isSuccess == true){
+                        alert(result.data);
+                    }
+                })
             }
         }
              

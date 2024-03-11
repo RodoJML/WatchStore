@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../state/store/store";
-import { listing_mainForm } from "../pages/NewListing";
+import { Listing_mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBox, faBoxArchive, faBoxesStacked, faCalendar, faCertificate, faCheckDouble, faClock, faColonSign, faDollarSign, faDolly, faEnvelope, faLocationDot, faPhone, faTruckRampBox, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBoxArchive, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faLocationDot, faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
 import { guestHasListing } from "../state/store/slice/listingsSlice";
@@ -20,8 +20,7 @@ export interface step4form {
     province: string,
 }
 
-export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
-
+export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: Listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
 
     const [form, setForm] = useState({} as step4form);
     const [active, setActive] = useState(false);
@@ -30,7 +29,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     const [listingAlreadyExist, setListingAlreadyExist] = useState(false);
     const [finished, setFinished] = useState(false);
     const [transition1, setTransition1] = useState(false);
-    const [transition2, setTransition2] = useState(false);
     const [date, setDate] = useState(new Date());
     const dispatch = useDispatch<AppDispatch>();
 
@@ -38,9 +36,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
         let timeout1: NodeJS.Timeout;
         let timeout2: NodeJS.Timeout;
         let timeout3: NodeJS.Timeout;
-        const currentDate = new Date();
-        const date = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
-        // we sum 1 to the month because it is 0 based
 
         if (begin) {
             timeout1 = setTimeout(() => { setActive(begin) }, 50);
@@ -72,8 +67,8 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
         }
     }, [form.cprice, currencyExchange])
 
-    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
+    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
 
         dispatch(guestHasListing(form.user_id)).then((result: any) => {
@@ -84,7 +79,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 complete(form);
             }
         });
-
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,6 +154,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                         <div className="text-shadow shadow-black">Publicado en:</div>
                     </div>
                     <div>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</div>
+                    {/* Month is zero based therefore we sum 1 */}
                 </div>
 
                 <textarea name="description" id="description" placeholder="Descripción o comentario" className="p-1 rounded w-full text-stone-800" rows={2} onChange={handleTextAreaChange} />
@@ -185,7 +180,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                             <div className="text-xs whitespace-nowrap text-nowrap">Tipo Cambio</div>
                         </div>
                     </div>
-
 
                 </div>
 
@@ -244,12 +238,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                         </div>
                     </div>
                 </button>
-
             </form>
-
-
-
         </div>
-
     )
 }

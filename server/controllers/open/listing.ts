@@ -62,6 +62,7 @@ router
         model.unregistered_addListing(req.body).then(
             (result: any) => {
                 const data = {data: result.data, isSuccess: result.insertedSuccessfully, total: result.total};
+                res.send(data);
             }
         ).catch(next);
     })
