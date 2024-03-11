@@ -69,11 +69,14 @@ export default function NewListing() {
 
         if (step1submitted && step2submitted && step3submitted && step4submitted) {
 
+            // If user is of type 3 or higher, it means its unregistered.
             if (sessionState.user.user_type <= 2) {
+
+            } else {
 
             }
 
-            // If user is of type 3 or higher, meaning unregistered. 
+             
             if (sessionState.user.user_type > 2) {
 
                 // Using the form data and shape it into the DB schema

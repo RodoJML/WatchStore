@@ -298,11 +298,9 @@ async function unregistered_addListing(form: listing_mainForm) {
                             } else {
                                 throw new Error("Original: An error ocurred getting the stock_id inserted")
                             }
-
                         } else {
                             throw new Error("Original: An error ocurred inserting the specs of original watch")
                         }
-
                     } else {
                         throw new Error("Original: An error ocurred returning the inserted id in orig_model")
                     }
@@ -310,38 +308,57 @@ async function unregistered_addListing(form: listing_mainForm) {
                 } else {
 
                     await db.raw('CALL glisting_insert_model_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                        [form.step1.brand, form.step2.model, "Added from listing", form.step2.country, form.step1.certification]);
+                        [form.step1.brand, form.step2.model, "Added from listing", form.step2.country > 0 ? form.step2.country : 7, form.step1.certification]);
 
                     const gen_model_inserted_id = await db.raw('SELECT @inserted_id as gen_model_inserted_id');
 
                     if (gen_model_inserted_id > 0 && gen_model_inserted_id != undefined) {
 
                         specs.gen_specs_model_id = gen_model_inserted_id;
+                        const inserted_gen_specs = await db('gen_specs').insert(specs);
 
+                        if (inserted_gen_specs.length > 0) {
+
+                            await db.raw('CALL glisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
+                                [form.step4.user_id, gen_model_inserted_id, form.step1.brand, form.step3.condition, form.step3.quantity]);
+
+                            const gen_stock_inserted_id = await db.raw('SELECT @inserted_id as gen_stock_inserted_id');
+
+                            if (gen_stock_inserted_id > 0) {
+
+                                listing.gen_listing_stock_id = gen_stock_inserted_id;
+                                const inserted_listing = await db('gen_listing').insert(listing);
+
+                                const insertedSuccessfully = inserted_listing.length > 0;
+                                const total = inserted_listing.length;
+                                let data = "";
+
+                                if (insertedSuccessfully) { data = "Listing added successfully" } else { data = "Listing unsuccesfull" };
+                                return { data, insertedSuccessfully, total }
+
+                            } else {
+                                throw new Error("Original: An error ocurred getting the stock_id inserted")
+                            }
+                        } else {
+                            throw new Error("Original: An error ocurred inserting the specs of original watch")
+                        }
                     } else {
                         throw new Error("Generic: An error ocurred returning the inserted id in gen_model")
                     }
-
                 }
-
             } else {
                 throw new Error("Something bad happened when inserting the gen store")
             }
-
         } else {
             throw new Error("Something bad happened when inserting the gen user")
         }
-
-    } catch {
-
+    } catch (err) {
+        throw new Error('Backend end error: ' + err);
     }
-
 }
 
 
 // --- We should have another function here to add listing, but accessed from a secure route.
-
-
 
 
 async function guestHasListing(key: number) {
