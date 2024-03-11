@@ -14,7 +14,7 @@ Technologies used:
 - Redux for state management https://redux.js.org/
 - ![Screen Shot 2024-01-28 at 11 50 03 PM](https://github.com/RodoJML/WatchStore/assets/63088555/698a5528-21a7-4e3b-8e30-742ddfe73fce) https://jwt.io/
 
-<h2>🌐 Preview of the website (Beta)</h2>
+<h2>🌐 Preview of the website (Beta - NOT LIVE yet, No URL available)</h2>
 
 - Styles done using Tailwind CSS https://tailwindcss.com/
 - All icons included from https://fontawesome.com/
