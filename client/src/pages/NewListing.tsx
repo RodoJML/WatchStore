@@ -63,7 +63,7 @@ export default function NewListing() {
 
             } else {
                 dispatch(unregistered_addListing(mainForm)).then((result: any ) => {
-                    console.log(result.data);
+                    alert(result.data);
                     
                 }).catch((err) => { alert(err)});
             }

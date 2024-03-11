@@ -254,7 +254,6 @@ async function unregistered_addListing(form: listing_mainForm) {
         listing.gen_listing_guarantee = form.step4.warranty;
         listing.gen_listing_unit_cprice = form.step4.cprice;
         listing.gen_listing_unit_dprice = form.step4.dprice;
-
     }
 
     try {
@@ -309,7 +308,7 @@ async function unregistered_addListing(form: listing_mainForm) {
                 } else {
 
                     await db.raw('CALL glisting_insert_model_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                        [form.step1.brand, form.step2.model, "Added from listing", form.step2.country > 0 ? form.step2.country : 7, form.step1.certification]);
+                    [form.step1.brand, form.step2.model, "Added from listing", form.step2.country > 0 ? form.step2.country : 7, form.step1.certification]);
 
                     const gen_model_inserted_id = await db.raw('SELECT @inserted_id as gen_model_inserted_id');
 
