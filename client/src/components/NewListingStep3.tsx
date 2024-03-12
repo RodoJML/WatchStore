@@ -1,7 +1,7 @@
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "../state/store/store";
-import { listing_mainForm } from "../pages/NewListing";
+import { Listing_mainForm } from "../pages/NewListing";
 import { useEffect, useState } from "react";
 
 export interface step3form {
@@ -13,7 +13,7 @@ export interface step3form {
     warranty: number,
 }
 
-export default function NewListingStep3({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: listing_mainForm, complete: (form: step3form) => (void), sessionStatus: RootState["session"] }) {
+export default function NewListingStep3({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: Listing_mainForm, complete: (form: step3form) => (void), sessionStatus: RootState["session"] }) {
 
     const [form, setForm] = useState({ quantity: 1 } as step3form);
     const [active, setActive] = useState(false);
@@ -61,7 +61,6 @@ export default function NewListingStep3({ begin, mainForm, complete, sessionStat
         setFinished(true);
         complete(form);
     }
-
 
 
     return (

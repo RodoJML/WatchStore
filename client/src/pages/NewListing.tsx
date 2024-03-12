@@ -1,16 +1,18 @@
 import NewListingStep1 from "../components/NewListingStep1";
-import NewListingNav from "../components/NewListingNav";
-import { useEffect, useState } from "react";
 import NewListingStep2 from "../components/NewListingStep2";
+import NewListingStep3 from "../components/NewListingStep3";
+import NewListingStep4 from "../components/NewListingStep4";
+import NewListingPosting from "../components/NewListingPosting";
+import NewListingNav from "../components/NewListingNav";
+import Notification from '../components/Notification';
+
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { step1form } from "../components/NewListingStep1";
 import { step2form } from "../components/NewListingStep2";
 import { step3form } from "../components/NewListingStep3";
 import { step4form } from "../components/NewListingStep4";
-import NewListingStep3 from "../components/NewListingStep3";
-import NewListingStep4 from "../components/NewListingStep4";
-import Notification from '../components/Notification';
 
 import { useNavigate } from "react-router-dom";
 import { unregistered_addListing } from "../state/store/slice/listingsSlice";
@@ -35,6 +37,7 @@ export default function NewListing() {
     const [step2submitted, setStep2submitted] = useState(false);
     const [step3submitted, setStep3submitted] = useState(false);
     const [step4submitted, setStep4submitted] = useState(false);
+    const [postedSucessfully, setPostedSucessfully] = useState(false);
 
     const handleStep1Complete = (form: step1form) => {
         setMainForm({ ...mainForm, step1: form });
@@ -58,6 +61,8 @@ export default function NewListing() {
 
     useEffect(() => {
 
+        let timeout1: NodeJS.Timeout;
+
         if (step1submitted && step2submitted && step3submitted && step4submitted) {
 
             // If user is of type 3 or higher, it means its unregistered.
@@ -66,15 +71,18 @@ export default function NewListing() {
             } else {
                 dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if(result.isSuccess == true){
-                        alert(result.data);
+                        setPostedSucessfully(true);
+                        timeout1 = setTimeout(() => {navigate("/")}, 800);
+                    } else {
+                        setPostedSucessfully(false);
                     }
-                })
+                }).catch((err) => {alert(err)});
             }
         }
-             
-            
 
-    }, [mainForm])
+        return () => {clearTimeout(timeout1)};
+
+    }, [mainForm, step1submitted, step2submitted, step3submitted, step4submitted])
 
     return (
         <div>
@@ -84,6 +92,7 @@ export default function NewListing() {
             {step1submitted && <NewListingStep2 begin={step1submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep2Complete} />}
             {step2submitted && <NewListingStep3 begin={step2submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep3Complete} />}
             {step3submitted && <NewListingStep4 begin={step3submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep4Complete} />}
+            {step4submitted && <NewListingPosting isSuccess={postedSucessfully}/>}
         </div>
     )
 }

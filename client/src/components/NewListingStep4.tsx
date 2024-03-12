@@ -29,6 +29,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     const [listingAlreadyExist, setListingAlreadyExist] = useState(false);
     const [finished, setFinished] = useState(false);
     const [transition1, setTransition1] = useState(false);
+    const [transition2, setTransition2] = useState(false);
     const [date, setDate] = useState(new Date());
     const dispatch = useDispatch<AppDispatch>();
 
@@ -40,6 +41,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
         if (begin) {
             timeout1 = setTimeout(() => { setActive(begin) }, 50);
             timeout2 = setTimeout(() => { setTransition1(true) }, 100);
+            timeout3 = setTimeout(() => { setTransition2(true) }, 800);
         }
 
         return () => {
@@ -77,6 +79,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
             } else {
                 setFinished(true);
                 complete(form);
+                window.scrollTo(0, 0);
             }
         });
     }
@@ -115,7 +118,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     }, [form.user_id])
 
     return (
-        <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition1 ? " right-0 " : " -right-full "}`}>
+        <div className={`${active ? "visible" : "hidden"} absolute w-screen p-3 transition-all ease-in-out duration-700 ${transition2 ? (finished ? " -left-full " : " left-0 ") : (transition1 ? " right-0 " : " -right-full ")}`}>
 
             <div className="flex justify-center h-42 opacity-70 animate-pulse">
                 <img src="/src/assets/images/listingInfo.png" alt="" />
