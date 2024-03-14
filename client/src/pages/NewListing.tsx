@@ -37,7 +37,7 @@ export default function NewListing() {
     const [step2submitted, setStep2submitted] = useState(false);
     const [step3submitted, setStep3submitted] = useState(false);
     const [step4submitted, setStep4submitted] = useState(false);
-    const [postedSucessfully, setPostedSucessfully] = useState(false);
+    const [postedSucessfully, setPostedSucessfully] = useState(undefined);
 
     const handleStep1Complete = (form: step1form) => {
         setMainForm({ ...mainForm, step1: form });
