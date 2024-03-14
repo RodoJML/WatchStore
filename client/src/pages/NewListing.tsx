@@ -37,7 +37,7 @@ export default function NewListing() {
     const [step2submitted, setStep2submitted] = useState(false);
     const [step3submitted, setStep3submitted] = useState(false);
     const [step4submitted, setStep4submitted] = useState(false);
-    const [postedSucessfully, setPostedSucessfully] = useState(undefined);
+    const [postedSucessfully, setPostedSucessfully] = useState(0);
 
     const handleStep1Complete = (form: step1form) => {
         setMainForm({ ...mainForm, step1: form });
@@ -71,10 +71,10 @@ export default function NewListing() {
             } else {
                 dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if(result.isSuccess == true){
-                        setPostedSucessfully(true);
+                        setPostedSucessfully(1);
                         timeout1 = setTimeout(() => {navigate("/")}, 800);
                     } else {
-                        setPostedSucessfully(false);
+                        setPostedSucessfully(2);
                     }
                 }).catch((err) => {alert(err)});
             }

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../state/store/store";
 import { Listing_mainForm } from "../pages/NewListing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBoxArchive, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faLocationDot, faPhone, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { faBoxArchive, faCertificate, faCheckDouble, faColonSign, faDollarSign, faEnvelope, faLocationDot, faPhone, faSpinner, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../state/store/slice/sessionSlice";
 import { guestHasListing } from "../state/store/slice/listingsSlice";
 
@@ -22,14 +22,13 @@ export interface step4form {
 
 export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: Listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
 
+    const listingState = useSelector((state: RootState) => state.listings);
     const [form, setForm] = useState({} as step4form);
     const [active, setActive] = useState(false);
     const [currencyExchange, setCurrencyExchange] = useState(true);
     const [ceValue, setCeValue] = useState(500);
     const [listingAlreadyExist, setListingAlreadyExist] = useState(false);
-    const [finished, setFinished] = useState(false);
     const [transition1, setTransition1] = useState(false);
-    const [transition2, setTransition2] = useState(false);
     const [date, setDate] = useState(new Date());
     const dispatch = useDispatch<AppDispatch>();
 
@@ -78,7 +77,6 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
             } else {
                 window.scrollTo(0, 0);
                 setActive(false);
-                setFinished(true);
                 complete(form);
             }
         });
@@ -176,7 +174,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                     <div className="flex justify-center items-center bg-black bg-opacity-40 rounded w-10 mr-1"><FontAwesomeIcon icon={faDollarSign} /></div>
 
                     <div className="flex w-full">
-                        <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className={`p-1 rounded w-full ${currencyExchange ? "text-white" : "text-stone-800"} mr-1`} pattern="[0-9]*" min={1} required onChange={handleInputChange} disabled={currencyExchange} {...(currencyExchange ? { value: form.cprice / ceValue } : {value: form.dprice})} />
+                        <input name="dprice" id="dprice" type="number" placeholder="Precio en dolares" className={`p-1 rounded w-full ${currencyExchange ? "text-white" : "text-stone-800"} mr-1`} pattern="[0-9]*" min={1} required onChange={handleInputChange} disabled={currencyExchange} {...(currencyExchange ? { value: form.cprice / ceValue } : { value: form.dprice })} />
 
                         <div className="flex items-center justify-center bg-black bg-opacity-40 rounded py-1 px-2">
                             <input name="currencyExchange" id="currencyExchange" className="mr-1" type="checkbox" defaultChecked onChange={handleInputChange} />
@@ -235,10 +233,16 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
 
                 <button type="submit" disabled={listingAlreadyExist} className={`flex justify-center items-center bg-gradient-to-b from-stone-700 to-stone-900 p-2 rounded shadow shadow-black ${listingAlreadyExist && " opacity-50"}`}>
                     <div className="text-white">
-                        <div className="flex items-center justify-center">
-                            <div className="mr-2 font-bold text-white text-shadow">PUBLICAR</div>
-                            <div><FontAwesomeIcon icon={faCheckDouble} className="text-lume-100" /></div>
-                        </div>
+                        {listingState.isLoading
+                            ?
+                            <div><FontAwesomeIcon icon={faSpinner} className="text-lume-100 fa-spin" /></div>
+                            :
+                            <div className="flex items-center justify-center">
+                                <div className="mr-2 font-bold text-white text-shadow">PUBLICAR</div>
+                                <div><FontAwesomeIcon icon={faCheckDouble} className="text-lume-100" /></div>
+                            </div>
+                        }
+
                     </div>
                 </button>
             </form>
