@@ -83,6 +83,7 @@ These are some notes to self:
     Remmber to add year to the models in the DB
     DB needs to be updated fields need to be change from Decimal (3,2) to Decimal (5,2) 
     Add whatsapp API
+    Convert all images to Webp
 
     
     Tailwind cheat sheet

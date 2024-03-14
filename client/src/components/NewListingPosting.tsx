@@ -9,10 +9,10 @@ export default function NewListingPosting({ isSuccess }: { isSuccess: number }) 
 
     return (
         <>
-            {listingState.isLoading || isSuccess == 0 ?
+            {listingState.isLoading == true || isSuccess == 0 ?
                 <div className="flex items-center justify-center mt-20">
                     <div>
-                        <FontAwesomeIcon className="9xl text-lume-100" icon={faSpinner} />
+                        <FontAwesomeIcon icon={faSpinner} className="text-9xl text-lume-100 fa-spin" />
                     </div>
                 </div>
                 :

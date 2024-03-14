@@ -111,6 +111,27 @@ const listingSlice = createSlice({
             state.messages.push({ message: action.error.message ?? JSON.stringify(action.error), type: 'danger' });
             console.log(state.messages[state.messages.length - 1]);
         });
+        builder.addCase(guestHasListing.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(guestHasListing.fulfilled, (state) => {
+            state.isLoading = false;
+        });
+        builder.addCase(guestHasListing.rejected, (state, action) => {
+            state.isLoading = false;
+            console.log(action.error);
+        });
+        builder.addCase(unregistered_addListing.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(unregistered_addListing.fulfilled, (state) => {
+            state.isLoading = false;
+        });
+        builder.addCase(unregistered_addListing.rejected, (state, action) => {
+            state.isLoading = false;
+            console.log(action.error);
+        });
+
     },
 });
 
@@ -139,7 +160,6 @@ export const unregistered_addListing = createAsyncThunk(
     'listings/unregistered_addListing',
     async (listing_mainForm: Listing_mainForm ): Promise<DataEnvelope<string>> => {
         return await Fetch.api(`/listing/unregistered_addListing`, listing_mainForm, 'POST').catch((err) => { throw err; });
-
     }
 )
 

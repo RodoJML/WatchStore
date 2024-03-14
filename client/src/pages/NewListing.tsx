@@ -72,7 +72,7 @@ export default function NewListing() {
                 dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if(result.isSuccess == true){
                         setPostedSucessfully(1);
-                        timeout1 = setTimeout(() => {navigate("/")}, 800);
+                        timeout1 = setTimeout(() => {navigate("/")}, 2000);
                     } else {
                         setPostedSucessfully(2);
                     }
