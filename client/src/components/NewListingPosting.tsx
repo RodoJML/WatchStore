@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store/store";
-import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function NewListingPosting({ isSuccess }: { isSuccess: boolean }) {
 
@@ -15,13 +16,13 @@ export default function NewListingPosting({ isSuccess }: { isSuccess: boolean })
                     </div>
                 </div>
                 :
-                (isSuccess == true && listingState.isLoading == false
+                ((listingState.isLoading == false && isSuccess == true)
                     ?
                     <div className="flex items-center justify-center mt-20">
                         <div className="w-60 text-sm text-white text-shadow shadow-black">
-                            
+
                             <div className="flex items-center justify-center w-full">
-                                <img className="w-24" src="/src/assets/images/success.png" />
+                                <FontAwesomeIcon className="text-9xl text-lume-100" icon={faCheck} />
                             </div>
 
                             <div className="w-full bg-black bg-opacity-30 p-3 text-center mt-5 rounded-md border border-white border-opacity-60">
@@ -38,7 +39,7 @@ export default function NewListingPosting({ isSuccess }: { isSuccess: boolean })
                         <div className="w-60 text-sm text-white text-shadow shadow-black">
 
                             <div className="flex items-center justify-center w-full">
-                                <img className="w-24 " src="/src/assets/images/fail.png" />
+                                <FontAwesomeIcon icon={faX} className="text-9xl text-red-800" />
                             </div>
 
                             <div className="w-full bg-black bg-opacity-30 p-3 text-center mt-5 rounded-md border border-white border-opacity-60">
