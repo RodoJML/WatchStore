@@ -21,7 +21,13 @@ Technologies used:
 - ℹ️ All UI components are beign built from scratch, no copy pasted from anywhere else, meaning that this website design is unique.
 - Design follows the "mobile first" method (So does Tailwind)
 
-<img width="1284" alt="preview" src="https://github.com/RodoJML/WatchStore/assets/63088555/3a31ddd2-a1b3-4c5b-86fb-90378cefb469">
+![Screen Shot 2024-03-14 at 12 19 53 AM](https://github.com/RodoJML/WatchStore/assets/63088555/9827d091-14ed-4e2c-8db5-52b17403a779)
+![Screen Shot 2024-03-14 at 12 21 48 AM](https://github.com/RodoJML/WatchStore/assets/63088555/51193866-1288-4cb5-bfd4-4843e37385a8)
+![Screen Shot 2024-03-14 at 12 21 20 AM](https://github.com/RodoJML/WatchStore/assets/63088555/a70cdfcc-29d8-4e5b-8400-9b2024e3bd43)
+![Screen Shot 2024-03-14 at 12 20 34 AM](https://github.com/RodoJML/WatchStore/assets/63088555/98117ada-155f-4b72-bdfa-fae7cdc05821)
+![Screen Shot 2024-03-14 at 12 21 48 AM](https://github.com/RodoJML/WatchStore/assets/63088555/7fa50e93-3d11-4ae8-b9f8-5b36d174c646)
+![Screen Shot 2024-03-14 at 12 22 04 AM](https://github.com/RodoJML/WatchStore/assets/63088555/43285c4c-c63d-40b7-881e-5a8b1fc07c0f)
+
 
 <h2>📚 Database Design</h2>
 <h3>Requirements</h3>
