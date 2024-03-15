@@ -379,7 +379,193 @@ async function unregistered_addListing(form: listing_mainForm) {
 
 
 // --- We should have another function here to add listing, but accessed from a secure route.
+async function registered_addListing(form: listing_mainForm, userid: number){
 
+    let specs = {} as any;
+    let stock = {} as any;
+    let listing = {} as any;
+
+    if (form.step1.certification == 1) {
+
+        specs = {} as Original_specsItem;
+        specs.orig_specs_brand_id = form.step1.brand;
+        specs.orig_specs_type_id = form.step2.type;
+        specs.orig_specs_movement_id = form.step2.movement;
+        specs.orig_specs_style_id = form.step2.style;
+        specs.orig_specs_shape_id = form.step2.shape;
+        specs.orig_specs_glass_id = form.step2.glass_material;
+        specs.orig_specs_case_color = form.step2.case_color;
+        specs.orig_specs_case_material_id = form.step2.case_material;
+        specs.orig_specs_strap_color = form.step2.strap_color;
+        specs.orig_specs_strap_material_id = form.step2.strap_material;
+        specs.orig_specs_dial_color = form.step2.dial_color;
+        specs.orig_specs_depth = form.step2.depth;
+        specs.orig_specs_width = form.step2.width;
+        specs.orig_specs_weight = form.step2.weight;
+        specs.orig_specs_gender = form.step2.gender;
+        specs.orig_specs_water_proof = form.step2.water_proof;
+        specs.orig_specs_water_resistant = form.step2.water_resistant;
+        specs.orig_specs_bezel_type_id = form.step2.bezel_type;
+        specs.orig_specs_bezel_material_id = form.step2.bezel_material;
+        specs.orig_specs_pw_reserve_hrs = form.step2.power_reserve;
+        specs.orig_specs_lume = form.step2.lume;
+        specs.orig_specs_clasp_type_id = form.step2.clasp_type;
+
+        stock = {} as Orig_stockItem;
+        stock.orig_stock_store_user_id = userid;
+        stock.orig_stock_watch_brand_id = form.step1.brand;
+        stock.orig_stock_condition = form.step3.condition;
+        stock.orig_stock_quantity = form.step3.quantity;
+
+        listing = {} as Orig_listingItem;
+        listing.orig_listing_stock_store_user_id = userid;
+        listing.orig_listing_description = form.step4.description;
+        listing.orig_listing_status = 1;
+        listing.orig_listing_guarantee = form.step4.warranty;
+        listing.orig_listing_unit_cprice = form.step4.cprice;
+        listing.orig_listing_unit_dprice = form.step4.dprice;
+
+    } else {
+
+        specs = {} as Gen_specsItem;
+        specs.gen_specs_brand_id = form.step1.brand;
+        specs.gen_specs_type_id = form.step2.type;
+        specs.gen_specs_movement_id = form.step2.movement;
+        specs.gen_specs_style_id = form.step2.style;
+        specs.gen_specs_shape_id = form.step2.shape;
+        specs.gen_specs_glass_id = form.step2.glass_material;
+        specs.gen_specs_case_color = form.step2.case_color;
+        specs.gen_specs_case_material_id = form.step2.case_material;
+        specs.gen_specs_strap_color = form.step2.strap_color;
+        specs.gen_specs_strap_material_id = form.step2.strap_material;
+        specs.gen_specs_dial_color = form.step2.dial_color;
+        specs.gen_specs_depth = form.step2.depth;
+        specs.gen_specs_width = form.step2.width;
+        specs.gen_specs_weight = form.step2.weight;
+        specs.gen_specs_gender = form.step2.gender;
+        specs.gen_specs_water_proof = form.step2.water_proof;
+        specs.gen_specs_water_resistant = form.step2.water_resistant;
+        specs.gen_specs_bezel_type_id = form.step2.bezel_type;
+        specs.gen_specs_bezel_material_id = form.step2.bezel_material;
+        specs.gen_specs_pw_reserve_hrs = form.step2.power_reserve;
+        specs.gen_specs_lume = form.step2.lume;
+        specs.gen_specs_clasp_type_id = form.step2.clasp_type;
+
+        stock = {} as Gen_stockItem;
+        stock.gen_stock_store_user_id = userid;
+        stock.gen_stock_watch_brand_id = form.step1.brand;
+        stock.gen_stock_condition = form.step3.condition;
+        stock.gen_stock_quantity = form.step3.quantity;
+
+        listing = {} as Gen_listingItem;
+        listing.gen_listing_stock_store_user_id = userid;
+        listing.gen_listing_description = form.step4.description;
+        listing.gen_listing_status = 1;
+        listing.gen_listing_guarantee = form.step4.warranty;
+        listing.gen_listing_unit_cprice = form.step4.cprice;
+        listing.gen_listing_unit_dprice = form.step4.dprice;
+    }
+
+    try{
+        const db = await connection();
+
+        if (form.step1.certification == 1) {
+
+            await db.raw('CALL olisting_insert_model_return_id(?, ?, ?, @inserted_id)', [form.step1.brand, form.step2.model, "Added automatically from listing"]);
+            const orig_model_inserted_id_select = await db.raw('SELECT @inserted_id as orig_model_inserted_id');
+            const orig_model_inserted_id_value = orig_model_inserted_id_select[0][0].orig_model_inserted_id;
+
+            if (orig_model_inserted_id_value > 0 && orig_model_inserted_id_value != undefined) {
+
+                specs.orig_specs_model_id = orig_model_inserted_id_value;
+                const inserted_orig_specs = await db('original_specs').insert(specs);
+
+                if (inserted_orig_specs.length > 0) {
+
+                    await db.raw('CALL olisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
+                        [form.step4.user_id, orig_model_inserted_id_value, form.step1.brand, form.step3.condition, form.step3.quantity]);
+
+                    const orig_stock_inserted_id_select = await db.raw('SELECT @inserted_id as orig_stock_inserted_id');
+                    const orig_stock_inserted_id_value = orig_stock_inserted_id_select[0][0].orig_stock_inserted_id
+
+                    if (orig_stock_inserted_id_value > 0 && orig_stock_inserted_id_value != undefined) {
+
+                        listing.orig_listing_stock_id = orig_stock_inserted_id_value;
+                        const inserted_listing = await db('orig_listing').insert(listing);
+
+                        const insertedSuccessfully = inserted_listing.length > 0;
+                        const total = inserted_listing.length;
+                        let data = "";
+
+                        if (insertedSuccessfully) { data = "Listing added successfully" } else { data = "Listing unsuccesfull" };
+                        return { data, insertedSuccessfully, total }
+
+                    } else {
+                        throw new Error("Original: An error ocurred getting the stock_id inserted")
+                    }
+                } else {
+                    throw new Error("Original: An error ocurred inserting the specs of original watch")
+                }
+            } else {
+                throw new Error("Original: An error ocurred returning the inserted id in orig_model")
+            }
+
+        } else {
+
+            let country = 0;
+
+            if (form.step2.country > 0 && form.step2.country != undefined) {
+                country = form.step2.country;
+            } else {
+                country = 7;
+            }
+
+            await db.raw('CALL glisting_insert_model_return_id(?, ?, ?, ?, ?, @inserted_id)',
+                [form.step1.brand, form.step2.model, "Added from listing", country, form.step1.certification]);
+
+            const gen_model_inserted_id_select = await db.raw('SELECT @inserted_id as gen_model_inserted_id');
+            const gen_model_inserted_id_value = gen_model_inserted_id_select[0][0].gen_model_inserted_id;
+
+            if (gen_model_inserted_id_value > 0 && gen_model_inserted_id_value != undefined) {
+
+                specs.gen_specs_model_id = gen_model_inserted_id_value;
+                const inserted_gen_specs = await db('gen_specs').insert(specs);
+
+                if (inserted_gen_specs.length > 0) {
+
+                    await db.raw('CALL glisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
+                        [form.step4.user_id, gen_model_inserted_id_value, form.step1.brand, form.step3.condition, form.step3.quantity]);
+
+                    const gen_stock_inserted_id_select = await db.raw('SELECT @inserted_id as gen_stock_inserted_id');
+                    const gen_stock_inserted_id_value = gen_stock_inserted_id_select[0][0].gen_stock_inserted_id;
+
+                    if (gen_stock_inserted_id_value > 0) {
+
+                        listing.gen_listing_stock_id = gen_stock_inserted_id_value;
+                        const inserted_listing = await db('gen_listing').insert(listing);
+
+                        const insertedSuccessfully = inserted_listing.length > 0;
+                        const total = inserted_listing.length;
+                        let data = "";
+
+                        if (insertedSuccessfully) { data = "Listing added successfully" } else { data = "Listing unsuccesfull" };
+                        return { data, insertedSuccessfully, total }
+
+                    } else {
+                        throw new Error("Original: An error ocurred getting the stock_id inserted")
+                    }
+                } else {
+                    throw new Error("Original: An error ocurred inserting the specs of original watch")
+                }
+            } else {
+                throw new Error("Generic: An error ocurred returning the inserted id in gen_model")
+            }
+        }
+
+    } catch (err){
+        throw new Error('Backend end error: ' + err);
+    }
+}
 
 async function guestHasListing(key: number) {
     const db = await connection();

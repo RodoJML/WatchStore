@@ -16,14 +16,7 @@ const port = 3000;
 const open_fetchUtil = require('./controllers/open/fetchUtil.ts');
 const open_user = require('./controllers/open/user.ts');
 const open_listing = require ('./controllers/open/listing.ts');
-const open_orig_listing = require('./controllers/open/orig_listing.ts');
-const open_orig_model = require('./controllers/open/orig_model.ts');
-const open_original_specs = require('./controllers/open/original_specs.ts');
-const open_orig_stock = require('./controllers/open/orig_stock.ts');
-const open_gen_model = require('./controllers/open/gen_model.ts');
-const open_gen_specs = require('./controllers/open/gen_specs.ts');
-const open_gen_stock = require('./controllers/open/gen_stock.ts');
-const open_gen_listing = require('./controllers/open/gen_listing.ts');
+const secure_listing = require('./controllers/secure/listing.ts');
 const open_store = require('./controllers/open/store.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
 
@@ -54,15 +47,9 @@ app
     .use(apiName + '/fetch', open_fetchUtil)
     .use(apiName + '/user', open_user)
     .use(apiName + '/listing', open_listing)
-    .use(apiName + '/orig_model', open_orig_model)
-    .use(apiName + '/gen_model', open_gen_model)
+    .use(apiName + '/secure_listing', requireLogin(), secure_listing)
     .use(apiName + '/store', open_store)
-    .use(apiName + '/original_specs', open_original_specs)
-    .use(apiName + '/gen_specs', open_gen_specs)
-    .use(apiName + '/orig_stock', open_orig_stock)
-    .use(apiName + '/orig_listing', open_orig_listing)
-    .use(apiName + '/gen_listing', open_gen_listing)
-    .use(apiName + '/gen_stock', open_gen_stock)
+
 
 // Error handling middleware
 app

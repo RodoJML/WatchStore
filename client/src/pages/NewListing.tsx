@@ -33,6 +33,7 @@ export default function NewListing() {
     const [mainForm, setMainForm] = useState({} as Listing_mainForm);
     const navigate = useNavigate();
 
+    const [currentStep, setCurrentStep] = useState(1);
     const [step1submitted, setStep1submitted] = useState(false);
     const [step2submitted, setStep2submitted] = useState(false);
     const [step3submitted, setStep3submitted] = useState(false);
@@ -42,21 +43,25 @@ export default function NewListing() {
     const handleStep1Complete = (form: step1form) => {
         setMainForm({ ...mainForm, step1: form });
         setStep1submitted(true);
+        setCurrentStep(2);
     };
 
     const handleStep2Complete = (form: step2form) => {
         setMainForm({ ...mainForm, step2: form });
         setStep2submitted(true);
+        setCurrentStep(3);
     }
 
     const handleStep3Complete = (form: step3form) => {
         setMainForm({ ...mainForm, step3: form });
         setStep3submitted(true);
+        setCurrentStep(4);
     }
 
     const handleStep4Complete = (form: step4form) => {
         setMainForm({ ...mainForm, step4: form });
         setStep4submitted(true);
+        setCurrentStep(5);
     }
 
     useEffect(() => {
@@ -87,7 +92,7 @@ export default function NewListing() {
     return (
         <div>
             <Notification message={sessionState.notification} />
-            <NewListingNav />
+            <NewListingNav currentStep={currentStep}/>
             <NewListingStep1 complete={handleStep1Complete} sessionStatus={sessionState} />
             {step1submitted && <NewListingStep2 begin={step1submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep2Complete} />}
             {step2submitted && <NewListingStep3 begin={step2submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep3Complete} />}
