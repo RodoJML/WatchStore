@@ -483,7 +483,7 @@ async function registered_addListing(form: listing_mainForm){
                 if (inserted_orig_specs.length > 0) {
 
                     await db.raw('CALL olisting_insert_stock_return_id(?, ?, ?, ?, ?, @inserted_id)',
-                        [form.step4.user_id, orig_model_inserted_id_value, form.step1.brand, form.step3.condition, form.step3.quantity]);
+                    [form.step4.user_id, orig_model_inserted_id_value, form.step1.brand, form.step3.condition, form.step3.quantity]);
 
                     const orig_stock_inserted_id_select = await db.raw('SELECT @inserted_id as orig_stock_inserted_id');
                     const orig_stock_inserted_id_value = orig_stock_inserted_id_select[0][0].orig_stock_inserted_id
