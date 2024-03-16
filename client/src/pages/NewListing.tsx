@@ -73,7 +73,6 @@ export default function NewListing() {
             // If user is of type 3 or higher, it means its unregistered.
             if (sessionState.user.user_type <= 2) {
                 
-                mainForm.step4.user_id = sessionState.user.user_id;
                 dispatch(registered_addListing({ listing_mainForm: mainForm, user: sessionState.user })).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if (result.isSuccess == true) {
                         setPostedSucessfully(1);
