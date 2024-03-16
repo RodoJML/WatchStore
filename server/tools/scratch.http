@@ -18,16 +18,6 @@ GET http://localhost:3000/api/v1/fetch/brand/
 }
 
 ###
-POST http://localhost:3000/api/v1/user/login/
-Content-Type: application/json
-
-{
-    "user_email": "rodojml@me.com",
-    "user_password": "rjml2290"
-}
-
-
-###
 GET http://localhost:3000/api/v1/listing/getAll_previews
 
 ###
@@ -107,3 +97,19 @@ Content-Type: application/json
     "orig_specs_water_proof": 1,
     "orig_specs_water_resistant": 1
 }
+
+@jwt={{login.response.body.data.token}}
+
+###
+# @name login
+POST http://localhost:3000/api/v1/user/login/
+Content-Type: application/json
+
+{
+    "user_email": "rodojml@icloud.com",
+    "user_password": "rjml2290!!"
+}
+
+###
+GET http://localhost:3000/api/v1/secure_listing/securitytest
+Authorization: Bearer {{jwt}}

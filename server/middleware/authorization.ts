@@ -18,9 +18,9 @@ function parseAuthorizationHeader(req: Request, res: Response, next: NextFunctio
 };
 
 function requireLogin(requireAdmin = false) {
-    return (req: Request, next: NextFunction) => {
+    return (req: Request, res:Response, next: NextFunction) => {
         if (req.body.user) {
-            if (req.body.user.user_type !== 1 && !requireAdmin) {
+            if (req.body.user.user_type !== 0 && !requireAdmin) {
                 next({ code: 403, message: 'You are not allowed to access this resource' });
                 // Code 403 means forbidden
             } else {

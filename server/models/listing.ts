@@ -379,7 +379,7 @@ async function unregistered_addListing(form: listing_mainForm) {
 
 
 // --- We should have another function here to add listing, but accessed from a secure route.
-async function registered_addListing(form: listing_mainForm, userid: number){
+async function registered_addListing(form: listing_mainForm){
 
     let specs = {} as any;
     let stock = {} as any;
@@ -412,13 +412,13 @@ async function registered_addListing(form: listing_mainForm, userid: number){
         specs.orig_specs_clasp_type_id = form.step2.clasp_type;
 
         stock = {} as Orig_stockItem;
-        stock.orig_stock_store_user_id = userid;
+        stock.orig_stock_store_user_id = form.step4.user_id;
         stock.orig_stock_watch_brand_id = form.step1.brand;
         stock.orig_stock_condition = form.step3.condition;
         stock.orig_stock_quantity = form.step3.quantity;
 
         listing = {} as Orig_listingItem;
-        listing.orig_listing_stock_store_user_id = userid;
+        listing.orig_listing_stock_store_user_id = form.step4.user_id;
         listing.orig_listing_description = form.step4.description;
         listing.orig_listing_status = 1;
         listing.orig_listing_guarantee = form.step4.warranty;
@@ -452,13 +452,13 @@ async function registered_addListing(form: listing_mainForm, userid: number){
         specs.gen_specs_clasp_type_id = form.step2.clasp_type;
 
         stock = {} as Gen_stockItem;
-        stock.gen_stock_store_user_id = userid;
+        stock.gen_stock_store_user_id = form.step4.user_id;
         stock.gen_stock_watch_brand_id = form.step1.brand;
         stock.gen_stock_condition = form.step3.condition;
         stock.gen_stock_quantity = form.step3.quantity;
 
         listing = {} as Gen_listingItem;
-        listing.gen_listing_stock_store_user_id = userid;
+        listing.gen_listing_stock_store_user_id = form.step4.user_id;
         listing.gen_listing_description = form.step4.description;
         listing.gen_listing_status = 1;
         listing.gen_listing_guarantee = form.step4.warranty;
@@ -708,4 +708,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing, unregistered_addListing };
+module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing, unregistered_addListing, registered_addListing };

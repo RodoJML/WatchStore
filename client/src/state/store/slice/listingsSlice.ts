@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Fetch from './../../../model/fetch';
-import type { DataEnvelope, DataEnvelopeList } from './../../../model/interfaces';
+import type { DataEnvelope, DataEnvelopeList, UserItem } from './../../../model/interfaces';
 import type { Listing_mainForm } from './../../../pages/NewListing';
 import { type Message } from './sessionSlice';
 import type { ListingPreviewItem } from './../../../model/interfaces';
@@ -160,6 +160,13 @@ export const unregistered_addListing = createAsyncThunk(
     'listings/unregistered_addListing',
     async (listing_mainForm: Listing_mainForm ): Promise<DataEnvelope<string>> => {
         return await Fetch.api(`/listing/unregistered_addListing`, listing_mainForm, 'POST').catch((err) => { throw err; });
+    }
+)
+
+export const registered_addListing = createAsyncThunk(
+    'listings/registered_addListing', async (args: {listing_mainForm: Listing_mainForm, user: UserItem}): Promise<DataEnvelope<string>> => {
+        args.listing_mainForm.step4.user_id = args.user.user_id;
+        return await Fetch.api('/secure_listing/registered_addListing', args.listing_mainForm, 'POST', { 'Authorization': 'Bearer ' + args.user.user_token})
     }
 )
 

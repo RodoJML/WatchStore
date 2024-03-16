@@ -19,6 +19,7 @@ export interface UserItem {
     user_views: number | undefined,
     user_photo_path: string | undefined,
     user_registration_date: Date | undefined,
+    user_token: string
 }
 
 export interface UserInfoItem {
