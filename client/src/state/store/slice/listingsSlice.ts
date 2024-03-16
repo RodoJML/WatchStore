@@ -165,7 +165,6 @@ export const unregistered_addListing = createAsyncThunk(
 
 export const registered_addListing = createAsyncThunk(
     'listings/registered_addListing', async (args: {listing_mainForm: Listing_mainForm, user: UserItem}): Promise<DataEnvelope<string>> => {
-        args.listing_mainForm.step4.user_id = args.user.user_id;
         return await Fetch.api('/secure_listing/registered_addListing', args.listing_mainForm, 'POST', { 'Authorization': 'Bearer ' + args.user.user_token})
     }
 )

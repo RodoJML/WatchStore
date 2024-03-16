@@ -15,7 +15,7 @@ import { step3form } from "../components/NewListingStep3";
 import { step4form } from "../components/NewListingStep4";
 
 import { useNavigate } from "react-router-dom";
-import { unregistered_addListing } from "../state/store/slice/listingsSlice";
+import { registered_addListing, unregistered_addListing } from "../state/store/slice/listingsSlice";
 import { DataEnvelope } from "../model/interfaces";
 import { unwrapResult } from "@reduxjs/toolkit";
 
@@ -72,32 +72,47 @@ export default function NewListing() {
 
             // If user is of type 3 or higher, it means its unregistered.
             if (sessionState.user.user_type <= 2) {
-
-            } else {
-                dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
-                    if(result.isSuccess == true){
+                
+                mainForm.step4.user_id = sessionState.user.user_id;
+                dispatch(registered_addListing({ listing_mainForm: mainForm, user: sessionState.user })).then(unwrapResult).then((result: DataEnvelope<string>) => {
+                    if (result.isSuccess == true) {
                         setPostedSucessfully(1);
-                        timeout1 = setTimeout(() => {navigate("/")}, 2000);
+                        timeout1 = setTimeout(() => { navigate("/") }, 2000);
                     } else {
                         setPostedSucessfully(2);
                     }
-                }).catch((err) => {alert(err)});
+                }).catch((err) => {
+                    setPostedSucessfully(2)
+                    console.error(err);
+                });
+
+            } else {
+                dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
+                    if (result.isSuccess == true) {
+                        setPostedSucessfully(1);
+                        timeout1 = setTimeout(() => { navigate("/") }, 2000);
+                    } else {
+                        setPostedSucessfully(2);
+                    }
+                }).catch((err) => { 
+                    setPostedSucessfully(2)
+                    console.error(err) });
             }
         }
 
-        return () => {clearTimeout(timeout1)};
+        return () => { clearTimeout(timeout1) };
 
     }, [mainForm, step1submitted, step2submitted, step3submitted, step4submitted])
 
     return (
         <div>
             <Notification message={sessionState.notification} />
-            <NewListingNav currentStep={currentStep}/>
+            <NewListingNav currentStep={currentStep} />
             <NewListingStep1 complete={handleStep1Complete} sessionStatus={sessionState} />
             {step1submitted && <NewListingStep2 begin={step1submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep2Complete} />}
             {step2submitted && <NewListingStep3 begin={step2submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep3Complete} />}
             {step3submitted && <NewListingStep4 begin={step3submitted} mainForm={mainForm} sessionStatus={sessionState} complete={handleStep4Complete} />}
-            {step4submitted && <NewListingPosting isSuccess={postedSucessfully}/>}
+            {step4submitted && <NewListingPosting isSuccess={postedSucessfully} />}
         </div>
     )
 }

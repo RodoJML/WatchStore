@@ -133,6 +133,7 @@ const sessionSlice = createSlice(
             builder.addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.user = action.payload.data.user; // action.payload.data.token is also available, use it when you need it.
+                state.user.user_token = action.payload.data.token;
                 state.signedIn = true;
             });
             builder.addCase(login.rejected, (state, action) => {
