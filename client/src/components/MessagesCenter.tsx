@@ -16,10 +16,11 @@ export default function MessagesCenter({ sessionStatus, onClick, isActive }: { s
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            setMessagesPaneOpacity(!messagesPaneOpacity);
-        }, 50);
-        return () => { clearTimeout(timeout) };
+        setMessagesPaneOpacity(!messagesPaneOpacity);
+        // const timeout = setTimeout(() => {
+        //     setMessagesPaneOpacity(!messagesPaneOpacity);
+        // }, 5);
+        // return () => { clearTimeout(timeout) };
     }, [isActive])
 
     return (
@@ -38,8 +39,8 @@ export default function MessagesCenter({ sessionStatus, onClick, isActive }: { s
                         <div className="grid grid-cols-2">
                             <div className="text-shadow shadow-black font-semibold">Mensajes</div>
                             <div className="flex justify-end items-center">
-                                <div className="text-2xs mr-1">Limpiar</div> 
-                                <FontAwesomeIcon className="opacity-50 cursor-pointer text-2xl" icon={faCircleXmark} onClick={() => { dispatch(clearMessages()); onClick(false); }}/>
+                                <div className="text-2xs mr-1">Limpiar</div>
+                                <FontAwesomeIcon className="opacity-50 cursor-pointer text-2xl" icon={faCircleXmark} onClick={() => { dispatch(clearMessages()); onClick(false); }} />
                             </div>
                         </div>
 
