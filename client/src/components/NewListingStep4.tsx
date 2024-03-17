@@ -98,9 +98,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 dispatch(setNotification({ message: "El máximo son 5 fotos", type: "danger" }));
                 input.value = "";
             } else {
-                if(input.files.length > 0){
-                    setForm({ ...form, photos: input.files });
-                }
+                setForm({ ...form, photos: input.files });
             }
         } else {
             // Whatever in the form is an input not related to files is handlede here.
