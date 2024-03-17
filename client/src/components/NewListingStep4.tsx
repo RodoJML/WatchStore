@@ -18,6 +18,7 @@ export interface step4form {
     dprice: number,
     warranty: number,
     province: string,
+    photos: FileList
 }
 
 export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: Listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
@@ -91,11 +92,19 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
         }
 
         if (input.files) {
+            // If input updated is related to files (in this case Photos)
+            // Then we do the following 
             if (input.files.length > maxPhotos) {
                 dispatch(setNotification({ message: "El máximo son 5 fotos", type: "danger" }));
                 input.value = "";
+            } else {
+                if(input.files.length > 0){
+                    setForm({ ...form, photos: input.files });
+                }
             }
         } else {
+            // Whatever in the form is an input not related to files is handlede here.
+            // Form and values are set.
             const { name, value } = e.target;
             setForm({ ...form, [name]: value });
         }
@@ -221,7 +230,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 <img className="opacity-70 p-2" src="/src/assets/images/angles.png" alt="" />
                 <div className="text-xs text-center text-shadow shadow-black">*Sugerencia de los angulos a incluir en sus fotos  </div>
 
-                <input type="file" name="photo" id="photo" accept="image/*" multiple
+                <input type="file" name="photos" id="photos" accept="image/*" multiple
                     className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
 
                 {
