@@ -105,9 +105,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 for(let i = 0; i < input.files.length; i++){
                     updatedFormFiles.append(`photo[${i}]`, input.files[i]);
                 }
-
                 setForm({ ...form, 'photos': updatedFormFiles });
-
             }
         } else {
             // Whatever in the form is an input not related to files is handlede here.

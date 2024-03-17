@@ -213,7 +213,7 @@ export interface step4form {
     dprice: number,
     warranty: number,
     province: string,
-    photos: FileList,
+    photos: FormData,
 }
 
 export interface listing_mainForm {

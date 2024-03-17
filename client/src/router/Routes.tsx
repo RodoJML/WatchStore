@@ -4,6 +4,7 @@ import ViewListing from '../pages/ViewListing';
 import NewListing from '../pages/NewListing';
 
 import { createBrowserRouter} from 'react-router-dom';
+import ForTest from '../pages/ForTest';
 
 export const router = createBrowserRouter([
     {
@@ -23,5 +24,10 @@ export const router = createBrowserRouter([
     {
         path: '/listing/new',
         element: <NewListing/>,
-    }
+    },
+    {
+        path: '/test',
+        element: <ForTest/>,
+    },
+
 ]);
