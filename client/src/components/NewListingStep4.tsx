@@ -101,6 +101,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 if(input.files.length > 0){
                     setForm({ ...form, photos: input.files });
                 }
+                console.log(form.photos);
             }
         } else {
             // Whatever in the form is an input not related to files is handlede here.
