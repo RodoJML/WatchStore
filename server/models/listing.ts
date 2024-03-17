@@ -150,7 +150,7 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
 // ------------------------------------------------------------------------------------------------
 async function unregistered_addListing(form: listing_mainForm) {
 
-    console.log(form.step4.photos[0].name);
+    console.log(form.step4.photos);
 
     const genericUser = {} as UserItem;
     genericUser.user_id = form.step4.user_id;

@@ -18,7 +18,7 @@ export interface step4form {
     dprice: number,
     warranty: number,
     province: string,
-    photos: FileList
+    photos: FileList,
 }
 
 export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: Listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
