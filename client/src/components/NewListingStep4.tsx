@@ -18,7 +18,7 @@ export interface step4form {
     dprice: number,
     warranty: number,
     province: string,
-    photos: FileList,
+    photos: FormData,
 }
 
 export default function NewListingStep4({ begin, mainForm, complete, sessionStatus }: { begin: boolean, mainForm: Listing_mainForm, complete: (form: step4form) => (void), sessionStatus: RootState["session"] }) {
@@ -98,7 +98,16 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 dispatch(setNotification({ message: "El máximo son 5 fotos", type: "danger" }));
                 input.value = "";
             } else {
-                setForm({ ...form, photos: input.files });
+                // This variable is needed because doing this "setFormFiles(input.files)" doesnt work
+                const updatedFormFiles = new FormData();
+
+                //Iterate over the files in my input and append them into the updatedFormFiles variable. 
+                for(let i = 0; i < input.files.length; i++){
+                    updatedFormFiles.append(`photo[${i}]`, input.files[i]);
+                }
+
+                setForm({ ...form, 'photos': updatedFormFiles });
+
             }
         } else {
             // Whatever in the form is an input not related to files is handlede here.
