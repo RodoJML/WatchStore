@@ -170,6 +170,12 @@ export const registered_addListing = createAsyncThunk(
     }
 )
 
+export const add_photos_test = createAsyncThunk(
+    'listings/addphotos', async (photos: FormData): Promise<DataEnvelope<string>> => {
+        return await Fetch.api('/listing/addPhotos', photos, 'POST');
+    }
+)
+
 export const { searchModeOn, searchModeOff, incrementPage, searchInitiatedOFF } = listingSlice.actions;
 
 export default listingSlice.reducer;
