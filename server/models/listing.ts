@@ -7,6 +7,10 @@ async function connection() {
     return db;
 }
 
+async function addPhotos(photos: any){
+    console.log(photos);
+}
+
 // This function fetch both listings of original and generic watches, it also detects if the API call is a search.
 // This function implements pagination to not include all the data information, improving performance. 
 async function get_previews(page = 1, pageSize = 30, search: string, advancedSearch: string) {
