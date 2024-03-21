@@ -8,7 +8,7 @@ async function connection() {
 }
 
 async function addPhotos(photos: any){
-    console.log(photos);
+    console.log("test");
 }
 
 // This function fetch both listings of original and generic watches, it also detects if the API call is a search.
@@ -712,4 +712,4 @@ async function search(table: string, colum_name: string, key: string) {
     return { objects, total };
 }
 
-module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing, unregistered_addListing, registered_addListing };
+module.exports = { getAll, get_previews, getAllbyPage, getOne, addOne, updateOne, deleteOne, search, guestHasListing, unregistered_addListing, registered_addListing, addPhotos};
