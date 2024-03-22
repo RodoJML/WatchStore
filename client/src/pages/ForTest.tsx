@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
 import { add_photos_test } from "../state/store/slice/listingsSlice";
+import * as Fetch from '../model/fetch';
+
 
 export default function ForTest() {
 
@@ -11,14 +13,13 @@ export default function ForTest() {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
         const input = e.target;
-        const maxPhotos = 5
 
         if (input.files) {
-
+            console.log("File detected");
             const updatedFormFiles = new FormData();
 
             //Iterate over the files in my input and append them into the updatedFormFiles variable. 
-            for (let i = 0; i < input.files.length; i++) {
+            for(let i = 0; i < input.files.length; i++){
                 updatedFormFiles.append(`photo[${i}]`, input.files[i]);
             }
             
@@ -31,7 +32,7 @@ export default function ForTest() {
         
         e.preventDefault();
 
-        dispatch(add_photos_test(photos));
+        Fetch.api('/listing/addPhotos', photos, 'POST');
 
     }
 
@@ -42,7 +43,7 @@ export default function ForTest() {
                 <div>Testing photos uploads</div>
                 <div>
                     <input type="file" name="photos" id="photos" accept="image/*" multiple
-                        className="flex justify-center w-full text-white px-5 py-2" />
+                        className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
                 </div>
                 <button>Submit</button>
             </form>

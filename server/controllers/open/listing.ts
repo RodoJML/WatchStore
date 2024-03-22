@@ -59,7 +59,7 @@ router
     })
 
     .post('/addPhotos', (req: Request, res: Response, next: NextFunction) => {
-        console.log(req.body.value);
+        console.log(req.body);
         model.addPhotos(req.body)
             .then(
                 (result: any) => {

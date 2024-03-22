@@ -8,7 +8,7 @@ async function connection() {
 }
 
 async function addPhotos(photos: any){
-    console.log("test");
+    
 }
 
 // This function fetch both listings of original and generic watches, it also detects if the API call is a search.

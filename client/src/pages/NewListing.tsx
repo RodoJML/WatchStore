@@ -5,6 +5,7 @@ import NewListingStep4 from "../components/NewListingStep4";
 import NewListingPosting from "../components/NewListingPosting";
 import NewListingNav from "../components/NewListingNav";
 import Notification from '../components/Notification';
+import * as Fetch from '../model/fetch';
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,6 +76,7 @@ export default function NewListing() {
                 
                 dispatch(registered_addListing({ listing_mainForm: mainForm, user: sessionState.user })).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if (result.isSuccess == true) {
+                        // post photos from here
                         setPostedSucessfully(1);
                         timeout1 = setTimeout(() => { navigate("/") }, 2000);
                     } else {
@@ -88,6 +90,7 @@ export default function NewListing() {
             } else {
                 dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if (result.isSuccess == true) {
+                        // Fetch.api('/listing/addPhotos', mainForm, 'POST');
                         setPostedSucessfully(1);
                         timeout1 = setTimeout(() => { navigate("/") }, 2000);
                     } else {
