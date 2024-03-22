@@ -20,7 +20,8 @@ export default function ForTest() {
 
             //Iterate over the files in my input and append them into the updatedFormFiles variable. 
             for(let i = 0; i < input.files.length; i++){
-                updatedFormFiles.append(`photo[${i}]`, input.files[i]);
+                console.log(input.files[i]);
+                updatedFormFiles.append('photo', input.files[i]);
             }
             
             setPhotos(updatedFormFiles);
