@@ -4,6 +4,7 @@ const expressController = require('express');
 const router = expressController.Router();
 const model = require('../../models/listing.ts');
 const multer = require('multer');
+const upload = multer({dest: './uploads'});
 
 
 router
