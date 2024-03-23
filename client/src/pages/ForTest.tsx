@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import { add_photos_test } from "../state/store/slice/listingsSlice";
 import * as Fetch from '../model/fetch';
 
 
@@ -9,6 +8,10 @@ export default function ForTest() {
 
     const dispatch = useDispatch<AppDispatch>();
     const [photos, setPhotos] = useState(new FormData());
+
+    useEffect(() => {
+        console.log(photos.get('photos'));
+    }, [photos])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -19,20 +22,20 @@ export default function ForTest() {
             const updatedFormFiles = new FormData();
 
             //Iterate over the files in my input and append them into the updatedFormFiles variable. 
-            for(let i = 0; i < input.files.length; i++){
-                console.log(input.files[i]);
-                updatedFormFiles.append('photo', input.files[i]);
+            for (let i = 0; i < input.files.length; i++) {
+                console.log(`iterate this ${i} much times`)
+                updatedFormFiles.set(`photos`, input.files[i]);
             }
-            
+
             setPhotos(updatedFormFiles);
+            
         }
     }
 
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         console.log("Submitted");
-        
-        e.preventDefault();
 
+        e.preventDefault();
         Fetch.api('/listing/addPhotos', photos, 'POST');
 
     }

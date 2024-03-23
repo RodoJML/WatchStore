@@ -19,6 +19,7 @@ const open_listing = require ('./controllers/open/listing.ts');
 const secure_listing = require('./controllers/secure/listing.ts');
 const open_store = require('./controllers/open/store.ts');
 const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization');
+const { fileUpload } = require('./middleware/fileUpload');
 
 // Middleware
 app
@@ -46,7 +47,7 @@ app
     .get(apiName, (req: Request, res: Response) => { res.send('Hello World') })
     .use(apiName + '/fetch', open_fetchUtil)
     .use(apiName + '/user', open_user)
-    .use(apiName + '/listing', open_listing)
+    .use(apiName + '/listing', fileUpload(), open_listing)
     .use(apiName + '/secure_listing', requireLogin(), secure_listing)
     .use(apiName + '/store', open_store)
 

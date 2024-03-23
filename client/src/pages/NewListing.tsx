@@ -90,7 +90,6 @@ export default function NewListing() {
             } else {
                 dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
                     if (result.isSuccess == true) {
-                        Fetch.api('/listing/addPhotos', mainForm, 'POST');
                         setPostedSucessfully(1);
                         timeout1 = setTimeout(() => { navigate("/") }, 2000);
                     } else {

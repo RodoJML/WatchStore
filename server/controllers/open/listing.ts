@@ -3,9 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 const expressController = require('express');
 const router = expressController.Router();
 const model = require('../../models/listing.ts');
-const multer = require('multer');
-const upload = multer({dest: './uploads'});
-
 
 router
     .get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -62,7 +59,7 @@ router
     })
 
     .post('/addPhotos', (req: Request, res: Response, next: NextFunction) => {
-        
+  
         model.addPhotos(req.body)
             .then(
                 (result: any) => {
