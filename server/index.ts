@@ -10,7 +10,7 @@ const apiName = '/api/v1';
 
 // Socket
 const hostname = process.env.HOSTNAME || 'localhost';
-const port = 3000;
+const port = process.env.port ?? 3000;
 
 // Controllers
 const open_fetchUtil = require('./controllers/open/fetchUtil.ts');
