@@ -7,11 +7,11 @@ import * as Fetch from '../model/fetch';
 export default function ForTest() {
 
     const dispatch = useDispatch<AppDispatch>();
-    const [photos, setPhotos] = useState(new FormData());
+    const [formData, setFormData] = useState(new FormData());
 
     useEffect(() => {
-        console.log(photos.get('photos'));
-    }, [photos])
+        console.log(formData.get('photos'));
+    }, [formData])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -19,24 +19,28 @@ export default function ForTest() {
 
         if (input.files) {
             console.log("File detected");
-            const updatedFormFiles = new FormData();
+            const updatedFormData = new FormData();
 
             //Iterate over the files in my input and append them into the updatedFormFiles variable. 
             for (let i = 0; i < input.files.length; i++) {
                 console.log(`iterate this ${i} much times`)
-                updatedFormFiles.set(`photos`, input.files[i]);
+                updatedFormData.append('photos', input.files[i]);
             }
 
-            setPhotos(updatedFormFiles);
-            
+            setFormData(updatedFormData);
         }
     }
 
-    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+        e.preventDefault();
         console.log("Submitted");
 
-        e.preventDefault();
-        Fetch.api('/listing/addPhotos', photos, 'POST');
+        try {
+            const response = await Fetch.api('/listing/addPhotos', formData, 'POST');
+            console.log(response);
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        }
 
     }
 
@@ -44,11 +48,10 @@ export default function ForTest() {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <div>Testing photos uploads</div>
-                <div>
+               
                     <input type="file" name="photos" id="photos" accept="image/*" multiple
                         className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
-                </div>
+            
                 <button>Submit</button>
             </form>
 

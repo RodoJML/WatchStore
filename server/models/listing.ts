@@ -8,7 +8,7 @@ async function connection() {
 }
 
 async function addPhotos(form: listing_mainForm){
-
+    console.log("entered model")
 }
 
 // This function fetch both listings of original and generic watches, it also detects if the API call is a search.
