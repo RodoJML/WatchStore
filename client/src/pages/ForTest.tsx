@@ -36,7 +36,7 @@ export default function ForTest() {
         console.log("Submitted");
 
         try {
-            const response = await Fetch.api('/listing/addPhotos', formData, 'POST', 'multipart/form-data');
+            const response = await Fetch.api('/listing/addPhotos', formData, 'POST');
             console.log(response);
         } catch (error) {
             console.error("Error submitting form:", error);
