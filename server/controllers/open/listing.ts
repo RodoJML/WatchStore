@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
+import { Multer } from 'multer';
 
 const expressController = require('express');
 const router = expressController.Router();
 const model = require('../../models/listing.ts');
+
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
 
-// interface MulterRequest extends Request {
-//     files: any; // Aquí puedes definir un tipo más específico si lo deseas
-// }
+interface MulterRequest extends Request {
+    files: Express.Multer.File[];
+}
 
 router
     .get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -64,7 +66,7 @@ router
             ).catch(next);
     })
 
-    .post('/addPhotos', upload.array('photos', 5), (req: Request, res: Response, next: NextFunction) => {
+    .post('/addPhotos', upload.array('photos', 5), (req: MulterRequest, res: Response, next: NextFunction) => {
 
         console.log(req.files);
         
