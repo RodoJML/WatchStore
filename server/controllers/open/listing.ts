@@ -6,6 +6,10 @@ const model = require('../../models/listing.ts');
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
 
+// interface MulterRequest extends Request {
+//     files: any; // Aquí puedes definir un tipo más específico si lo deseas
+// }
+
 router
     .get('/', (req: Request, res: Response, next: NextFunction) => {
         model.getAll()
@@ -60,12 +64,13 @@ router
             ).catch(next);
     })
 
-    .post('/addPhotos', (req: Request, res: Response, next: NextFunction) => {
-  
-        model.addPhotos(req.body)
+    .post('/addPhotos', upload.array('photos', 5), (req: Request, res: Response, next: NextFunction) => {
+
+        console.log(req.files);
+        model.addPhotos(req.files)
             .then(
                 (result: any) => {
-                    const data = { data: result, isSuccess: true };
+                    const data = { data: result.data, isSuccess: true };
                     res.send(data);
                 }
             ).catch(next);
