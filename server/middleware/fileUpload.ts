@@ -10,20 +10,11 @@ interface MulterRequest extends Request {
 
 
 function fileUpload(){
-    return ((req: Request, res: Response, next: NextFunction) => {
+    return (upload.single('photos'), (req: MulterRequest, res: Response, next: NextFunction) => {
     
-        if(req.body){        
-            console.log("Entered middleware")
-            console.log(req.body);
-            
-
-            // if(req.body.mainForm.step4 != undefined){
-                
-            //     if(req.body.mainForm.step4.photos)
-                
-            // } else {
-            //     next();
-            // }
+        if(req.file){        
+            console.log("File Detected")
+            console.log(req.file);
         } else {
             next();
         }

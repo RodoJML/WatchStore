@@ -60,7 +60,7 @@ router
             ).catch(next);
     })
 
-    .post('/addPhotos', upload.single('photos'), (req: Request, res: Response, next: NextFunction) => {
+    .post('/addPhotos', (req: Request, res: Response, next: NextFunction) => {
   
         model.addPhotos(req.body)
             .then(
