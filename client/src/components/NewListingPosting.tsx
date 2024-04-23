@@ -6,6 +6,7 @@ import { faCheck, faSpinner, faX } from "@fortawesome/free-solid-svg-icons";
 export default function NewListingPosting({ isSuccess }: { isSuccess: number }) {
 
     const listingState = useSelector((state: RootState) => state.listings);
+    // The "isSucces" here means that the info of the posting and the photos were uploaded successfully. 
 
     return (
         <>
@@ -16,9 +17,9 @@ export default function NewListingPosting({ isSuccess }: { isSuccess: number }) 
                     </div>
                 </div>
                 :
-                isSuccess != 0 &&
 
-                    isSuccess == 1
+
+                isSuccess == 1
                     ?
                     <div className="flex items-center justify-center mt-20">
                         <div className="w-60 text-sm text-white text-shadow shadow-black">
@@ -37,6 +38,9 @@ export default function NewListingPosting({ isSuccess }: { isSuccess: number }) 
 
                     </div>
                     :
+
+                    isSuccess > 1
+                    &&
                     <div className="flex items-center justify-center mt-20">
                         <div className="w-60 text-sm text-white text-shadow shadow-black">
 
@@ -53,7 +57,6 @@ export default function NewListingPosting({ isSuccess }: { isSuccess: number }) 
                             </div>
                         </div>
                     </div>
-
             }
         </>
     )
