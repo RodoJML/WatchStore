@@ -73,12 +73,21 @@ export default function NewListing() {
 
             // If user is of type 3 or higher, it means its unregistered.
             if (sessionState.user.user_type <= 2) {
-                
-                dispatch(registered_addListing({ listing_mainForm: mainForm, user: sessionState.user })).then(unwrapResult).then((result: DataEnvelope<string>) => {
+
+                dispatch(registered_addListing({ listing_mainForm: mainForm, user: sessionState.user })).then(unwrapResult).then(async (result: DataEnvelope<string>) => {
+
                     if (result.isSuccess == true) {
-                        // post photos from here
+                        
+                        // Photos are send to the API from here.
+                        try {
+                            await Fetch.api('/listing/addPhotos', mainForm.step4.photos, 'POST');
+                        } catch (error) {
+                            console.error("Error uploading photos", error);
+                        }
+
                         setPostedSucessfully(1);
                         timeout1 = setTimeout(() => { navigate("/") }, 2000);
+
                     } else {
                         setPostedSucessfully(2);
                     }
@@ -86,6 +95,8 @@ export default function NewListing() {
                     setPostedSucessfully(2)
                     console.error(err);
                 });
+
+
 
             } else {
                 dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
@@ -95,9 +106,10 @@ export default function NewListing() {
                     } else {
                         setPostedSucessfully(2);
                     }
-                }).catch((err) => { 
+                }).catch((err) => {
                     setPostedSucessfully(2)
-                    console.error(err) });
+                    console.error(err)
+                });
             }
         }
 
