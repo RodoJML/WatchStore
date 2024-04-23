@@ -67,8 +67,6 @@ router
     })
 
     .post('/addPhotos', upload.array('photos', 5), (req: MulterRequest, res: Response, next: NextFunction) => {
-
-        console.log(req.files);
         
         model.addPhotos(req.files)
             .then(

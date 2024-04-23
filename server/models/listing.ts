@@ -8,12 +8,13 @@ async function connection() {
 }
 
 async function addPhotos(files: any){
-    // console.log(files);
-    // if(files){
-    //     return {data: "Photos received"}
-    // } else {
-    //     throw new Error("No photos detected");
-    // }
+    console.log(files);
+    
+    if(files){
+        return {data: "Photos received"}
+    } else {
+        throw new Error("No photos detected");
+    }
 }
 
 // This function fetch both listings of original and generic watches, it also detects if the API call is a search.
