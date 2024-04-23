@@ -80,6 +80,7 @@ export default function NewListing() {
                         
                         // Photos are send to the API from here.
                         try {
+                            console.log("Entered the upload photo section");
                             await Fetch.api('/listing/addPhotos', mainForm.step4.photos, 'POST');
                         } catch (error) {
                             console.error("Error uploading photos", error);
@@ -99,8 +100,17 @@ export default function NewListing() {
 
 
             } else {
-                dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
+                dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then(async (result: DataEnvelope<string>) => {
                     if (result.isSuccess == true) {
+
+                        // Photos are send to the API from here.
+                        try {
+                            console.log("Entered the upload photo section");
+                            await Fetch.api('/listing/addPhotos', mainForm.step4.photos, 'POST');
+                        } catch (error) {
+                            console.error("Error uploading photos", error);
+                        }
+                        
                         setPostedSucessfully(1);
                         timeout1 = setTimeout(() => { navigate("/") }, 2000);
                     } else {
