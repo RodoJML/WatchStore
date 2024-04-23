@@ -8,8 +8,10 @@ async function connection() {
 }
 
 async function addPhotos(files: any){
-    console.log(files);
     
+    // Here's all the details of the photos, name, size, etc.
+    console.log(files);
+
     if(files){
         return {data: "Photos received"}
     } else {
