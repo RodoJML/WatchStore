@@ -13,6 +13,7 @@ Technologies used:
 - Knex for SQL (Wrapper library) https://knexjs.org/
 - Redux for state management https://redux.js.org/
 - ![Screen Shot 2024-01-28 at 11 50 03 PM](https://github.com/RodoJML/WatchStore/assets/63088555/698a5528-21a7-4e3b-8e30-742ddfe73fce) https://jwt.io/
+- Multer to handle fileuploads in the backend https://www.npmjs.com/package/multer
 
 <h2>🌐 Preview of the website (Beta - Public URL not available)</h2>
 

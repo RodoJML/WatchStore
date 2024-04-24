@@ -6,7 +6,29 @@ const router = expressController.Router();
 const model = require('../../models/listing.ts');
 
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
+
+// MULTER CONFIGURATION
+// Sets destination folder for images uploaded and file(s) name.
+const storage = multer.diskStorage({
+    destination: function (req: Request, file, callback) { callback(null, 'uploads/') },
+    filename: function (req, file, callback) { callback(null, file.fieldname) }
+})
+
+// Set the type of files that will be accepted.
+function fileFilter(req, file, callback) {
+    if (file.mimetype === 'image/jpeg' ||
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg') {
+        callback(null, true);
+    } else {
+        callback(null, false);
+    }
+}
+
+const upload = multer({storage: storage, fileFilter: fileFilter});
+
+
+// const upload = multer({dest: 'uploads/'}); 
 
 interface MulterRequest extends Request {
     files: Express.Multer.File[];
@@ -66,8 +88,8 @@ router
             ).catch(next);
     })
 
-    .post('/addPhotos', upload.array('photos', 5), (req: MulterRequest, res: Response, next: NextFunction) => {
-        
+    .post('/addPhotos', cpUpload, (req: MulterRequest, res: Response, next: NextFunction) => {
+
         model.addPhotos(req.files)
             .then(
                 (result: any) => {
