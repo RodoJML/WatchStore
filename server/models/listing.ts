@@ -8,13 +8,13 @@ async function connection() {
     return db;
 }
 
-async function addPhotos(files: any){
+async function addPhotos(files: Express.Multer.File[]){
     
     // Here's all the details of the photos, name, size, etc.
     console.log(files);
 
     if(files){
-        return {data: "Photos received"}
+        return {data: "(" + files.length + ")" + " photos received!"}
     } else {
         throw new Error("No photos detected");
     }

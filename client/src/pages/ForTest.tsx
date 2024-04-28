@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
+import { add_photos_test } from "../state/store/slice/listingsSlice";
+
 import * as Fetch from '../model/fetch';
 
 
@@ -35,12 +37,16 @@ export default function ForTest() {
         e.preventDefault();
         console.log("Submitted");
 
-        try {
-            const response = await Fetch.api('/listing/addPhotos', formData, 'POST');
-            console.log(response);
-        } catch (error) {
-            console.error("Error submitting form:", error);
-        }
+        dispatch(add_photos_test(formData)).then((result) => {
+            console.log(result);
+        });
+
+        // try {
+        //     const response = await Fetch.api('/listing/addPhotos', formData, 'POST');
+        //     console.log(response);
+        // } catch (error) {
+        //     console.error("Error submitting form:", error);
+        // }
 
     }
 

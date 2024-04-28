@@ -104,6 +104,9 @@ export default function NewListing() {
 
             } else {
 
+                // Dispatch Upload Photos
+                    // 
+
                 async function uploadPhotos(photos: FormData) {
                     try {
                         return await Fetch.api('/listing/addPhotos', photos, 'POST');
