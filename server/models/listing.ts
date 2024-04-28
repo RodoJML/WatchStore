@@ -1,5 +1,6 @@
-import { Gen_listingItem, Gen_modelItem, Gen_specsItem, Gen_stockItem, Orig_listingItem, Orig_modelItem, Orig_stockItem, Original_specsItem, StoreItem, UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
+import { Gen_listingItem, Gen_specsItem, Gen_stockItem, Orig_listingItem, Orig_stockItem, Original_specsItem, StoreItem, UserInfoItem, UserItem, listing_mainForm } from '../data/interfaces';
 import { connect } from './knex';
+import { exist } from '../models/user'
 const bcrypt = require('bcrypt');
 
 async function connection() {
@@ -161,7 +162,7 @@ async function get_previews(page = 1, pageSize = 30, search: string, advancedSea
 
 // ------------------------------------------------------------------------------------------------
 async function unregistered_addListing(form: listing_mainForm) {
-
+    
     const genericUser = {} as UserItem;
     genericUser.user_id = form.step4.user_id;
     genericUser.user_type = 3;
@@ -186,6 +187,7 @@ async function unregistered_addListing(form: listing_mainForm) {
     let specs = {} as any;
     let stock = {} as any;
     let listing = {} as any;
+
 
     if (form.step1.certification == 1) {
 
@@ -279,6 +281,11 @@ async function unregistered_addListing(form: listing_mainForm) {
 
     try {
         const db = await connection();
+        // Check if the phoneNumber (UserID) passed, already exist in the DB
+        // If it exist, check if the type is less than 2, otherwise throw and error.
+        const userExist = exist("user_id", genericUser.user_type + "")
+
+
         const insertedUser = await db('user').insert(genericUser);
 
         if (insertedUser.length > 0) {
@@ -581,6 +588,7 @@ async function registered_addListing(form: listing_mainForm){
 
 async function guestHasListing(key: number) {
     const db = await connection();
+
 
     const orig_listings_count = await db('ORIG_LISTING').count('orig_listing_stock_store_user_id').where('orig_listing_stock_store_user_id', key);
     const gen_listings_count = await db('GEN_LISTING').count('gen_listing_stock_store_user_id').where('gen_listing_stock_store_user_id', key);

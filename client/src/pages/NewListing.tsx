@@ -39,6 +39,7 @@ export default function NewListing() {
     const [step2submitted, setStep2submitted] = useState(false);
     const [step3submitted, setStep3submitted] = useState(false);
     const [step4submitted, setStep4submitted] = useState(false);
+    const [successPhoto, setSuccessPhoto] = useState(false);
     const [postedSucessfully, setPostedSucessfully] = useState(0);
 
     const handleStep1Complete = (form: step1form) => {
@@ -74,10 +75,12 @@ export default function NewListing() {
             // If user is of type 3 or higher, it means its unregistered.
             if (sessionState.user.user_type <= 2) {
 
+                // The security of this function relies on having an authentication token.
+                // Needs to be implemented...
                 dispatch(registered_addListing({ listing_mainForm: mainForm, user: sessionState.user })).then(unwrapResult).then(async (result: DataEnvelope<string>) => {
 
                     if (result.isSuccess == true) {
-                        
+
                         // Photos are send to the API from here.
                         try {
                             console.log("Entered the upload photo section");
@@ -100,26 +103,40 @@ export default function NewListing() {
 
 
             } else {
-                dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then(async (result: DataEnvelope<string>) => {
-                    if (result.isSuccess == true) {
 
-                        // Photos are send to the API from here.
-                        try {
-                            console.log("Entered the upload photo section");
-                            await Fetch.api('/listing/addPhotos', mainForm.step4.photos, 'POST');
-                        } catch (error) {
-                            console.error("Error uploading photos", error);
-                        }
-                        
-                        setPostedSucessfully(1);
-                        timeout1 = setTimeout(() => { navigate("/") }, 2000);
-                    } else {
-                        setPostedSucessfully(2);
+                async function uploadPhotos(photos: FormData) {
+                    try {
+                        return await Fetch.api('/listing/addPhotos', photos, 'POST');
+                    } catch (error) {
+                        console.error("An error occur uploading the photos", error);
+                        throw error; 
                     }
-                }).catch((err) => {
-                    setPostedSucessfully(2)
-                    console.error(err)
-                });
+                }
+
+                uploadPhotos(mainForm.step4.photos).then((result: DataEnvelope<string>) => {
+
+                    if (result.isSuccess == true) {
+                        setSuccessPhoto(true);
+
+                        dispatch(unregistered_addListing(mainForm)).then(unwrapResult).then((result: DataEnvelope<string>) => {
+                            if (result.isSuccess == true) {
+                                setPostedSucessfully(1);
+                                timeout1 = setTimeout(() => { navigate("/") }, 2000);
+                            } else {
+                                setPostedSucessfully(2);
+                            }
+                        }).catch((err) => {
+                            setPostedSucessfully(2)
+                            console.error(err)
+                        });
+                    }
+
+                }).catch((err: Error) => {
+                    setSuccessPhoto(false);
+                    setPostedSucessfully(2);
+                    console.log("An error occur uploading the photos", err);
+                })
+
             }
         }
 

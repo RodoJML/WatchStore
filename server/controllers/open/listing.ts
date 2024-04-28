@@ -10,18 +10,24 @@ const multer = require('multer');
 // MULTER CONFIGURATION
 // Sets destination folder for images uploaded and file(s) name.
 const storage = multer.diskStorage({
-    destination: function (req: Request, file, callback) { callback(null, 'uploads/') },
-    filename: function (req, file, callback) { callback(null, file.fieldname) }
+    destination: function (req: Request, file: Express.Multer.File, callback: Function) { callback(null, 'uploads/') },
+    filename: function (req: Request, file: Express.Multer.File, callback: Function) {
+        // The next line creates an unique name for the file uploaded.
+        // Here you can edite the file name as desired. 
+        // For example "file.originalname" can be used to use same filename uploaded by user
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        callback(null, file.fieldname + '-' + uniqueSuffix) }
 })
 
 // Set the type of files that will be accepted.
-function fileFilter(req, file, callback) {
-    if (file.mimetype === 'image/jpeg' ||
-        file.mimetype === 'image/png' ||
-        file.mimetype === 'image/jpg') {
+function fileFilter(req: Request, file: Express.Multer.File, callback: Function) {
+    if (file.mimetype === 'image/jpeg'  ||
+        file.mimetype === 'image/png'   ||
+        file.mimetype === 'image/jpg'   || 
+        file.mimetype === 'image/heic') {
         callback(null, true);
     } else {
-        callback(null, false);
+        callback(new Error('Incorrect file type submitted'))
     }
 }
 
@@ -88,7 +94,7 @@ router
             ).catch(next);
     })
 
-    .post('/addPhotos', cpUpload, (req: MulterRequest, res: Response, next: NextFunction) => {
+    .post('/addPhotos', upload.array('photos', 5), (req: MulterRequest, res: Response, next: NextFunction) => {
 
         model.addPhotos(req.files)
             .then(

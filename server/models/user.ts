@@ -101,7 +101,7 @@ async function addUserInfo(userInfo: UserInfoItem){
     }
 }
 
-async function exist(column: string, key: string) {
+export async function exist(column: string, key: string) {
     const db = await connection();
     const user = await db('user').count('*').where(column, key);
     return user[0]['count(*)'] as number > 0;

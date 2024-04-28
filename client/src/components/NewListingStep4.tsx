@@ -72,15 +72,23 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
     const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
 
-        dispatch(guestHasListing(form.user_id)).then((result: any) => {
-            if (result.payload.total > 0) {
-                setListingAlreadyExist(true);
-            } else {
-                window.scrollTo(0, 0);
-                setActive(false);
-                complete(form);
-            }
-        });
+        // Only users With store or admins can create multiple listings.
+        if (sessionStatus.user.user_type > 1) {
+            dispatch(guestHasListing(form.user_id)).then((result: any) => {
+                if (result.payload.total > 0) {
+                    setListingAlreadyExist(true);
+                } else {
+                    window.scrollTo(0, 0);
+                    setActive(false);
+                    complete(form);
+                }
+            });
+
+        } else {
+            window.scrollTo(0, 0);
+            setActive(false);
+            complete(form);
+        }
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +110,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 const updatedFormFiles = new FormData();
 
                 //Iterate over the files in my input and append them into the updatedFormFiles variable. 
-                for(let i = 0; i < input.files.length; i++){
+                for (let i = 0; i < input.files.length; i++) {
                     updatedFormFiles.append('photos', input.files[i]); // `photo[${i}]`
                 }
                 setForm({ ...form, 'photos': updatedFormFiles });
@@ -235,7 +243,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 <img className="opacity-70 p-2" src="/src/assets/images/angles.png" alt="" />
                 <div className="text-xs text-center text-shadow shadow-black">*Sugerencia de los angulos a incluir en sus fotos  </div>
 
-                <input type="file" name="photos" id="photos" accept="image/*" multiple
+                <input type="file" name="photos" id="photos" accept=".jpg, .jpeg, .png, .heic" multiple
                     className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
 
                 {
