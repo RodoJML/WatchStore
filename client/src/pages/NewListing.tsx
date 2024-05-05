@@ -16,7 +16,7 @@ import { step3form } from "../components/NewListingStep3";
 import { step4form } from "../components/NewListingStep4";
 
 import { useNavigate } from "react-router-dom";
-import { registered_addListing, unregistered_addListing } from "../state/store/slice/listingsSlice";
+import { registered_addListing, unregistered_addListing, addPhotos } from "../state/store/slice/listingsSlice";
 import { DataEnvelope } from "../model/interfaces";
 import { unwrapResult } from "@reduxjs/toolkit";
 
@@ -30,8 +30,8 @@ export interface Listing_mainForm {
 export default function NewListing() {
 
     const sessionState = useSelector((state: RootState) => state.session);
-    const dispatch = useDispatch<AppDispatch>();
     const [mainForm, setMainForm] = useState({} as Listing_mainForm);
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const [currentStep, setCurrentStep] = useState(1);
@@ -105,7 +105,7 @@ export default function NewListing() {
             } else {
 
                 // Dispatch Upload Photos
-                    // 
+                dispatch(addPhotos(mainForm.step4.photos)).then(unwrapResult).then((result: any) => {}).catch((err) => {});
 
                 async function uploadPhotos(photos: FormData) {
                     try {
