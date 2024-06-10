@@ -243,7 +243,7 @@ export default function NewListingStep4({ begin, mainForm, complete, sessionStat
                 <img className="opacity-70 p-2" src="/src/assets/images/angles.png" alt="" />
                 <div className="text-xs text-center text-shadow shadow-black">*Sugerencia de los angulos a incluir en sus fotos  </div>
 
-                <input type="file" name="photos" id="photos" accept=".jpg, .jpeg, .png, .heic" multiple
+                <input type="file" name="photos" id="photos" accept=".jpg, .jpeg, .png, .heic .webp" multiple
                     className="flex justify-center w-full text-white px-5 py-2" onChange={handleInputChange} />
 
                 {
