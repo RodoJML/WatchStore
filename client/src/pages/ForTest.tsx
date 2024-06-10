@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store/store";
 import { useEffect, useState } from "react";
-import { add_photos_test } from "../state/store/slice/listingsSlice";
+// import { add_photos_test } from "../state/store/slice/listingsSlice";
 
 import * as Fetch from '../model/fetch';
 
