@@ -133,4 +133,4 @@ function verifyTokenAsync(token: any) {
 }
 
 
-module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addFromListing, addUserInfo }; 
+module.exports = { login, signup, exist, generateTokenAsync, verifyTokenAsync, addFromListing, addUserInfo }; //Test
